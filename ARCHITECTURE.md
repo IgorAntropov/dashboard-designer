@@ -59,4 +59,9 @@ version display (0.6): `GET /api/v1/version` plus a build-time `appVersion` show
 screen; API-docs hardening (0.7): OpenAPI/Swagger gated in production, `BearerAuth` JWT scheme, and
 reusable `UuidPkMixin` / `TimestampMixin` for future models; frontend typed API client (0.8):
 `openapi-typescript` generates `src/shared/api/schema.d.ts` from the backend OpenAPI, consumed by an
-`openapi-fetch` client; API origin via `NUXT_PUBLIC_API_ORIGIN`. Next per CLAUDE.md §18 tracker.
+`openapi-fetch` client; API origin via `NUXT_PUBLIC_API_ORIGIN`.
+
+Auth (0.3): `users` + `refresh_tokens` tables (UUID pks); argon2 password hashing (`core/passwords`);
+JWT access/refresh with rotation + server-side hashed-token revocation (`core/tokens`,
+`services/auth`); routes `POST /auth/register|login|refresh` and `GET /me`; Alembic migration
+`0001_auth_tables`. Next per CLAUDE.md §18 tracker.

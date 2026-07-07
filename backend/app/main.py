@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 
+from app.api.auth import router as auth_router
 from app.api.health import router as health_router
+from app.api.users import router as users_router
 from app.api.version import router as version_router
 from app.core.config import Settings, get_settings
 from app.core.security import customize_openapi
@@ -19,8 +21,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         redoc_url=redoc_url,
         openapi_url=openapi_url,
     )
-    app.include_router(health_router, prefix=settings.api_v1_prefix)
-    app.include_router(version_router, prefix=settings.api_v1_prefix)
+    prefix = settings.api_v1_prefix
+    app.include_router(health_router, prefix=prefix)
+    app.include_router(version_router, prefix=prefix)
+    app.include_router(auth_router, prefix=prefix)
+    app.include_router(users_router, prefix=prefix)
     customize_openapi(app, settings)
     return app
 

@@ -69,4 +69,11 @@ JWT access/refresh with rotation + server-side hashed-token revocation (`core/to
 OAuth (0.4): `oauth_accounts` table; a provider abstraction (`services/oauth/base.OAuthProvider`
 Protocol + `OAuthIdentity`) with Yandex and VK implementations behind `build_provider` registry;
 `GET /auth/oauth/{provider}/start` (state cookie + redirect) and `/callback` (exchange → upsert user
-→ issue tokens); migration `0002_oauth_accounts`. Next per CLAUDE.md §18 tracker.
+→ issue tokens); migration `0002_oauth_accounts`.
+
+Dashboard CRUD (1.1): `dashboards` table (UUID pk, JSONB `layout`/`data_bindings`/`data_source`,
+`status` enum); `DashboardService` enforces server-side ownership (foreign UUID → 404) and per-tier
+quota (`services/quota`, free=1/pro=3/unlimited=∞); routes `GET/POST /dashboards`,
+`GET/PATCH/DELETE /dashboards/{id}`, `POST /dashboards/{id}/duplicate`; migration `0003_dashboards`.
+Frontend `entities/dashboard` (typed `openapi-fetch` repository) + `pages/dashboards` list page;
+a shared auth middleware attaches the access token via `setAccessToken`. Next per CLAUDE.md §18 tracker.

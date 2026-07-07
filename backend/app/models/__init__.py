@@ -1,8 +1,9 @@
 from app.db.base import Base
+from app.models.dashboard import Dashboard
 from app.models.oauth_account import OAuthAccount
 from app.models.refresh_token import RefreshToken
 from app.models.user import User
 
 metadata = Base.metadata
 
-__all__ = ["Base", "OAuthAccount", "RefreshToken", "User", "metadata"]
+__all__ = ["Base", "Dashboard", "OAuthAccount", "RefreshToken", "User", "metadata"]

@@ -6,13 +6,15 @@ const appVersion = readFileSync(
   'utf8',
 ).trim()
 
+const apiOrigin = process.env.NUXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000'
+
 export default defineNuxtConfig({
   srcDir: 'src/',
   modules: ['@pinia/nuxt', '@nuxt/eslint'],
   css: ['bootstrap/dist/css/bootstrap.min.css'],
   runtimeConfig: {
     public: {
-      apiBaseUrl: 'http://localhost:8000/api/v1',
+      apiOrigin,
       appVersion,
     },
   },

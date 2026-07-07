@@ -1,9 +1,9 @@
-const DEFAULT_API_BASE_URL = 'http://localhost:8000/api/v1'
+const DEFAULT_API_ORIGIN = 'http://localhost:8000'
 
 export interface AppConfig {
-  apiBaseUrl: string
+  apiOrigin: string
 }
 
 export const config: AppConfig = {
-  apiBaseUrl: DEFAULT_API_BASE_URL,
+  apiOrigin: process.env.NUXT_PUBLIC_API_ORIGIN ?? DEFAULT_API_ORIGIN,
 }

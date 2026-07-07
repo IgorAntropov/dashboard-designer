@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import { apiClient } from '@shared/api'
+import { api } from '@shared/api'
 
 const runtimeConfig = useRuntimeConfig()
 const buildVersion = runtimeConfig.public.appVersion as string
 const apiVersion = ref('…')
 
 onMounted(async () => {
-  try {
-    const data = await apiClient.get<{ version: string }>('/version')
-    apiVersion.value = data.version
-  } catch {
-    apiVersion.value = 'unavailable'
-  }
+  const { data, error } = await api.GET('/api/v1/version')
+  apiVersion.value = error || !data ? 'unavailable' : (data.version ?? 'unavailable')
 })
 
 useHead({ title: 'Panelka — Settings' })

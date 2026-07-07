@@ -1,7 +1,8 @@
+import createClient from 'openapi-fetch'
+
 import { config } from '../config'
-import { ApiClient } from './client'
+import type { paths } from './schema'
 
-export { ApiClient } from './client'
-export type { ApiClientOptions } from './client'
+export type { paths } from './schema'
 
-export const apiClient = new ApiClient({ baseUrl: config.apiBaseUrl })
+export const api = createClient<paths>({ baseUrl: config.apiOrigin })

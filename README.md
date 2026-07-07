@@ -45,6 +45,18 @@ pnpm install
 pnpm --filter @panelka/frontend dev
 ```
 
+## Typed API client
+
+The frontend talks to the backend through a typed `openapi-fetch` client (`src/shared/api`).
+Regenerate the types from the running backend's OpenAPI schema:
+
+```bash
+cd frontend
+pnpm gen:api            # reads $NUXT_PUBLIC_API_ORIGIN/openapi.json (default http://localhost:8000)
+```
+
+The API origin is configured via `NUXT_PUBLIC_API_ORIGIN` (see `frontend/.env.example`).
+
 ## Versioning
 
 App version lives in `VERSION` (`X.Y.Z`). Each commit auto-increments the patch via a git hook.

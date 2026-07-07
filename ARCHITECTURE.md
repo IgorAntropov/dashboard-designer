@@ -1,7 +1,7 @@
 # ARCHITECTURE.md — Panelka technical map
 
-> Living technical map (see CLAUDE.md §17.4). Update in the same iteration as any change to module
-> boundaries or shared contracts. CLAUDE.md holds vision + rules; this file holds how the parts wire.
+> Living technical map. Update in the same iteration as any change to module boundaries or shared
+> contracts. This file describes how the parts wire together.
 
 ## 1. High-level topology
 
@@ -76,4 +76,4 @@ Dashboard CRUD (1.1): `dashboards` table (UUID pk, JSONB `layout`/`data_bindings
 quota (`services/quota`, free=1/pro=3/unlimited=∞); routes `GET/POST /dashboards`,
 `GET/PATCH/DELETE /dashboards/{id}`, `POST /dashboards/{id}/duplicate`; migration `0003_dashboards`.
 Frontend `entities/dashboard` (typed `openapi-fetch` repository) + `pages/dashboards` list page;
-a shared auth middleware attaches the access token via `setAccessToken`. Next per CLAUDE.md §18 tracker.
+a shared auth middleware attaches the access token via `setAccessToken`.

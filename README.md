@@ -2,8 +2,7 @@
 
 SaaS dashboard constructor: build dashboards from a widget library by drag-and-drop, theme them,
 and embed them into your own app (iframe / embed script + Web Component / NPM). Bring-your-own-data
-at runtime. See `CLAUDE.md` for the full product vision and rules, and `ARCHITECTURE.md` for the
-technical map.
+at runtime. See `ARCHITECTURE.md` for the technical map.
 
 ## Monorepo layout
 

@@ -12,9 +12,11 @@ from app.core.tokens import (
     create_refresh_token,
     decode_token,
 )
+from app.models.oauth_account import OAuthAccount
 from app.models.refresh_token import RefreshToken
 from app.models.user import User
 from app.schemas.auth import TokenPair
+from app.services.oauth.base import OAuthIdentity
 
 
 class AuthError(Exception):
@@ -95,3 +97,39 @@ class AuthService:
         if user is None:
             raise InvalidRefreshTokenError
         return await self.issue_tokens(user)
+
+    async def upsert_oauth_user(self, identity: OAuthIdentity) -> User:
+        account = await self._session.scalar(
+            select(OAuthAccount).where(
+                OAuthAccount.provider == identity.provider,
+                OAuthAccount.provider_user_id == identity.provider_user_id,
+            )
+        )
+        if account is not None:
+            linked = await self._session.get(User, account.user_id)
+            if linked is not None:
+                return linked
+
+        user: User | None = None
+        if identity.email is not None:
+            user = await self._session.scalar(
+                select(User).where(User.email == identity.email)
+            )
+        if user is None:
+            fallback_email = (
+                identity.email
+                or f"{identity.provider}-{identity.provider_user_id}@oauth.panelka"
+            )
+            user = User(email=fallback_email, display_name=identity.display_name)
+            self._session.add(user)
+            await self._session.flush()
+
+        self._session.add(
+            OAuthAccount(
+                user_id=user.id,
+                provider=identity.provider,
+                provider_user_id=identity.provider_user_id,
+            )
+        )
+        await self._session.flush()
+        return user

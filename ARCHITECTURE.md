@@ -64,4 +64,9 @@ reusable `UuidPkMixin` / `TimestampMixin` for future models; frontend typed API 
 Auth (0.3): `users` + `refresh_tokens` tables (UUID pks); argon2 password hashing (`core/passwords`);
 JWT access/refresh with rotation + server-side hashed-token revocation (`core/tokens`,
 `services/auth`); routes `POST /auth/register|login|refresh` and `GET /me`; Alembic migration
-`0001_auth_tables`. Next per CLAUDE.md §18 tracker.
+`0001_auth_tables`.
+
+OAuth (0.4): `oauth_accounts` table; a provider abstraction (`services/oauth/base.OAuthProvider`
+Protocol + `OAuthIdentity`) with Yandex and VK implementations behind `build_provider` registry;
+`GET /auth/oauth/{provider}/start` (state cookie + redirect) and `/callback` (exchange → upsert user
+→ issue tokens); migration `0002_oauth_accounts`. Next per CLAUDE.md §18 tracker.

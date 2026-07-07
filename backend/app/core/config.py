@@ -30,6 +30,12 @@ class Settings(BaseSettings):
     jwt_access_ttl_sec: int = 900
     jwt_refresh_ttl_sec: int = 1209600
 
+    oauth_redirect_base: str = "http://localhost:8000/api/v1/auth/oauth"
+    oauth_yandex_client_id: str = ""
+    oauth_yandex_client_secret: str = ""
+    oauth_vk_client_id: str = ""
+    oauth_vk_client_secret: str = ""
+
     @property
     def docs_enabled(self) -> bool:
         return self.environment != "production"

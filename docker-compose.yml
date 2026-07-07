@@ -16,7 +16,9 @@ services:
       - "6379:6379"
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     environment:
       PANELKA_DATABASE_URL: postgresql+asyncpg://panelka:panelka@postgres:5432/panelka
       PANELKA_REDIS_URL: redis://redis:6379/0

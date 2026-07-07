@@ -54,5 +54,6 @@ one via the `.githooks/pre-commit` hook; `Z` rolls over at 99 into `Y`, and `Y` 
 
 ## 6. Status
 
-Scaffolded: repo layout (0.1), backend base + health endpoint (0.2), frontend FSD skeleton (0.5).
-Next per CLAUDE.md §18 tracker.
+Scaffolded: repo layout (0.1), backend base + health endpoint (0.2), frontend FSD skeleton (0.5),
+version display (0.6): `GET /api/v1/version` plus a build-time `appVersion` shown on the About
+screen. Next per CLAUDE.md §18 tracker.

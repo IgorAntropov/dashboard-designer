@@ -1,6 +1,16 @@
 from functools import lru_cache
+from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+def read_version() -> str:
+    for parent in Path(__file__).resolve().parents:
+        candidate = parent / "VERSION"
+        if candidate.is_file():
+            return candidate.read_text().strip()
+    return "0.0.0"
 
 
 class Settings(BaseSettings):
@@ -9,6 +19,7 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "Panelka API"
+    app_version: str = Field(default_factory=read_version)
     environment: str = "development"
     api_v1_prefix: str = "/api/v1"
 

@@ -1,0 +1,14 @@
+.git
+.idea
+.veai
+node_modules
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+frontend
+embed
+.nuxt
+.output

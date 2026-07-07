@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     jwt_access_ttl_sec: int = 900
     jwt_refresh_ttl_sec: int = 1209600
 
+    @property
+    def docs_enabled(self) -> bool:
+        return self.environment != "production"
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -30,6 +30,13 @@ const VALUE_SCHEMA: WidgetSchema = {
 
 const VALUE_BINDING: WidgetBinding = { value: 'value' }
 
+const KPI_SCHEMA: WidgetSchema = {
+  value: { key: 'value', type: 'number', label: 'Value' },
+  delta: { key: 'delta', type: 'number', label: 'Delta %' },
+}
+
+const KPI_BINDING: WidgetBinding = { value: 'value', delta: 'delta' }
+
 const REGION_SCHEMA: WidgetSchema = {
   region: { key: 'region', type: 'string', label: 'Region' },
   value: { key: 'value', type: 'number', label: 'Value' },
@@ -103,12 +110,12 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
   },
   {
     key: 'stat-tile',
-    label: 'Stat',
+    label: 'KPI',
     category: 'kpi',
-    defaultSize: { w: 3, h: 2 },
-    defaultConfig: { title: 'Stat' },
-    defaultSchema: VALUE_SCHEMA,
-    defaultBinding: VALUE_BINDING,
+    defaultSize: { w: 3, h: 3 },
+    defaultConfig: { title: 'KPI', unit: '', period: '', info: '' },
+    defaultSchema: KPI_SCHEMA,
+    defaultBinding: KPI_BINDING,
   },
   {
     key: 'gauge',

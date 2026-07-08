@@ -25,7 +25,12 @@
     "hint": "Vyberte widget k úpravě",
     "max": "Maximum",
     "mapScope": "Rozsah mapy",
-    "mapUrl": "URL GeoJSON"
+    "mapUrl": "URL GeoJSON",
+    "unit": "Jednotka",
+    "period": "Období",
+    "info": "Popis (nápověda)",
+    "target": "Cíl",
+    "decimals": "Desetiny"
   },
   "mapScope": {
     "world": "Svět",

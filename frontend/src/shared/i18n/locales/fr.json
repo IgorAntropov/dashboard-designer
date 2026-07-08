@@ -25,7 +25,12 @@
     "hint": "Sélectionnez un widget à modifier",
     "max": "Maximum",
     "mapScope": "Étendue de la carte",
-    "mapUrl": "URL GeoJSON"
+    "mapUrl": "URL GeoJSON",
+    "unit": "Unité",
+    "period": "Période",
+    "info": "Info (infobulle)",
+    "target": "Objectif",
+    "decimals": "Décimales"
   },
   "mapScope": {
     "world": "Monde",

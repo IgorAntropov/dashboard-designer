@@ -243,3 +243,15 @@ world-country preview rows. GeoJSON is loaded at runtime (needs network in the h
 so in an offline sandbox only the pure helpers/option are unit-tested (`map.test.ts`). More detailed or
 regional maps are added by registering a scope URL or supplying a custom one. Full gap analysis toward
 reference-grade dashboards lives in `docs/gap-analysis-dashboards.md`.
+
+KPI tile 2.0 (5.4): the `stat-tile` widget was upgraded from value+label into a reference-grade KPI
+tile, still DOM-rendered in the shared core (`renderKpi`, theme colors inline so it matches editor and
+embed Shadow DOM). It shows: title + optional info tooltip (native `title` from `config.info`, i.e.
+source/methodology), a formatted value + `config.unit`, a delta badge (▲/▼ + %, green/red/neutral) from
+a bound `delta` field, a `config.period` caption, and — when `config.target` is set — a progress bar
+`value/target` with a target caption. Pure helpers live in `packages/renderer/kpi.ts`: `formatKpiValue`
+(Intl number formatting, `config.decimals`) and `deltaMeta` (arrow/color/sign), both unit-tested
+(`kpi.test.ts`). The registry gives `stat-tile` its own `{value, delta}` schema (KPI_SCHEMA) and default
+config (unit/period/info); `sampleDataFor` returns `{value, delta}`; the config panel exposes
+unit/period/info/target/decimals (`config.*`). Old `.pk-stat*` styles were replaced by `.pk-kpi*` in
+both `assets/css/theme.css` and the embed `renderer/styles.ts`.

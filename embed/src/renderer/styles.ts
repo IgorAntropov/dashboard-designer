@@ -21,9 +21,19 @@ export const ENGINE_CSS = `
   overflow: hidden;
   box-sizing: border-box;
 }
-.pk-stat { display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 4px 8px; }
-.pk-stat__value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
-.pk-stat__label { color: var(--pk-muted, #6b7280); font-size: 0.85rem; }
+.pk-kpi { display: flex; flex-direction: column; justify-content: center; gap: 4px; height: 100%; padding: 6px 10px; }
+.pk-kpi__head { display: flex; align-items: center; gap: 6px; }
+.pk-kpi__title { font-size: 0.85rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pk-kpi__info { flex: 0 0 auto; width: 15px; height: 15px; border: 1px solid; border-radius: 50%; font-size: 0.62rem; font-style: italic; font-weight: 700; line-height: 13px; text-align: center; cursor: help; }
+.pk-kpi__valueRow { display: flex; align-items: baseline; gap: 5px; }
+.pk-kpi__value { font-size: 1.8rem; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.pk-kpi__unit { font-size: 0.8rem; }
+.pk-kpi__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pk-kpi__delta { font-size: 0.8rem; font-weight: 600; }
+.pk-kpi__period { font-size: 0.75rem; }
+.pk-kpi__track { width: 100%; height: 6px; margin-top: 2px; border-radius: 999px; background-color: rgba(128,128,128,0.22); overflow: hidden; }
+.pk-kpi__bar { height: 100%; border-radius: 999px; }
+.pk-kpi__target { font-size: 0.72rem; }
 .pk-text { height: 100%; display: flex; align-items: center; padding: 4px 8px; }
 .pk-progress { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; padding: 4px 8px; }
 .pk-progress__label { font-size: 0.85rem; }

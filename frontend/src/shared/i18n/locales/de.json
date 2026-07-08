@@ -25,7 +25,12 @@
     "hint": "Wähle ein Widget zum Bearbeiten",
     "max": "Maximum",
     "mapScope": "Kartenbereich",
-    "mapUrl": "GeoJSON-URL"
+    "mapUrl": "GeoJSON-URL",
+    "unit": "Einheit",
+    "period": "Zeitraum",
+    "info": "Info (Tooltip)",
+    "target": "Ziel",
+    "decimals": "Dezimalen"
   },
   "mapScope": {
     "world": "Welt",

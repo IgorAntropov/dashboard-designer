@@ -25,7 +25,12 @@
     "hint": "Select a widget to edit",
     "max": "Maximum",
     "mapScope": "Map scope",
-    "mapUrl": "GeoJSON URL"
+    "mapUrl": "GeoJSON URL",
+    "unit": "Unit",
+    "period": "Period",
+    "info": "Info (tooltip)",
+    "target": "Target",
+    "decimals": "Decimals"
   },
   "mapScope": {
     "world": "World",

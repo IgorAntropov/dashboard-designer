@@ -25,7 +25,12 @@
     "hint": "Wybierz widżet do edycji",
     "max": "Maksimum",
     "mapScope": "Zasięg mapy",
-    "mapUrl": "URL GeoJSON"
+    "mapUrl": "URL GeoJSON",
+    "unit": "Jednostka",
+    "period": "Okres",
+    "info": "Opis (dymek)",
+    "target": "Cel",
+    "decimals": "Miejsca dz."
   },
   "mapScope": {
     "world": "Świat",

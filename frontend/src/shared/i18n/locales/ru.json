@@ -25,7 +25,12 @@
     "hint": "Выберите виджет для настройки",
     "max": "Максимум",
     "mapScope": "Охват карты",
-    "mapUrl": "URL GeoJSON"
+    "mapUrl": "URL GeoJSON",
+    "unit": "Единица",
+    "period": "Период",
+    "info": "Описание (тултип)",
+    "target": "Цель",
+    "decimals": "Знаки"
   },
   "mapScope": {
     "world": "Мир",

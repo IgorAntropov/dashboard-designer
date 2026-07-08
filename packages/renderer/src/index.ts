@@ -1,11 +1,13 @@
 import * as echarts from 'echarts'
 
+import { deltaMeta, formatKpiValue } from './kpi'
 import { buildGeoOption, ensureMap, mapNameForUrl } from './map'
 import { mapUrlFor } from './maps/scopes'
 import { buildChartOption } from './option'
 import type { RenderInput, WidgetHandle } from './types'
 
 export type { RenderInput, RenderTheme, WidgetHandle } from './types'
+export { formatKpiValue, deltaMeta } from './kpi'
 export {
   resolvePoints,
   resolveRegions,
@@ -28,23 +30,113 @@ const CHART_TYPES = new Set([
   'gauge',
 ])
 
-function renderStat(el: HTMLElement, input: RenderInput): void {
+function textConfig(input: RenderInput, key: string): string {
+  const value = input.config[key]
+  return typeof value === 'string' ? value : ''
+}
+
+function renderKpi(el: HTMLElement, input: RenderInput): void {
   const valueKey = input.binding.value ?? 'value'
+  const deltaKey = input.binding.delta ?? 'delta'
   const first = input.data[0]
+  const decimals =
+    typeof input.config.decimals === 'number' ? input.config.decimals : undefined
+  const rawValue = first != null ? Number(first[valueKey] ?? 0) : null
+  const rawDelta =
+    first != null && first[deltaKey] != null && first[deltaKey] !== ''
+      ? Number(first[deltaKey])
+      : null
+  const unit = textConfig(input, 'unit')
+  const period = textConfig(input, 'period')
+  const info = textConfig(input, 'info')
+  const title = textConfig(input, 'title')
+  const target =
+    typeof input.config.target === 'number' && input.config.target > 0
+      ? input.config.target
+      : null
 
   el.replaceChildren()
   const wrap = document.createElement('div')
-  wrap.className = 'pk-stat'
+  wrap.className = 'pk-kpi'
 
-  const value = document.createElement('div')
-  value.className = 'pk-stat__value'
-  value.textContent = first ? String(first[valueKey] ?? '') : '—'
+  if (title || info) {
+    const head = document.createElement('div')
+    head.className = 'pk-kpi__head'
+    const titleEl = document.createElement('span')
+    titleEl.className = 'pk-kpi__title'
+    titleEl.style.color = input.theme.colorMuted
+    titleEl.textContent = title
+    head.append(titleEl)
+    if (info) {
+      const infoEl = document.createElement('span')
+      infoEl.className = 'pk-kpi__info'
+      infoEl.textContent = 'i'
+      infoEl.title = info
+      infoEl.style.borderColor = input.theme.colorMuted
+      infoEl.style.color = input.theme.colorMuted
+      head.append(infoEl)
+    }
+    wrap.append(head)
+  }
 
-  const label = document.createElement('div')
-  label.className = 'pk-stat__label'
-  label.textContent = typeof input.config.title === 'string' ? input.config.title : ''
+  const valueRow = document.createElement('div')
+  valueRow.className = 'pk-kpi__valueRow'
+  const valueEl = document.createElement('span')
+  valueEl.className = 'pk-kpi__value'
+  valueEl.style.color = input.theme.colorText
+  valueEl.textContent =
+    rawValue != null && Number.isFinite(rawValue)
+      ? formatKpiValue(rawValue, decimals)
+      : '—'
+  valueRow.append(valueEl)
+  if (unit) {
+    const unitEl = document.createElement('span')
+    unitEl.className = 'pk-kpi__unit'
+    unitEl.style.color = input.theme.colorMuted
+    unitEl.textContent = unit
+    valueRow.append(unitEl)
+  }
+  wrap.append(valueRow)
 
-  wrap.append(value, label)
+  const meta = document.createElement('div')
+  meta.className = 'pk-kpi__meta'
+  if (rawDelta != null && Number.isFinite(rawDelta)) {
+    const delta = deltaMeta(rawDelta, input.theme)
+    const badge = document.createElement('span')
+    badge.className = 'pk-kpi__delta'
+    badge.style.color = delta.color
+    badge.textContent = `${delta.arrow} ${delta.text}`
+    meta.append(badge)
+  }
+  if (period) {
+    const periodEl = document.createElement('span')
+    periodEl.className = 'pk-kpi__period'
+    periodEl.style.color = input.theme.colorMuted
+    periodEl.textContent = period
+    meta.append(periodEl)
+  }
+  if (meta.childNodes.length > 0) {
+    wrap.append(meta)
+  }
+
+  if (target != null && rawValue != null && Number.isFinite(rawValue)) {
+    const pct = Math.max(0, Math.min(100, (rawValue / target) * 100))
+    const track = document.createElement('div')
+    track.className = 'pk-kpi__track'
+    const bar = document.createElement('div')
+    bar.className = 'pk-kpi__bar'
+    bar.style.width = `${pct}%`
+    bar.style.backgroundColor = input.theme.colorAccent
+    track.append(bar)
+    wrap.append(track)
+
+    const caption = document.createElement('div')
+    caption.className = 'pk-kpi__target'
+    caption.style.color = input.theme.colorMuted
+    caption.textContent = `${formatKpiValue(target, decimals)}${unit ? ` ${unit}` : ''}`
+    wrap.append(caption)
+  }
+
   el.append(wrap)
 }
 
@@ -99,7 +191,7 @@ const DOM_RENDERERS: Record<
   string,
   (el: HTMLElement, input: RenderInput) => void
 > = {
-  'stat-tile': renderStat,
+  'stat-tile': renderKpi,
   progress: renderProgress,
   'text-block': renderText,
 }

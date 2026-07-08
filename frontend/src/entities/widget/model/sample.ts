@@ -1,6 +1,6 @@
 export function sampleDataFor(type: string): Array<Record<string, unknown>> {
   if (type === 'stat-tile') {
-    return [{ label: 'Total', value: 1280 }]
+    return [{ value: 1280, delta: 11.4 }]
   }
   if (type === 'gauge' || type === 'progress') {
     return [{ value: 68 }]

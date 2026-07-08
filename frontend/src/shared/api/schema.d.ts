@@ -106,7 +106,7 @@ export interface paths {
     delete: operations['delete_dashboard_api_v1_dashboards__dashboard_id__delete']
     options?: never
     head?: never
-    patch?: never
+    patch: operations['update_dashboard_api_v1_dashboards__dashboard_id__patch']
     trace?: never
   }
 }
@@ -167,6 +167,14 @@ export interface components {
       layout?: { [key: string]: unknown }
       data_bindings?: { [key: string]: unknown }
       data_source?: { [key: string]: unknown }
+    }
+    DashboardUpdate: {
+      title?: string | null
+      theme_key?: string | null
+      layout?: { [key: string]: unknown } | null
+      data_bindings?: { [key: string]: unknown } | null
+      data_source?: { [key: string]: unknown } | null
+      status?: 'draft' | 'published' | null
     }
   }
   responses: never
@@ -315,6 +323,23 @@ export interface operations {
       cookie?: never
     }
     requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['Dashboard'] }
+      }
+    }
+  }
+  update_dashboard_api_v1_dashboards__dashboard_id__patch: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody: {
+      content: { 'application/json': components['schemas']['DashboardUpdate'] }
+    }
     responses: {
       200: {
         headers: { [name: string]: unknown }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import type { SchemaField, WidgetInstance } from '@entities/widget'
 import { widgetTypeByKey } from '@entities/widget'
@@ -116,13 +116,90 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
+  const history = ref<string[]>([])
+  const historyIndex = ref(-1)
+  let applying = false
+  let historyTimer: ReturnType<typeof setTimeout> | null = null
+
+  const canUndo = computed(() => historyIndex.value > 0)
+  const canRedo = computed(
+    () => historyIndex.value < history.value.length - 1,
+  )
+
+  function snapshot(): string {
+    return JSON.stringify({ widgets: widgets.value, themeKey: themeKey.value })
+  }
+
+  function applySnapshot(snap: string): void {
+    const parsed = JSON.parse(snap) as {
+      widgets: WidgetInstance[]
+      themeKey: string
+    }
+    applying = true
+    widgets.value = parsed.widgets
+    themeKey.value = parsed.themeKey
+    selectedId.value = null
+    applying = false
+  }
+
+  function record(): void {
+    const snap = snapshot()
+    if (history.value[historyIndex.value] === snap) {
+      return
+    }
+    history.value = history.value.slice(0, historyIndex.value + 1)
+    history.value.push(snap)
+    historyIndex.value = history.value.length - 1
+  }
+
+  function undo(): void {
+    if (canUndo.value) {
+      historyIndex.value -= 1
+      applySnapshot(history.value[historyIndex.value])
+    }
+  }
+
+  function redo(): void {
+    if (canRedo.value) {
+      historyIndex.value += 1
+      applySnapshot(history.value[historyIndex.value])
+    }
+  }
+
+  function hydrate(nextWidgets: WidgetInstance[], key: string): void {
+    applying = true
+    widgets.value = nextWidgets
+    themeKey.value = key
+    selectedId.value = null
+    applying = false
+    history.value = [snapshot()]
+    historyIndex.value = 0
+  }
+
+  watch(
+    [widgets, themeKey],
+    () => {
+      if (applying) {
+        return
+      }
+      if (historyTimer) {
+        clearTimeout(historyTimer)
+      }
+      historyTimer = setTimeout(record, 400)
+    },
+    { deep: true },
+  )
+
   return {
     widgets,
     selectedId,
     selectedWidget,
     themeKey,
+    canUndo,
+    canRedo,
     setTheme,
     setWidgets,
+    hydrate,
     add,
     addAt,
     select,
@@ -130,6 +207,8 @@ export const useCanvasStore = defineStore('canvas', () => {
     updateConfig,
     updateBinding,
     updateSchemaField,
+    undo,
+    redo,
     remove,
   }
 })

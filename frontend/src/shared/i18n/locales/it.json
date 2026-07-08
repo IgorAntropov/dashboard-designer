@@ -67,7 +67,16 @@
     "cancel": "Annulla",
     "confirmDelete": "Eliminare la dashboard?"
   },
-  "editor": { "title": "Editor", "back": "Indietro", "theme": "Tema" },
+  "editor": {
+    "title": "Editor",
+    "back": "Indietro",
+    "theme": "Tema",
+    "save": "Salva",
+    "saving": "Salvataggio…",
+    "saved": "Salvato",
+    "undo": "Annulla",
+    "redo": "Ripeti"
+  },
   "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },
   "language": { "label": "Lingua" }
 }

@@ -3,6 +3,7 @@ import { api } from '@shared/api'
 
 export type Dashboard = components['schemas']['Dashboard']
 export type DashboardCreate = components['schemas']['DashboardCreate']
+export type DashboardUpdate = components['schemas']['DashboardUpdate']
 
 export async function listDashboards(): Promise<Dashboard[]> {
   const { data, error } = await api.GET('/api/v1/dashboards')
@@ -22,6 +23,17 @@ export async function createDashboard(
 export async function getDashboard(id: string): Promise<Dashboard | null> {
   const { data } = await api.GET('/api/v1/dashboards/{dashboard_id}', {
     params: { path: { dashboard_id: id } },
+  })
+  return data ?? null
+}
+
+export async function updateDashboard(
+  id: string,
+  patch: DashboardUpdate,
+): Promise<Dashboard | null> {
+  const { data } = await api.PATCH('/api/v1/dashboards/{dashboard_id}', {
+    params: { path: { dashboard_id: id } },
+    body: patch,
   })
   return data ?? null
 }

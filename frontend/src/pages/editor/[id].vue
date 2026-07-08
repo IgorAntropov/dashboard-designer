@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import type { WidgetInstance } from '@entities/widget'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import type { Dashboard } from '@entities/dashboard'
-import { getDashboard } from '@entities/dashboard'
+import { getDashboard, updateDashboard } from '@entities/dashboard'
 import { AppButton } from '@shared/ui'
 import { DashboardCanvas, useCanvasStore } from '@widgets/canvas'
 import { ConfigPanel } from '@widgets/config-panel'
@@ -17,26 +18,91 @@ const dashboardId = route.params.id as string
 const dashboard = ref<Dashboard | null>(null)
 const title = computed(() => dashboard.value?.title ?? t('editor.title'))
 
+const ready = ref(false)
+const saveState = ref<'idle' | 'saving' | 'saved'>('idle')
+let saveTimer: ReturnType<typeof setTimeout> | null = null
+
+async function save(): Promise<void> {
+  saveState.value = 'saving'
+  await updateDashboard(dashboardId, {
+    layout: { widgets: canvasStore.widgets },
+    theme_key: canvasStore.themeKey,
+  })
+  saveState.value = 'saved'
+}
+
 onMounted(async () => {
   const loaded = await getDashboard(dashboardId)
   dashboard.value = loaded
-  if (loaded) {
-    canvasStore.setTheme(loaded.theme_key)
-  }
+  const layout = (loaded?.layout ?? {}) as { widgets?: WidgetInstance[] }
+  canvasStore.hydrate(
+    Array.isArray(layout.widgets) ? layout.widgets : [],
+    loaded?.theme_key ?? 'light-minimal',
+  )
+  ready.value = true
 })
+
+watch(
+  [() => canvasStore.widgets, () => canvasStore.themeKey],
+  () => {
+    if (!ready.value) {
+      return
+    }
+    saveState.value = 'idle'
+    if (saveTimer) {
+      clearTimeout(saveTimer)
+    }
+    saveTimer = setTimeout(save, 900)
+  },
+  { deep: true },
+)
 
 useHead({ title })
 </script>
 
 <template>
   <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1 class="h4 mb-0">{{ title }}</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+      <h1 class="h4 mb-0 text-truncate">{{ title }}</h1>
+
       <div class="d-flex align-items-center gap-2">
         <ClientOnly>
+          <span
+            class="small text-muted"
+            :class="{ invisible: saveState === 'idle' }"
+          >
+            {{ saveState === 'saving' ? $t('editor.saving') : $t('editor.saved') }}
+          </span>
+
+          <AppButton
+            variant="ghost"
+            size="sm"
+            icon="undo"
+            icon-only
+            :aria-label="$t('editor.undo')"
+            :title="$t('editor.undo')"
+            :disabled="!canvasStore.canUndo"
+            @click="canvasStore.undo()"
+          />
+          <AppButton
+            variant="ghost"
+            size="sm"
+            icon="redo"
+            icon-only
+            :aria-label="$t('editor.redo')"
+            :title="$t('editor.redo')"
+            :disabled="!canvasStore.canRedo"
+            @click="canvasStore.redo()"
+          />
+
           <span class="small text-muted">{{ $t('editor.theme') }}</span>
           <ThemeSelector />
+
+          <AppButton size="sm" icon="save" @click="save">
+            {{ $t('editor.save') }}
+          </AppButton>
         </ClientOnly>
+
         <AppButton to="/dashboards" variant="secondary" size="sm" icon="back">
           {{ $t('editor.back') }}
         </AppButton>

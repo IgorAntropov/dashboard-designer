@@ -67,7 +67,16 @@
     "cancel": "Anuluj",
     "confirmDelete": "Usunąć pulpit?"
   },
-  "editor": { "title": "Edytor", "back": "Wstecz", "theme": "Motyw" },
+  "editor": {
+    "title": "Edytor",
+    "back": "Wstecz",
+    "theme": "Motyw",
+    "save": "Zapisz",
+    "saving": "Zapisywanie…",
+    "saved": "Zapisano",
+    "undo": "Cofnij",
+    "redo": "Ponów"
+  },
   "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },
   "language": { "label": "Język" }
 }

@@ -67,7 +67,16 @@
     "cancel": "Abbrechen",
     "confirmDelete": "Dashboard löschen?"
   },
-  "editor": { "title": "Editor", "back": "Zurück", "theme": "Design" },
+  "editor": {
+    "title": "Editor",
+    "back": "Zurück",
+    "theme": "Design",
+    "save": "Speichern",
+    "saving": "Speichern…",
+    "saved": "Gespeichert",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen"
+  },
   "theme": { "system": "System", "light": "Hell", "dark": "Dunkel" },
   "language": { "label": "Sprache" }
 }

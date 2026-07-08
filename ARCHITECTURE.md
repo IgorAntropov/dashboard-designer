@@ -50,6 +50,12 @@ follow it) and passes the `RenderTheme` to `WidgetView` (charts). `widgets/theme
 changes it; the editor loads it from the dashboard's `theme_key`. This dashboard theme is independent
 from the app's light/dark color-mode.
 
+Autosave (1.7): the editor hydrates the canvas store from `dashboard.layout.widgets` + `theme_key`,
+then a debounced watch persists `{ layout: { widgets }, theme_key }` via `PATCH /dashboards/{id}`
+(with an explicit Save button and a saving/saved indicator). The store keeps a debounced JSON history
+(`hydrate`/`record`/`undo`/`redo`, `canUndo`/`canRedo`) so structural edits and settled typing collapse
+into undoable steps. This closes Phase 1 (Editor MVP).
+
 ## 3. Data / contract flow
 
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in

@@ -67,7 +67,16 @@
     "cancel": "Cancel",
     "confirmDelete": "Delete dashboard?"
   },
-  "editor": { "title": "Editor", "back": "Back", "theme": "Theme" },
+  "editor": {
+    "title": "Editor",
+    "back": "Back",
+    "theme": "Theme",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "undo": "Undo",
+    "redo": "Redo"
+  },
   "theme": { "system": "System", "light": "Light", "dark": "Dark" },
   "language": { "label": "Language" }
 }

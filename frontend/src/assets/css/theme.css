@@ -151,6 +151,35 @@ body {
   font-weight: 600;
 }
 
+.pk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.pk-btn__icon,
+.app-icon {
+  width: 1.05em;
+  height: 1.05em;
+  flex: 0 0 auto;
+}
+
+.pk-btn--icon {
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+}
+
+.pk-btn--ghost {
+  color: var(--pk-text);
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.pk-btn--ghost:hover {
+  background-color: color-mix(in srgb, var(--pk-accent) 14%, transparent);
+}
+
 .btn-primary {
   --bs-btn-bg: var(--pk-accent);
   --bs-btn-border-color: var(--pk-accent);

@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { PasswordField } from '@shared/ui'
+import { AppButton, PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 

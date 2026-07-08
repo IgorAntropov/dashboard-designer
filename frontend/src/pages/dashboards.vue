@@ -7,6 +7,7 @@ import {
   deleteDashboard,
   listDashboards,
 } from '@entities/dashboard'
+import { AppButton } from '@shared/ui'
 
 const dashboards = ref<Dashboard[]>([])
 const newTitle = ref('')
@@ -53,9 +54,9 @@ useHead({ title: computed(() => t('dashboards.title')) })
         >
         <label for="dashboard-title">{{ $t('dashboards.placeholder') }}</label>
       </div>
-      <button class="btn btn-primary" type="submit">
+      <AppButton type="submit" icon="plus">
         {{ $t('dashboards.create') }}
-      </button>
+      </AppButton>
     </form>
 
     <p v-if="loading">{{ $t('dashboards.loading') }}</p>
@@ -70,19 +71,23 @@ useHead({ title: computed(() => t('dashboards.title')) })
       >
         <span>{{ dashboard.title }}</span>
         <span class="d-flex gap-2">
-          <NuxtLink
-            class="btn btn-sm btn-outline-primary"
+          <AppButton
             :to="`/editor/${dashboard.id}`"
+            variant="secondary"
+            size="sm"
+            icon="open"
           >
             {{ $t('dashboards.open') }}
-          </NuxtLink>
-          <button
-            class="btn btn-sm btn-outline-danger"
-            type="button"
+          </AppButton>
+          <AppButton
+            variant="danger"
+            size="sm"
+            icon="trash"
+            icon-only
+            :aria-label="$t('dashboards.delete')"
+            :title="$t('dashboards.delete')"
             @click="onDelete(dashboard.id)"
-          >
-            {{ $t('dashboards.delete') }}
-          </button>
+          />
         </span>
       </li>
     </ul>

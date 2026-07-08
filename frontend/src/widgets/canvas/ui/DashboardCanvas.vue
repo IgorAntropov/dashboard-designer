@@ -2,6 +2,8 @@
 import type { GridStack, GridStackNode } from 'gridstack'
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
+import { AppButton } from '@shared/ui'
+
 import { useCanvasStore } from '../model/store'
 
 const store = useCanvasStore()
@@ -108,13 +110,14 @@ function onRemove(id: string): void {
         class="grid-stack-item-content border rounded bg-white p-2 d-flex justify-content-between align-items-start"
       >
         <span class="small text-muted">{{ widget.type }}</span>
-        <button
-          class="btn btn-sm btn-outline-danger py-0"
-          type="button"
+        <AppButton
+          variant="danger"
+          size="sm"
+          icon="trash"
+          icon-only
+          aria-label="delete"
           @click="onRemove(widget.id)"
-        >
-          ×
-        </button>
+        />
       </div>
     </div>
   </div>

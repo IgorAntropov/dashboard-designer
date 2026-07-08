@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DashboardCanvas } from '@widgets/canvas'
 import { WidgetPalette } from '@widgets/palette'
+import { AppButton } from '@shared/ui'
 
 const route = useRoute()
 const dashboardId = route.params.id as string
@@ -12,9 +13,9 @@ useHead({ title: 'Panelka — Editor' })
   <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h1 class="h4 mb-0">{{ $t('editor.title') }}</h1>
-      <NuxtLink class="btn btn-sm btn-outline-secondary" to="/dashboards">
+      <AppButton to="/dashboards" variant="secondary" size="sm" icon="back">
         {{ $t('editor.back') }}
-      </NuxtLink>
+      </AppButton>
     </div>
     <p class="text-muted small">{{ dashboardId }}</p>
 

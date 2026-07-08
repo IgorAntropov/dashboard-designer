@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { PasswordField } from '@shared/ui'
+import { AppButton, PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
@@ -54,9 +54,9 @@ useHead({ title: computed(() => t('auth.loginTitle')) })
 
         <p v-if="failed" class="text-danger small">{{ $t('auth.failed') }}</p>
 
-        <button class="btn btn-primary w-100" type="submit" :disabled="pending">
+        <AppButton type="submit" block :disabled="pending">
           {{ $t('auth.login') }}
-        </button>
+        </AppButton>
       </form>
 
       <p class="mt-3 mb-0 small text-center">

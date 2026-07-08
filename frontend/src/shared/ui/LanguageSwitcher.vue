@@ -17,6 +17,34 @@ const flags: Record<string, string> = {
 const localeList = computed(() => locales.value as LocaleObject[])
 const open = ref(false)
 const root = ref<HTMLElement | null>(null)
+const trigger = ref<HTMLElement | null>(null)
+const menuStyle = ref<Record<string, string>>({})
+
+function place(): void {
+  const rect = trigger.value?.getBoundingClientRect()
+  if (!rect) {
+    return
+  }
+  const style: Record<string, string> = { position: 'fixed' }
+  if (rect.top > window.innerHeight / 2) {
+    style.bottom = `${window.innerHeight - rect.top + 6}px`
+  } else {
+    style.top = `${rect.bottom + 6}px`
+  }
+  if (rect.left > window.innerWidth / 2) {
+    style.right = `${window.innerWidth - rect.right}px`
+  } else {
+    style.left = `${rect.left}px`
+  }
+  menuStyle.value = style
+}
+
+function toggle(): void {
+  if (!open.value) {
+    place()
+  }
+  open.value = !open.value
+}
 
 function select(code: string): void {
   setLocale(code)
@@ -36,17 +64,18 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick))
 <template>
   <div ref="root" class="lang-switch">
     <button
+      ref="trigger"
       type="button"
       class="lang-switch__btn"
       :aria-label="$t('language.label')"
       :aria-expanded="open"
-      @click="open = !open"
+      @click="toggle"
     >
       <span class="lang-switch__flag">{{ flags[locale] }}</span>
       <span class="lang-switch__caret" aria-hidden="true">▾</span>
     </button>
 
-    <ul v-if="open" class="lang-switch__menu">
+    <ul v-if="open" class="lang-switch__menu" :style="menuStyle">
       <li v-for="item in localeList" :key="item.code">
         <button
           type="button"

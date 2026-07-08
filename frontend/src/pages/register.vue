@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
+import { PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
@@ -57,18 +58,12 @@ useHead({ title: 'Panelka — Register' })
           <label for="register-email">{{ $t('auth.email') }}</label>
         </div>
 
-        <div class="form-floating mb-3">
-          <input
-            id="register-password"
-            v-model="password"
-            type="password"
-            class="form-control"
-            :placeholder="$t('auth.password')"
-            minlength="8"
-            required
-          >
-          <label for="register-password">{{ $t('auth.password') }}</label>
-        </div>
+        <PasswordField
+          id="register-password"
+          v-model="password"
+          :label="$t('auth.password')"
+          :minlength="8"
+        />
 
         <p v-if="failed" class="text-danger small">{{ $t('auth.failed') }}</p>
 

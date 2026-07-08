@@ -85,10 +85,28 @@ body {
   color: var(--pk-muted);
 }
 
-.lang-switch__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 1040;
+.pk-password .form-control {
+  padding-right: 3rem;
+}
+
+.pk-password__toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 2.85rem;
+  border: none;
+  background: transparent;
+  color: var(--pk-muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: color 0.15s ease;
+}
+
+.pk-password__toggle:hover {
+  color: var(--pk-text);
 }
 
 .lang-switch__menu {

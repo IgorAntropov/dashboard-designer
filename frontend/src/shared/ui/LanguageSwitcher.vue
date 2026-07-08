@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LocaleObject } from '@nuxtjs/i18n'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const { locale, locales, setLocale } = useI18n()
 
@@ -16,15 +16,25 @@ const flags: Record<string, string> = {
 
 const localeList = computed(() => locales.value as LocaleObject[])
 const open = ref(false)
+const root = ref<HTMLElement | null>(null)
 
 function select(code: string): void {
   setLocale(code)
   open.value = false
 }
+
+function onDocumentClick(event: MouseEvent): void {
+  if (open.value && root.value && !root.value.contains(event.target as Node)) {
+    open.value = false
+  }
+}
+
+onMounted(() => document.addEventListener('click', onDocumentClick))
+onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick))
 </script>
 
 <template>
-  <div class="lang-switch">
+  <div ref="root" class="lang-switch">
     <button
       type="button"
       class="lang-switch__btn"
@@ -35,8 +45,6 @@ function select(code: string): void {
       <span class="lang-switch__flag">{{ flags[locale] }}</span>
       <span class="lang-switch__caret" aria-hidden="true">▾</span>
     </button>
-
-    <div v-if="open" class="lang-switch__backdrop" @click="open = false" />
 
     <ul v-if="open" class="lang-switch__menu">
       <li v-for="item in localeList" :key="item.code">

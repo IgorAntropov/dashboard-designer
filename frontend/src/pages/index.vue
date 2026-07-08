@@ -17,11 +17,11 @@ useHead({ title: 'Panelka' })
     <p class="lead">{{ $t('landing.subtitle') }}</p>
 
     <div class="d-flex gap-2 mt-4">
-      <NuxtLink class="btn btn-primary" to="/dashboards">
+      <NuxtLink class="btn btn-primary" to="/register">
         {{ $t('landing.getStarted') }}
       </NuxtLink>
-      <NuxtLink class="btn btn-outline-secondary" to="/settings">
-        {{ $t('landing.settings') }}
+      <NuxtLink class="btn btn-outline-secondary" to="/login">
+        {{ $t('auth.login') }}
       </NuxtLink>
     </div>
   </main>

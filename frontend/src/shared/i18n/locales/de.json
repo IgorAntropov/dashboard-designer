@@ -1,9 +1,25 @@
 {
-  "nav": { "dashboards": "Dashboards", "settings": "Einstellungen" },
+  "nav": {
+    "dashboards": "Dashboards",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
   "landing": {
     "subtitle": "Erstelle Dashboards, gestalte sie und binde sie überall ein.",
     "getStarted": "Loslegen",
     "settings": "Einstellungen"
+  },
+  "auth": {
+    "loginTitle": "Anmelden",
+    "registerTitle": "Konto erstellen",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "displayName": "Name",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "noAccount": "Kein Konto?",
+    "haveAccount": "Schon ein Konto?",
+    "failed": "Fehlgeschlagen. Prüfe deine Angaben."
   },
   "settings": {
     "title": "Einstellungen",

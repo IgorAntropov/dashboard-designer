@@ -91,3 +91,10 @@ UX foundation (1.2b): `@nuxtjs/i18n` with 7 locales (ru default, en/de/pl/cs/fr/
 `data-bs-theme` in `app.vue`; design tokens in `assets/css/theme.css` (neutral base + yellow accent);
 a right-anchored app-shell `layouts/default.vue` with nav + `shared/ui` `ThemeToggle`/`LanguageSwitcher`;
 landing/auth use `layouts/blank.vue`; page transitions enabled. Locale choice persists via a cookie.
+
+Auth UI (1.2c): `entities/session` Pinia store holds the current user + access/refresh tokens (cookies),
+with `login`/`register`/`logout`/`refresh`/`init`; a client plugin runs `init()` on startup and the
+shared api middleware attaches the access token. `login`/`register` pages (blank layout) call the typed
+endpoints; a global `auth.global` middleware redirects unauthenticated users to `/login` and authed
+users away from auth pages, so the right-side nav (with user email + logout) is only reached after
+sign-in. FIXME: move the refresh token to a backend-set httpOnly cookie to reduce XSS exposure.

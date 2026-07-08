@@ -1,9 +1,21 @@
 {
-  "nav": { "dashboards": "Дашборды", "settings": "Настройки" },
+  "nav": { "dashboards": "Дашборды", "settings": "Настройки", "logout": "Выйти" },
   "landing": {
     "subtitle": "Собирайте дашборды, оформляйте и встраивайте куда угодно.",
     "getStarted": "Начать",
     "settings": "Настройки"
+  },
+  "auth": {
+    "loginTitle": "Вход",
+    "registerTitle": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "displayName": "Имя",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "failed": "Не удалось. Проверьте данные."
   },
   "settings": {
     "title": "Настройки",

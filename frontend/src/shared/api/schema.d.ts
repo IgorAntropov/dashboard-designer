@@ -1,11 +1,6 @@
 export interface paths {
   '/api/v1/health': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['health_api_v1_health_get']
     put?: never
     post?: never
@@ -16,12 +11,7 @@ export interface paths {
     trace?: never
   }
   '/api/v1/version': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['version_api_v1_version_get']
     put?: never
     post?: never
@@ -31,13 +21,52 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/auth/register': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['register_api_v1_auth_register_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/v1/auth/login': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['login_api_v1_auth_login_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/v1/auth/refresh': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['refresh_api_v1_auth_refresh_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/v1/me': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get: operations['me_api_v1_me_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/dashboards': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['list_dashboards_api_v1_dashboards_get']
     put?: never
     post: operations['create_dashboard_api_v1_dashboards_post']
@@ -48,12 +77,7 @@ export interface paths {
     trace?: never
   }
   '/api/v1/dashboards/{dashboard_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get?: never
     put?: never
     post?: never
@@ -69,20 +93,38 @@ export type webhooks = Record<string, never>
 
 export interface components {
   schemas: {
+    SubscriptionTier: 'free' | 'pro' | 'unlimited'
+    UserOut: {
+      id: string
+      email: string
+      display_name: string
+      subscription_tier: components['schemas']['SubscriptionTier']
+    }
+    TokenPair: {
+      access_token: string
+      refresh_token: string
+      token_type: string
+    }
+    RegisterRequest: {
+      email: string
+      password: string
+      display_name: string
+    }
+    LoginRequest: {
+      email: string
+      password: string
+    }
+    RefreshRequest: {
+      refresh_token: string
+    }
     Dashboard: {
       id: string
       title: string
       slug: string
       theme_key: string
-      layout: {
-        [key: string]: unknown
-      }
-      data_bindings: {
-        [key: string]: unknown
-      }
-      data_source: {
-        [key: string]: unknown
-      }
+      layout: { [key: string]: unknown }
+      data_bindings: { [key: string]: unknown }
+      data_source: { [key: string]: unknown }
       status: 'draft' | 'published'
       created_at: string
       updated_at: string
@@ -90,15 +132,9 @@ export interface components {
     DashboardCreate: {
       title: string
       theme_key?: string
-      layout?: {
-        [key: string]: unknown
-      }
-      data_bindings?: {
-        [key: string]: unknown
-      }
-      data_source?: {
-        [key: string]: unknown
-      }
+      layout?: { [key: string]: unknown }
+      data_bindings?: { [key: string]: unknown }
+      data_source?: { [key: string]: unknown }
     }
   }
   responses: never
@@ -112,60 +148,77 @@ export type $defs = Record<string, never>
 
 export interface operations {
   health_api_v1_health_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     requestBody?: never
     responses: {
       200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': {
-            [key: string]: string
-          }
-        }
+        headers: { [name: string]: unknown }
+        content: { 'application/json': { [key: string]: string } }
       }
     }
   }
   version_api_v1_version_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     requestBody?: never
     responses: {
       200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': {
-            [key: string]: string
-          }
-        }
+        headers: { [name: string]: unknown }
+        content: { 'application/json': { [key: string]: string } }
+      }
+    }
+  }
+  register_api_v1_auth_register_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['RegisterRequest'] }
+    }
+    responses: {
+      201: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserOut'] }
+      }
+    }
+  }
+  login_api_v1_auth_login_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['LoginRequest'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['TokenPair'] }
+      }
+    }
+  }
+  refresh_api_v1_auth_refresh_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['RefreshRequest'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['TokenPair'] }
+      }
+    }
+  }
+  me_api_v1_me_get: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserOut'] }
       }
     }
   }
   list_dashboards_api_v1_dashboards_get: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     requestBody?: never
     responses: {
       200: {
-        headers: {
-          [name: string]: unknown
-        }
+        headers: { [name: string]: unknown }
         content: {
           'application/json': components['schemas']['Dashboard'][]
         }
@@ -173,25 +226,14 @@ export interface operations {
     }
   }
   create_dashboard_api_v1_dashboards_post: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
     requestBody: {
-      content: {
-        'application/json': components['schemas']['DashboardCreate']
-      }
+      content: { 'application/json': components['schemas']['DashboardCreate'] }
     }
     responses: {
       201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['Dashboard']
-        }
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['Dashboard'] }
       }
     }
   }
@@ -199,17 +241,13 @@ export interface operations {
     parameters: {
       query?: never
       header?: never
-      path: {
-        dashboard_id: string
-      }
+      path: { dashboard_id: string }
       cookie?: never
     }
     requestBody?: never
     responses: {
       204: {
-        headers: {
-          [name: string]: unknown
-        }
+        headers: { [name: string]: unknown }
         content?: never
       }
     }

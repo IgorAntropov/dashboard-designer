@@ -1,9 +1,21 @@
 {
-  "nav": { "dashboards": "Pulpity", "settings": "Ustawienia" },
+  "nav": { "dashboards": "Pulpity", "settings": "Ustawienia", "logout": "Wyloguj" },
   "landing": {
     "subtitle": "Twórz pulpity, nadawaj im styl i osadzaj je wszędzie.",
     "getStarted": "Zaczynaj",
     "settings": "Ustawienia"
+  },
+  "auth": {
+    "loginTitle": "Zaloguj się",
+    "registerTitle": "Utwórz konto",
+    "email": "E-mail",
+    "password": "Hasło",
+    "displayName": "Imię",
+    "login": "Zaloguj",
+    "register": "Zarejestruj",
+    "noAccount": "Nie masz konta?",
+    "haveAccount": "Masz już konto?",
+    "failed": "Niepowodzenie. Sprawdź dane."
   },
   "settings": {
     "title": "Ustawienia",

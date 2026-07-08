@@ -1,9 +1,21 @@
 {
-  "nav": { "dashboards": "Dashboards", "settings": "Settings" },
+  "nav": { "dashboards": "Dashboards", "settings": "Settings", "logout": "Log out" },
   "landing": {
     "subtitle": "Build dashboards, theme them, and embed them anywhere.",
     "getStarted": "Get started",
     "settings": "Settings"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "registerTitle": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "displayName": "Name",
+    "login": "Sign in",
+    "register": "Sign up",
+    "noAccount": "No account?",
+    "haveAccount": "Already have an account?",
+    "failed": "Failed. Check your details."
   },
   "settings": {
     "title": "Settings",

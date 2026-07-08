@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { useSessionStore } from '@entities/session'
 import { LanguageSwitcher, ThemeToggle } from '@shared/ui'
+
+const session = useSessionStore()
+
+async function onLogout(): Promise<void> {
+  session.logout()
+  await navigateTo('/')
+}
 </script>
 
 <template>
@@ -23,8 +31,18 @@ import { LanguageSwitcher, ThemeToggle } from '@shared/ui'
       </nav>
 
       <div class="app-nav__tools">
+        <p v-if="session.user" class="small text-muted mb-1 text-truncate">
+          {{ session.user.email }}
+        </p>
         <LanguageSwitcher />
         <ThemeToggle />
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          type="button"
+          @click="onLogout"
+        >
+          {{ $t('nav.logout') }}
+        </button>
       </div>
     </aside>
   </div>

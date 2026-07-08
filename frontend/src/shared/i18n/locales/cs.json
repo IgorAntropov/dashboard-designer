@@ -1,9 +1,25 @@
 {
-  "nav": { "dashboards": "Dashboardy", "settings": "Nastavení" },
+  "nav": {
+    "dashboards": "Dashboardy",
+    "settings": "Nastavení",
+    "logout": "Odhlásit"
+  },
   "landing": {
     "subtitle": "Tvořte dashboardy, stylujte je a vkládejte je kamkoli.",
     "getStarted": "Začít",
     "settings": "Nastavení"
+  },
+  "auth": {
+    "loginTitle": "Přihlásit se",
+    "registerTitle": "Vytvořit účet",
+    "email": "E-mail",
+    "password": "Heslo",
+    "displayName": "Jméno",
+    "login": "Přihlásit",
+    "register": "Registrovat",
+    "noAccount": "Nemáte účet?",
+    "haveAccount": "Už máte účet?",
+    "failed": "Nezdařilo se. Zkontrolujte údaje."
   },
   "settings": {
     "title": "Nastavení",

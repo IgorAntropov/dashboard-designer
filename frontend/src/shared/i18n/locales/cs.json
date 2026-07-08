@@ -29,9 +29,81 @@
     "kickedMessage": "Někdo se přihlásil k vašemu účtu na jiném zařízení."
   },
   "landing": {
-    "subtitle": "Tvořte dashboardy, stylujte je a vkládejte je kamkoli.",
-    "getStarted": "Začít",
-    "settings": "Nastavení"
+    "nav": {
+      "features": "Funkce",
+      "how": "Jak to funguje",
+      "pricing": "Ceník",
+      "login": "Přihlásit se",
+      "start": "Začít",
+      "app": "Moje dashboardy"
+    },
+    "hero": {
+      "badge": "No-code tvůrce dashboardů",
+      "title": "Stavějte dashboardy. Vložte je kamkoli.",
+      "subtitle": "Skládejte dashboardy z widgetů přetažením, nastavte schéma dat, vyberte motiv — a vložte je do své aplikace bez UI kódu.",
+      "primary": "Začít zdarma",
+      "secondary": "Přihlásit se",
+      "note": "Bez karty. Bezplatný tarif navždy."
+    },
+    "demo": {
+      "title": "Přehled prodejů",
+      "revenue": "Tržby",
+      "users": "Uživatelé",
+      "growth": "Růst",
+      "live": "Živě"
+    },
+    "features": {
+      "title": "Vše pro analytiku",
+      "subtitle": "Od prvního widgetu po publikovaný dashboard ve vaší aplikaci.",
+      "builderTitle": "Vizuální editor",
+      "builderText": "Přetahujte widgety na plátno, posouvejte a měňte velikost. Bez kódu.",
+      "dataTitle": "Vaše data",
+      "dataText": "Každý widget definuje schéma dat — předejte své pole za běhu.",
+      "embedTitle": "Vložení kamkoli",
+      "embedText": "iframe, skript nebo web component. Jeden dashboard, tři způsoby.",
+      "themesTitle": "Motivy a realtime",
+      "themesText": "Pět hotových motivů a živé aktualizace přes WebSocket ihned."
+    },
+    "how": {
+      "title": "Tři kroky k živému dashboardu",
+      "subtitle": "Od nápadu k vložení během minut.",
+      "step1Title": "Sestavte",
+      "step1Text": "Vyberte widgety z palety a rozmístěte je na plátno.",
+      "step2Title": "Nastavte",
+      "step2Text": "Určete schéma dat, namapujte svá pole a vyberte motiv.",
+      "step3Title": "Vložte",
+      "step3Text": "Publikujte a vložte snippet — data předáváte za běhu."
+    },
+    "pricing": {
+      "title": "Jednoduché ceny",
+      "subtitle": "Začněte zdarma, upgradujte při růstu.",
+      "month": "/měs.",
+      "free": "Zdarma",
+      "popular": "Oblíbené",
+      "choose": "Vybrat",
+      "start": "Začít",
+      "freeF1": "1 dashboard",
+      "freeF2": "Až 5 widgetů",
+      "freeF3": "5 motivů",
+      "freeF4": "Vložení",
+      "proF1": "3 dashboardy",
+      "proF2": "Neomezené widgety",
+      "proF3": "Export",
+      "proF4": "Všechny způsoby vložení",
+      "unlimitedF1": "Neomezené dashboardy",
+      "unlimitedF2": "Vlastní motivy",
+      "unlimitedF3": "Export",
+      "unlimitedF4": "Odebrat atribuci"
+    },
+    "cta": {
+      "title": "Připraveni na první dashboard?",
+      "subtitle": "Bezplatný tarif, bez karty.",
+      "button": "Začít zdarma"
+    },
+    "footer": {
+      "tagline": "Tvůrce dashboardů a vložitelná analytika.",
+      "rights": "Všechna práva vyhrazena."
+    }
   },
   "auth": {
     "loginTitle": "Přihlásit se",

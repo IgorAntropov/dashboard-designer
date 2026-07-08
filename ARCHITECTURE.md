@@ -172,3 +172,16 @@ refresh, retries idempotent requests, and on refresh failure logs out and redire
 `GET /api/v1/ws/session?token=` — an in-memory `SessionConnectionManager` keeps one live socket per
 user and, on a new login, sends `{"type":"kicked"}` to the previous socket and closes it; the client
 shows a modal and logs out. (In-memory is per-process — production scales this via Redis pub/sub, §9.4.)
+
+Landing (5.1): the public marketing page (`pages/index.vue`, `layout: false`) is composed from a
+`widgets/landing` FSD slice with a single public `index.ts`. Sections: `LandingHeader` (sticky, glass
+blur, session-aware CTA — "My dashboards" when authenticated, else login/start), `LandingHero`
+(parallax hero driven by a `lib/useScrollY` composable, with `HeroChart` — a pure CSS/SVG animated
+dashboard mock: staggered rising bars, an SVG area line drawn via `stroke-dashoffset`, a donut gauge,
+and rAF count-up stat tiles), `LandingFeatures`, `LandingHow` (3-step use case), `LandingPricing`
+(Free/Pro/Unlimited cards mirroring §10 tiers and the `490/990 ₽` plan prices; CTA routes to
+`/profile` when authenticated, else `/register`), `LandingCta`, `LandingFooter`. Scroll-reveal uses a
+shared `lib/useReveal` IntersectionObserver composable; anchor nav relies on `scroll-padding-top` +
+`scroll-behavior: smooth` (both disabled under `prefers-reduced-motion`). All copy is i18n-driven under
+the `landing.*` namespace across the 7 locales; styling is scoped per component on `--pk-*` tokens so
+light/dark themes cascade. The old `blank` layout still serves auth pages.

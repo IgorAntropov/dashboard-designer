@@ -1,0 +1,7 @@
+export { default as LandingHeader } from './ui/LandingHeader.vue'
+export { default as LandingHero } from './ui/LandingHero.vue'
+export { default as LandingFeatures } from './ui/LandingFeatures.vue'
+export { default as LandingHow } from './ui/LandingHow.vue'
+export { default as LandingPricing } from './ui/LandingPricing.vue'
+export { default as LandingCta } from './ui/LandingCta.vue'
+export { default as LandingFooter } from './ui/LandingFooter.vue'

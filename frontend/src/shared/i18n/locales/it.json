@@ -29,9 +29,81 @@
     "kickedMessage": "Qualcuno ha effettuato l'accesso al tuo account su un altro dispositivo."
   },
   "landing": {
-    "subtitle": "Crea dashboard, personalizzale e incorporale ovunque.",
-    "getStarted": "Inizia",
-    "settings": "Impostazioni"
+    "nav": {
+      "features": "Funzionalità",
+      "how": "Come funziona",
+      "pricing": "Prezzi",
+      "login": "Accedi",
+      "start": "Inizia",
+      "app": "Le mie dashboard"
+    },
+    "hero": {
+      "badge": "Costruttore di dashboard no-code",
+      "title": "Crea dashboard. Incorporale ovunque.",
+      "subtitle": "Componi dashboard dai widget con il trascinamento, definisci lo schema dati, scegli un tema — e incorporale nella tua app senza codice UI.",
+      "primary": "Inizia gratis",
+      "secondary": "Accedi",
+      "note": "Senza carta. Piano gratuito per sempre."
+    },
+    "demo": {
+      "title": "Panoramica vendite",
+      "revenue": "Ricavi",
+      "users": "Utenti",
+      "growth": "Crescita",
+      "live": "Live"
+    },
+    "features": {
+      "title": "Tutto per la tua analisi",
+      "subtitle": "Dal primo widget alla dashboard pubblicata nella tua app.",
+      "builderTitle": "Editor visuale",
+      "builderText": "Trascina i widget sulla tela, spostali e ridimensionali liberamente. Senza codice.",
+      "dataTitle": "I tuoi dati",
+      "dataText": "Ogni widget definisce uno schema dati — passa il tuo array a runtime.",
+      "embedTitle": "Incorpora ovunque",
+      "embedText": "iframe, script o web component. Una dashboard, tre modi.",
+      "themesTitle": "Temi e tempo reale",
+      "themesText": "Cinque temi pronti e aggiornamenti live via WebSocket inclusi."
+    },
+    "how": {
+      "title": "Tre passi verso una dashboard live",
+      "subtitle": "Dall'idea all'incorporamento in pochi minuti.",
+      "step1Title": "Costruisci",
+      "step1Text": "Scegli i widget dalla palette e disponili sulla tela.",
+      "step2Title": "Configura",
+      "step2Text": "Imposta lo schema dati, mappa i tuoi campi e scegli un tema.",
+      "step3Title": "Incorpora",
+      "step3Text": "Pubblica e incolla lo snippet — i dati li passi a runtime."
+    },
+    "pricing": {
+      "title": "Prezzi semplici",
+      "subtitle": "Inizia gratis, fai l'upgrade quando cresci.",
+      "month": "/mese",
+      "free": "Gratis",
+      "popular": "Popolare",
+      "choose": "Scegli",
+      "start": "Inizia",
+      "freeF1": "1 dashboard",
+      "freeF2": "Fino a 5 widget",
+      "freeF3": "5 temi",
+      "freeF4": "Incorporamento",
+      "proF1": "3 dashboard",
+      "proF2": "Widget illimitati",
+      "proF3": "Export",
+      "proF4": "Tutti i metodi di incorporamento",
+      "unlimitedF1": "Dashboard illimitate",
+      "unlimitedF2": "Temi personalizzati",
+      "unlimitedF3": "Export",
+      "unlimitedF4": "Rimuovi attribuzione"
+    },
+    "cta": {
+      "title": "Pronto a creare la tua prima dashboard?",
+      "subtitle": "Piano gratuito, senza carta.",
+      "button": "Inizia gratis"
+    },
+    "footer": {
+      "tagline": "Costruttore di dashboard e analisi incorporabile.",
+      "rights": "Tutti i diritti riservati."
+    }
   },
   "auth": {
     "loginTitle": "Accedi",

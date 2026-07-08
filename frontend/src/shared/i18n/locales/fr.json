@@ -29,9 +29,81 @@
     "kickedMessage": "Quelqu'un s'est connecté à votre compte sur un autre appareil."
   },
   "landing": {
-    "subtitle": "Créez des tableaux de bord, personnalisez-les et intégrez-les partout.",
-    "getStarted": "Commencer",
-    "settings": "Paramètres"
+    "nav": {
+      "features": "Fonctionnalités",
+      "how": "Comment ça marche",
+      "pricing": "Tarifs",
+      "login": "Se connecter",
+      "start": "Commencer",
+      "app": "Mes tableaux de bord"
+    },
+    "hero": {
+      "badge": "Créateur de tableaux de bord no-code",
+      "title": "Créez des tableaux de bord. Intégrez-les partout.",
+      "subtitle": "Composez des tableaux de bord à partir de widgets par glisser-déposer, définissez le schéma de données, choisissez un thème — et intégrez-les dans votre application sans code UI.",
+      "primary": "Commencer gratuitement",
+      "secondary": "Se connecter",
+      "note": "Sans carte. Offre gratuite à vie."
+    },
+    "demo": {
+      "title": "Aperçu des ventes",
+      "revenue": "Revenu",
+      "users": "Utilisateurs",
+      "growth": "Croissance",
+      "live": "En direct"
+    },
+    "features": {
+      "title": "Tout pour votre analytique",
+      "subtitle": "Du premier widget au tableau de bord publié dans votre application.",
+      "builderTitle": "Éditeur visuel",
+      "builderText": "Glissez des widgets sur le canevas, déplacez-les et redimensionnez-les. Sans code.",
+      "dataTitle": "Vos propres données",
+      "dataText": "Chaque widget définit un schéma de données — transmettez votre tableau à l'exécution.",
+      "embedTitle": "Intégrez partout",
+      "embedText": "iframe, script d'intégration ou web component. Un tableau de bord, trois façons.",
+      "themesTitle": "Thèmes et temps réel",
+      "themesText": "Cinq thèmes prêts à l'emploi et des mises à jour en direct via WebSocket."
+    },
+    "how": {
+      "title": "Trois étapes vers un tableau de bord en direct",
+      "subtitle": "De l'idée à l'intégration en quelques minutes.",
+      "step1Title": "Construire",
+      "step1Text": "Choisissez des widgets dans la palette et disposez-les sur le canevas.",
+      "step2Title": "Configurer",
+      "step2Text": "Définissez le schéma de données, mappez vos champs et choisissez un thème.",
+      "step3Title": "Intégrer",
+      "step3Text": "Publiez et collez le snippet — vous transmettez les données à l'exécution."
+    },
+    "pricing": {
+      "title": "Des tarifs simples",
+      "subtitle": "Commencez gratuitement, évoluez à votre rythme.",
+      "month": "/mois",
+      "free": "Gratuit",
+      "popular": "Populaire",
+      "choose": "Choisir",
+      "start": "Commencer",
+      "freeF1": "1 tableau de bord",
+      "freeF2": "Jusqu'à 5 widgets",
+      "freeF3": "5 thèmes",
+      "freeF4": "Intégration",
+      "proF1": "3 tableaux de bord",
+      "proF2": "Widgets illimités",
+      "proF3": "Export",
+      "proF4": "Toutes les intégrations",
+      "unlimitedF1": "Tableaux de bord illimités",
+      "unlimitedF2": "Thèmes personnalisés",
+      "unlimitedF3": "Export",
+      "unlimitedF4": "Retirer l'attribution"
+    },
+    "cta": {
+      "title": "Prêt à créer votre premier tableau de bord ?",
+      "subtitle": "Offre gratuite, sans carte.",
+      "button": "Commencer gratuitement"
+    },
+    "footer": {
+      "tagline": "Créateur de tableaux de bord et analytique intégrable.",
+      "rights": "Tous droits réservés."
+    }
   },
   "auth": {
     "loginTitle": "Connexion",

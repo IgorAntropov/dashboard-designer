@@ -29,9 +29,81 @@
     "kickedMessage": "Ktoś zalogował się do Twojego konta na innym urządzeniu."
   },
   "landing": {
-    "subtitle": "Twórz pulpity, nadawaj im styl i osadzaj je wszędzie.",
-    "getStarted": "Zaczynaj",
-    "settings": "Ustawienia"
+    "nav": {
+      "features": "Funkcje",
+      "how": "Jak to działa",
+      "pricing": "Cennik",
+      "login": "Zaloguj się",
+      "start": "Zacznij",
+      "app": "Moje pulpity"
+    },
+    "hero": {
+      "badge": "Kreator pulpitów no-code",
+      "title": "Twórz pulpity. Osadzaj gdziekolwiek.",
+      "subtitle": "Składaj pulpity z widżetów metodą przeciągnij i upuść, ustaw schemat danych, wybierz motyw — i osadź je w swojej aplikacji bez kodu UI.",
+      "primary": "Zacznij za darmo",
+      "secondary": "Zaloguj się",
+      "note": "Bez karty. Darmowy plan na zawsze."
+    },
+    "demo": {
+      "title": "Przegląd sprzedaży",
+      "revenue": "Przychód",
+      "users": "Użytkownicy",
+      "growth": "Wzrost",
+      "live": "Na żywo"
+    },
+    "features": {
+      "title": "Wszystko do analityki",
+      "subtitle": "Od pierwszego widżetu po opublikowany pulpit w Twojej aplikacji.",
+      "builderTitle": "Wizualny kreator",
+      "builderText": "Przeciągaj widżety na kanwę, przesuwaj i zmieniaj rozmiar. Bez kodu.",
+      "dataTitle": "Twoje dane",
+      "dataText": "Każdy widżet definiuje schemat danych — przekaż swoją tablicę w czasie działania.",
+      "embedTitle": "Osadzaj wszędzie",
+      "embedText": "iframe, skrypt lub web component. Jeden pulpit, trzy sposoby.",
+      "themesTitle": "Motywy i czas rzeczywisty",
+      "themesText": "Pięć gotowych motywów i aktualizacje na żywo przez WebSocket od razu."
+    },
+    "how": {
+      "title": "Trzy kroki do pulpitu na żywo",
+      "subtitle": "Od pomysłu do osadzenia w kilka minut.",
+      "step1Title": "Zbuduj",
+      "step1Text": "Wybierz widżety z palety i rozmieść je na kanwie.",
+      "step2Title": "Skonfiguruj",
+      "step2Text": "Ustaw schemat danych, zmapuj swoje pola i wybierz motyw.",
+      "step3Title": "Osadź",
+      "step3Text": "Opublikuj i wklej snippet — dane przekazujesz w czasie działania."
+    },
+    "pricing": {
+      "title": "Proste ceny",
+      "subtitle": "Zacznij za darmo, ulepsz gdy urośniesz.",
+      "month": "/mies.",
+      "free": "Za darmo",
+      "popular": "Popularny",
+      "choose": "Wybierz",
+      "start": "Zacznij",
+      "freeF1": "1 pulpit",
+      "freeF2": "Do 5 widżetów",
+      "freeF3": "5 motywów",
+      "freeF4": "Osadzanie",
+      "proF1": "3 pulpity",
+      "proF2": "Widżety bez limitu",
+      "proF3": "Eksport",
+      "proF4": "Wszystkie metody osadzania",
+      "unlimitedF1": "Pulpity bez limitu",
+      "unlimitedF2": "Własne motywy",
+      "unlimitedF3": "Eksport",
+      "unlimitedF4": "Usuń atrybucję"
+    },
+    "cta": {
+      "title": "Gotów zbudować pierwszy pulpit?",
+      "subtitle": "Darmowy plan, bez karty.",
+      "button": "Zacznij za darmo"
+    },
+    "footer": {
+      "tagline": "Kreator pulpitów i osadzalna analityka.",
+      "rights": "Wszelkie prawa zastrzeżone."
+    }
   },
   "auth": {
     "loginTitle": "Zaloguj się",

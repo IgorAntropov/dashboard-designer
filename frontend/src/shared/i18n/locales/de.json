@@ -29,9 +29,81 @@
     "kickedMessage": "Jemand hat sich auf einem anderen Gerät in Ihr Konto eingeloggt."
   },
   "landing": {
-    "subtitle": "Erstelle Dashboards, gestalte sie und binde sie überall ein.",
-    "getStarted": "Loslegen",
-    "settings": "Einstellungen"
+    "nav": {
+      "features": "Funktionen",
+      "how": "So funktioniert's",
+      "pricing": "Preise",
+      "login": "Anmelden",
+      "start": "Loslegen",
+      "app": "Meine Dashboards"
+    },
+    "hero": {
+      "badge": "No-Code Dashboard-Baukasten",
+      "title": "Dashboards bauen. Überall einbetten.",
+      "subtitle": "Stelle Dashboards per Drag-and-drop aus Widgets zusammen, definiere das Datenschema, wähle ein Theme — und bette sie ohne UI-Code in deine App ein.",
+      "primary": "Kostenlos starten",
+      "secondary": "Anmelden",
+      "note": "Keine Karte nötig. Kostenloser Tarif für immer."
+    },
+    "demo": {
+      "title": "Umsatzübersicht",
+      "revenue": "Umsatz",
+      "users": "Nutzer",
+      "growth": "Wachstum",
+      "live": "Live"
+    },
+    "features": {
+      "title": "Alles für deine Analytik",
+      "subtitle": "Vom ersten Widget bis zum veröffentlichten Dashboard in deiner App.",
+      "builderTitle": "Visueller Baukasten",
+      "builderText": "Ziehe Widgets auf die Fläche, verschiebe und skaliere sie frei. Ohne Code.",
+      "dataTitle": "Deine eigenen Daten",
+      "dataText": "Jedes Widget definiert ein Datenschema — übergib dein Array zur Laufzeit.",
+      "embedTitle": "Überall einbetten",
+      "embedText": "iframe, Embed-Skript oder Web-Component. Ein Dashboard, drei Wege.",
+      "themesTitle": "Themes & Echtzeit",
+      "themesText": "Fünf fertige Themes und Live-Updates über WebSocket ab Werk."
+    },
+    "how": {
+      "title": "In drei Schritten zum Live-Dashboard",
+      "subtitle": "Von der Idee bis zum Einbetten in Minuten.",
+      "step1Title": "Bauen",
+      "step1Text": "Wähle Widgets aus der Palette und ordne sie auf der Fläche an.",
+      "step2Title": "Konfigurieren",
+      "step2Text": "Lege das Datenschema fest, ordne deine Felder zu und wähle ein Theme.",
+      "step3Title": "Einbetten",
+      "step3Text": "Veröffentliche und füge den Snippet ein — Daten kommen zur Laufzeit."
+    },
+    "pricing": {
+      "title": "Einfache Preise",
+      "subtitle": "Kostenlos starten, wachsen und upgraden.",
+      "month": "/Mon.",
+      "free": "Kostenlos",
+      "popular": "Beliebt",
+      "choose": "Wählen",
+      "start": "Loslegen",
+      "freeF1": "1 Dashboard",
+      "freeF2": "Bis zu 5 Widgets",
+      "freeF3": "5 Themes",
+      "freeF4": "Einbetten",
+      "proF1": "3 Dashboards",
+      "proF2": "Unbegrenzte Widgets",
+      "proF3": "Export",
+      "proF4": "Alle Einbettungsarten",
+      "unlimitedF1": "Unbegrenzte Dashboards",
+      "unlimitedF2": "Eigene Themes",
+      "unlimitedF3": "Export",
+      "unlimitedF4": "Branding entfernen"
+    },
+    "cta": {
+      "title": "Bereit für dein erstes Dashboard?",
+      "subtitle": "Kostenloser Tarif, keine Karte nötig.",
+      "button": "Kostenlos starten"
+    },
+    "footer": {
+      "tagline": "Dashboard-Baukasten & einbettbare Analytik.",
+      "rights": "Alle Rechte vorbehalten."
+    }
   },
   "auth": {
     "loginTitle": "Anmelden",

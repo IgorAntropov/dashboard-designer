@@ -29,9 +29,81 @@
     "kickedMessage": "Someone signed in to your account on another device."
   },
   "landing": {
-    "subtitle": "Build dashboards, theme them, and embed them anywhere.",
-    "getStarted": "Get started",
-    "settings": "Settings"
+    "nav": {
+      "features": "Features",
+      "how": "How it works",
+      "pricing": "Pricing",
+      "login": "Log in",
+      "start": "Get started",
+      "app": "My dashboards"
+    },
+    "hero": {
+      "badge": "No-code dashboard builder",
+      "title": "Build dashboards. Embed anywhere.",
+      "subtitle": "Assemble dashboards from widgets by drag-and-drop, shape the data schema, pick a theme — and embed them into your own product without writing UI code.",
+      "primary": "Start for free",
+      "secondary": "Log in",
+      "note": "No card required. Free plan forever."
+    },
+    "demo": {
+      "title": "Sales overview",
+      "revenue": "Revenue",
+      "users": "Users",
+      "growth": "Growth",
+      "live": "Live"
+    },
+    "features": {
+      "title": "Everything you need for analytics",
+      "subtitle": "From the first widget to a published dashboard in your app.",
+      "builderTitle": "Visual builder",
+      "builderText": "Drag widgets onto a canvas, move and resize them freely. No code.",
+      "dataTitle": "Bring your own data",
+      "dataText": "Each widget defines a data schema — feed it your array at runtime.",
+      "embedTitle": "Embed anywhere",
+      "embedText": "iframe, embed script or web component. One dashboard, three ways.",
+      "themesTitle": "Themes & realtime",
+      "themesText": "Five ready themes and live updates over WebSocket out of the box."
+    },
+    "how": {
+      "title": "Three steps to a live dashboard",
+      "subtitle": "From idea to embed in minutes.",
+      "step1Title": "Build",
+      "step1Text": "Pick widgets from the palette and arrange them on the canvas.",
+      "step2Title": "Configure",
+      "step2Text": "Set the data schema, map it to your fields and choose a theme.",
+      "step3Title": "Embed",
+      "step3Text": "Publish and paste the snippet — you pass your data at runtime."
+    },
+    "pricing": {
+      "title": "Simple pricing",
+      "subtitle": "Start free, upgrade as you grow.",
+      "month": "/mo",
+      "free": "Free",
+      "popular": "Popular",
+      "choose": "Choose",
+      "start": "Get started",
+      "freeF1": "1 dashboard",
+      "freeF2": "Up to 5 widgets",
+      "freeF3": "5 themes",
+      "freeF4": "Embedding",
+      "proF1": "3 dashboards",
+      "proF2": "Unlimited widgets",
+      "proF3": "Export",
+      "proF4": "All embed methods",
+      "unlimitedF1": "Unlimited dashboards",
+      "unlimitedF2": "Custom themes",
+      "unlimitedF3": "Export",
+      "unlimitedF4": "Remove attribution"
+    },
+    "cta": {
+      "title": "Ready to build your first dashboard?",
+      "subtitle": "Free plan, no card required.",
+      "button": "Start for free"
+    },
+    "footer": {
+      "tagline": "Dashboard constructor & embeddable analytics.",
+      "rights": "All rights reserved."
+    }
   },
   "auth": {
     "loginTitle": "Sign in",

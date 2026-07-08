@@ -35,6 +35,17 @@
     "kickedTitle": "Relace ukončena",
     "kickedMessage": "Někdo se přihlásil k vašemu účtu na jiném zařízení."
   },
+  "errors": {
+    "quotaWidgets": "Bezplatný tarif: max. 5 widgetů na dashboard.",
+    "quotaDashboards": "Dosáhli jste limitu dashboardů svého tarifu.",
+    "exportPaid": "Export je dostupný v placených tarifech.",
+    "notFound": "Nenalezeno.",
+    "server": "Chyba serveru. Zkuste to prosím později.",
+    "generic": "Něco se pokazilo. Zkuste to znovu."
+  },
+  "toast": {
+    "close": "Zavřít"
+  },
   "landing": {
     "nav": {
       "features": "Funkce",

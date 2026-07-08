@@ -35,6 +35,17 @@
     "kickedTitle": "Sitzung beendet",
     "kickedMessage": "Jemand hat sich auf einem anderen Gerät in Ihr Konto eingeloggt."
   },
+  "errors": {
+    "quotaWidgets": "Kostenloser Tarif: max. 5 Widgets pro Dashboard.",
+    "quotaDashboards": "Dashboard-Limit deines Tarifs erreicht.",
+    "exportPaid": "Export ist in kostenpflichtigen Tarifen verfügbar.",
+    "notFound": "Nicht gefunden.",
+    "server": "Serverfehler. Bitte später erneut versuchen.",
+    "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+  },
+  "toast": {
+    "close": "Schließen"
+  },
   "landing": {
     "nav": {
       "features": "Funktionen",

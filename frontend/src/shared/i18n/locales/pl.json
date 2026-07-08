@@ -35,6 +35,17 @@
     "kickedTitle": "Sesja zakończona",
     "kickedMessage": "Ktoś zalogował się do Twojego konta na innym urządzeniu."
   },
+  "errors": {
+    "quotaWidgets": "Plan darmowy: maks. 5 widżetów na pulpit.",
+    "quotaDashboards": "Osiągnięto limit pulpitów w Twoim planie.",
+    "exportPaid": "Eksport dostępny w planach płatnych.",
+    "notFound": "Nie znaleziono.",
+    "server": "Błąd serwera. Spróbuj ponownie później.",
+    "generic": "Coś poszło nie tak. Spróbuj ponownie."
+  },
+  "toast": {
+    "close": "Zamknij"
+  },
   "landing": {
     "nav": {
       "features": "Funkcje",

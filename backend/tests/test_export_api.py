@@ -28,6 +28,7 @@ async def test_export_requires_paid_tier(client: AsyncClient) -> None:
         f"/api/v1/dashboards/{dashboard_id}/export", headers=headers
     )
     assert forbidden.status_code == 403
+    assert forbidden.json()["code"] == "export_paid"
 
     await client.patch(
         "/api/v1/me/subscription", json={"tier": "pro"}, headers=headers

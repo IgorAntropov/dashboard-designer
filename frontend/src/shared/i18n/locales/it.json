@@ -35,6 +35,17 @@
     "kickedTitle": "Sessione terminata",
     "kickedMessage": "Qualcuno ha effettuato l'accesso al tuo account su un altro dispositivo."
   },
+  "errors": {
+    "quotaWidgets": "Piano gratuito: massimo 5 widget per dashboard.",
+    "quotaDashboards": "Hai raggiunto il limite di dashboard del tuo piano.",
+    "exportPaid": "L'export è disponibile nei piani a pagamento.",
+    "notFound": "Non trovato.",
+    "server": "Errore del server. Riprova più tardi.",
+    "generic": "Qualcosa è andato storto. Riprova."
+  },
+  "toast": {
+    "close": "Chiudi"
+  },
   "landing": {
     "nav": {
       "features": "Funzionalità",

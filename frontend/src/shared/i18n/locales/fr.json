@@ -35,6 +35,17 @@
     "kickedTitle": "Session terminée",
     "kickedMessage": "Quelqu'un s'est connecté à votre compte sur un autre appareil."
   },
+  "errors": {
+    "quotaWidgets": "Offre gratuite : jusqu'à 5 widgets par tableau de bord.",
+    "quotaDashboards": "Vous avez atteint la limite de tableaux de bord de votre offre.",
+    "exportPaid": "L'export est disponible sur les offres payantes.",
+    "notFound": "Introuvable.",
+    "server": "Erreur serveur. Veuillez réessayer plus tard.",
+    "generic": "Une erreur s'est produite. Veuillez réessayer."
+  },
+  "toast": {
+    "close": "Fermer"
+  },
   "landing": {
     "nav": {
       "features": "Fonctionnalités",

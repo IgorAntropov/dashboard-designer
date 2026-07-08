@@ -30,10 +30,10 @@ async function save(): Promise<void> {
     theme_key: canvasStore.themeKey,
   }
   let result = await updateDashboard(dashboardId, patch)
-  if (!result) {
+  if (!result.data && result.status === 401) {
     result = await updateDashboard(dashboardId, patch)
   }
-  saveState.value = result ? 'saved' : 'idle'
+  saveState.value = result.data ? 'saved' : 'idle'
 }
 
 onMounted(async () => {

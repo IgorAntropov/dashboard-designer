@@ -35,6 +35,17 @@
     "kickedTitle": "Session ended",
     "kickedMessage": "Someone signed in to your account on another device."
   },
+  "errors": {
+    "quotaWidgets": "Free plan: up to 5 widgets per dashboard.",
+    "quotaDashboards": "You've reached the dashboard limit for your plan.",
+    "exportPaid": "Export is available on paid plans.",
+    "notFound": "Not found.",
+    "server": "Server error. Please try again later.",
+    "generic": "Something went wrong. Please try again."
+  },
+  "toast": {
+    "close": "Close"
+  },
   "landing": {
     "nav": {
       "features": "Features",

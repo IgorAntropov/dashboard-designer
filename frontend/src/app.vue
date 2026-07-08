@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { AppButton, AppModal } from '@shared/ui'
+import { AppButton, AppModal, ToastHost } from '@shared/ui'
 
 const colorMode = useColorMode()
 const session = useSessionStore()
@@ -35,4 +35,6 @@ async function acknowledgeKick(): Promise<void> {
       <AppButton @click="acknowledgeKick">OK</AppButton>
     </template>
   </AppModal>
+
+  <ToastHost />
 </template>

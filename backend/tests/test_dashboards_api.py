@@ -45,6 +45,7 @@ async def test_dashboard_crud_ownership_and_quota(client: AsyncClient) -> None:
         "/api/v1/dashboards", json={"title": "Second"}, headers=owner
     )
     assert over_quota.status_code == 403
+    assert over_quota.json()["code"] == "quota_dashboards"
 
     intruder = await _auth_headers(client, "intruder@example.com")
     stolen = await client.get(
@@ -85,3 +86,11 @@ async def test_free_tier_widget_cap(client: AsyncClient) -> None:
         f"/api/v1/dashboards/{dashboard_id}", json=widgets(6), headers=owner
     )
     assert over.status_code == 403
+    assert over.json()["code"] == "quota_widgets"
+
+    intruder = await _auth_headers(client, "cap-intruder@example.com")
+    stolen = await client.patch(
+        f"/api/v1/dashboards/{dashboard_id}", json=widgets(1), headers=intruder
+    )
+    assert stolen.status_code == 404
+    assert stolen.json()["code"] == "not_found"

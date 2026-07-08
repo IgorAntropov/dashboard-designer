@@ -212,3 +212,18 @@ registry adds the `svg-map` type (REGION schema/binding) and `geo` to `WIDGET_CA
 `sampleDataFor` returns region rows whose names match the SVG. Editor and embed share the same path, so
 the map renders identically in both. Unit-tested in `map.test.ts`. The map is intentionally a compact
 schematic (continent-level) — swapping in a detailed GeoJSON/SVG per country is a later extension.
+
+Error handling & toasts: the backend raises a typed `AppError(status_code, code, detail)`
+(`app/core/errors.py`, registered via `add_exception_handler`) so failures carry a machine-readable
+`code` in the JSON body (`{"code", "detail"}`). Dashboard quotas distinguish `quota_dashboards` vs
+`quota_widgets` (the service's `DashboardQuotaExceededError` gained a `reason`); export gating uses
+`export_paid`; missing/owned-by-another resources use `not_found`. On the frontend, the shared api
+client exposes `setErrorHandler`; its `onResponse` interceptor now surfaces every non-401 error (parsing
+`code` from a cloned response) while the 401 branch still drives the silent refresh/retry. A client
+plugin (`plugins/errors.client.ts`) maps `code`→localized message (`errors.*`) and calls `pushToast`
+from a tiny reactive store (`shared/notify`), rendered by `shared/ui/ToastHost` (teleported, auto-dismiss,
+theme-aware) mounted in `app.vue`. Auth-path failures (login/register/refresh) are skipped so those
+screens keep their inline messaging. The editor autosave previously retried on any failure (causing a
+duplicate PATCH + duplicate toast on a 403 quota); `updateDashboard` now returns `{ data, status }` and
+the editor retries only on `401` (post-refresh), so a quota rejection is a single request with a single
+toast.

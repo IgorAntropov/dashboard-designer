@@ -28,15 +28,20 @@ export async function getDashboard(id: string): Promise<Dashboard | null> {
   return data ?? null
 }
 
+export interface UpdateDashboardResult {
+  data: Dashboard | null
+  status: number
+}
+
 export async function updateDashboard(
   id: string,
   patch: DashboardUpdate,
-): Promise<Dashboard | null> {
-  const { data } = await api.PATCH('/api/v1/dashboards/{dashboard_id}', {
+): Promise<UpdateDashboardResult> {
+  const { data, response } = await api.PATCH('/api/v1/dashboards/{dashboard_id}', {
     params: { path: { dashboard_id: id } },
     body: patch,
   })
-  return data ?? null
+  return { data: data ?? null, status: response.status }
 }
 
 export async function publishDashboard(

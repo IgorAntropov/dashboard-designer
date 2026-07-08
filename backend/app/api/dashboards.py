@@ -1,10 +1,11 @@
 import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
 from app.api.deps import CurrentUserDep, SessionDep
+from app.core.errors import AppError
 from app.models.dashboard import Dashboard
 from app.models.enums import SubscriptionTier
 from app.schemas.dashboard import DashboardCreate, DashboardOut, DashboardUpdate
@@ -17,12 +18,14 @@ from app.services.dashboard import (
 
 router = APIRouter(prefix="/dashboards", tags=["dashboards"])
 
-_NOT_FOUND = HTTPException(
-    status_code=status.HTTP_404_NOT_FOUND, detail="Dashboard not found"
+_NOT_FOUND = AppError(
+    status.HTTP_404_NOT_FOUND, "not_found", "Dashboard not found"
 )
-_QUOTA = HTTPException(
-    status_code=status.HTTP_403_FORBIDDEN, detail="Dashboard quota exceeded"
-)
+
+
+def _quota_error(exc: DashboardQuotaExceededError) -> AppError:
+    code = "quota_widgets" if exc.reason == "widgets" else "quota_dashboards"
+    return AppError(status.HTTP_403_FORBIDDEN, code, "Quota exceeded")
 
 
 @router.get("", response_model=list[DashboardOut])
@@ -39,7 +42,7 @@ async def create_dashboard(
     try:
         dashboard = await DashboardService(session).create(current_user, payload)
     except DashboardQuotaExceededError as exc:
-        raise _QUOTA from exc
+        raise _quota_error(exc) from exc
     await session.commit()
     return dashboard
 
@@ -68,7 +71,7 @@ async def update_dashboard(
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
     except DashboardQuotaExceededError as exc:
-        raise _QUOTA from exc
+        raise _quota_error(exc) from exc
     await session.commit()
     return dashboard
 
@@ -98,7 +101,7 @@ async def duplicate_dashboard(
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
     except DashboardQuotaExceededError as exc:
-        raise _QUOTA from exc
+        raise _quota_error(exc) from exc
     await session.commit()
     return dashboard
 
@@ -108,9 +111,10 @@ async def export_dashboard(
     dashboard_id: uuid.UUID, current_user: CurrentUserDep, session: SessionDep
 ) -> JSONResponse:
     if current_user.subscription_tier == SubscriptionTier.free:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Export requires a paid plan",
+        raise AppError(
+            status.HTTP_403_FORBIDDEN,
+            "export_paid",
+            "Export requires a paid plan",
         )
     try:
         dashboard = await DashboardService(session).get_owned(

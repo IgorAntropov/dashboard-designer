@@ -11,6 +11,7 @@ from app.api.users import router as users_router
 from app.api.version import router as version_router
 from app.api.ws import router as ws_router
 from app.core.config import Settings, get_settings
+from app.core.errors import AppError, app_error_handler
 from app.core.security import customize_openapi
 
 
@@ -44,6 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(billing_router, prefix=prefix)
     app.include_router(public_router, prefix=prefix)
     app.include_router(ws_router, prefix=prefix)
+    app.add_exception_handler(AppError, app_error_handler)
     customize_openapi(app, settings)
     return app
 

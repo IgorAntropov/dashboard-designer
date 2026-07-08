@@ -8,6 +8,7 @@ export type { paths, components } from './schema'
 let accessToken: string | null = null
 let onUnauthorized: (() => Promise<boolean>) | null = null
 let onAuthFailed: (() => Promise<void> | void) | null = null
+let onError: ((status: number, code: string | null) => void) | null = null
 
 export function setAccessToken(token: string | null): void {
   accessToken = token
@@ -19,6 +20,26 @@ export function setUnauthorizedHandler(handler: () => Promise<boolean>): void {
 
 export function setAuthFailedHandler(handler: () => Promise<void> | void): void {
   onAuthFailed = handler
+}
+
+export function setErrorHandler(
+  handler: (status: number, code: string | null) => void,
+): void {
+  onError = handler
+}
+
+async function notifyError(response: Response): Promise<void> {
+  if (!onError) {
+    return
+  }
+  let code: string | null = null
+  try {
+    const body = (await response.clone().json()) as { code?: unknown }
+    code = typeof body.code === 'string' ? body.code : null
+  } catch {
+    code = null
+  }
+  onError(response.status, code)
 }
 
 const AUTH_PATHS = ['/auth/login', '/auth/register', '/auth/refresh']
@@ -37,9 +58,15 @@ api.use({
     return request
   },
   async onResponse({ request, response }) {
-    if (response.status !== 401 || isAuthPath(request.url)) {
+    if (response.ok || isAuthPath(request.url)) {
       return response
     }
+
+    if (response.status !== 401) {
+      await notifyError(response)
+      return response
+    }
+
     if (request.headers.get('x-pk-retry')) {
       await onAuthFailed?.()
       return response

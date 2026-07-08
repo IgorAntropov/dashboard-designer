@@ -22,7 +22,9 @@ class DashboardNotFoundError(DashboardError):
 
 
 class DashboardQuotaExceededError(DashboardError):
-    pass
+    def __init__(self, reason: str = "dashboards") -> None:
+        super().__init__(reason)
+        self.reason = reason
 
 
 def _slugify(title: str) -> str:
@@ -53,7 +55,7 @@ class DashboardService:
     async def _ensure_quota(self, user: User) -> None:
         limit = dashboard_limit(user.subscription_tier)
         if limit is not None and await self._count_for_user(user) >= limit:
-            raise DashboardQuotaExceededError
+            raise DashboardQuotaExceededError("dashboards")
 
     async def create(self, user: User, payload: DashboardCreate) -> Dashboard:
         await self._ensure_quota(user)
@@ -93,7 +95,7 @@ class DashboardService:
             return
         widgets = layout.get("widgets")
         if isinstance(widgets, list) and len(widgets) > limit:
-            raise DashboardQuotaExceededError
+            raise DashboardQuotaExceededError("widgets")
 
     async def publish(
         self, user: User, dashboard_id: uuid.UUID, allowed_domains: list[str]

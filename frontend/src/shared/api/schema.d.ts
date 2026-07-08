@@ -98,6 +98,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/dashboards/{dashboard_id}/publish': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['publish_dashboard_api_v1_dashboards__dashboard_id__publish_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/dashboards/{dashboard_id}': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['get_dashboard_api_v1_dashboards__dashboard_id__get']
@@ -175,6 +186,14 @@ export interface components {
       data_bindings?: { [key: string]: unknown } | null
       data_source?: { [key: string]: unknown } | null
       status?: 'draft' | 'published' | null
+    }
+    PublishRequest: {
+      allowed_domains?: string[]
+    }
+    PublishResponse: {
+      token: string
+      allowed_domains: string[]
+      status: 'draft' | 'published'
     }
   }
   responses: never
@@ -327,6 +346,23 @@ export interface operations {
       200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['Dashboard'] }
+      }
+    }
+  }
+  publish_dashboard_api_v1_dashboards__dashboard_id__publish_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody: {
+      content: { 'application/json': components['schemas']['PublishRequest'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['PublishResponse'] }
       }
     }
   }

@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException, status
 from app.api.deps import CurrentUserDep, SessionDep
 from app.models.dashboard import Dashboard
 from app.schemas.dashboard import DashboardCreate, DashboardOut, DashboardUpdate
+from app.schemas.embed import PublishRequest, PublishResponse
 from app.services.dashboard import (
     DashboardNotFoundError,
     DashboardQuotaExceededError,
@@ -95,3 +96,25 @@ async def duplicate_dashboard(
         raise _QUOTA from exc
     await session.commit()
     return dashboard
+
+
+@router.post("/{dashboard_id}/publish", response_model=PublishResponse)
+async def publish_dashboard(
+    dashboard_id: uuid.UUID,
+    payload: PublishRequest,
+    current_user: CurrentUserDep,
+    session: SessionDep,
+) -> PublishResponse:
+    service = DashboardService(session)
+    try:
+        dashboard, token = await service.publish(
+            current_user, dashboard_id, payload.allowed_domains
+        )
+    except DashboardNotFoundError as exc:
+        raise _NOT_FOUND from exc
+    await session.commit()
+    return PublishResponse(
+        token=token.token,
+        allowed_domains=token.allowed_domains,
+        status=dashboard.status,
+    )

@@ -4,6 +4,7 @@ import { api } from '@shared/api'
 export type Dashboard = components['schemas']['Dashboard']
 export type DashboardCreate = components['schemas']['DashboardCreate']
 export type DashboardUpdate = components['schemas']['DashboardUpdate']
+export type PublishResponse = components['schemas']['PublishResponse']
 
 export async function listDashboards(): Promise<Dashboard[]> {
   const { data, error } = await api.GET('/api/v1/dashboards')
@@ -34,6 +35,17 @@ export async function updateDashboard(
   const { data } = await api.PATCH('/api/v1/dashboards/{dashboard_id}', {
     params: { path: { dashboard_id: id } },
     body: patch,
+  })
+  return data ?? null
+}
+
+export async function publishDashboard(
+  id: string,
+  allowedDomains: string[],
+): Promise<PublishResponse | null> {
+  const { data } = await api.POST('/api/v1/dashboards/{dashboard_id}/publish', {
+    params: { path: { dashboard_id: id } },
+    body: { allowed_domains: allowedDomains },
   })
   return data ?? null
 }

@@ -6,6 +6,8 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.dashboard import Dashboard
+from app.models.embed_token import EmbedToken
+from app.models.enums import DashboardStatus
 from app.models.user import User
 from app.schemas.dashboard import DashboardCreate, DashboardUpdate
 from app.services.quota import dashboard_limit
@@ -82,6 +84,31 @@ class DashboardService:
             setattr(dashboard, field, value)
         await self._session.flush()
         return dashboard
+
+    async def publish(
+        self, user: User, dashboard_id: uuid.UUID, allowed_domains: list[str]
+    ) -> tuple[Dashboard, EmbedToken]:
+        dashboard = await self.get_owned(user, dashboard_id)
+        dashboard.status = DashboardStatus.published
+
+        token = await self._session.scalar(
+            select(EmbedToken).where(
+                EmbedToken.dashboard_id == dashboard.id,
+                EmbedToken.revoked.is_(False),
+            )
+        )
+        if token is None:
+            token = EmbedToken(
+                dashboard_id=dashboard.id,
+                token=secrets.token_urlsafe(32)[:64],
+                allowed_domains=allowed_domains,
+            )
+            self._session.add(token)
+        else:
+            token.allowed_domains = allowed_domains
+
+        await self._session.flush()
+        return dashboard, token
 
     async def delete(self, user: User, dashboard_id: uuid.UUID) -> None:
         dashboard = await self.get_owned(user, dashboard_id)

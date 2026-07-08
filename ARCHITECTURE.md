@@ -227,3 +227,19 @@ screens keep their inline messaging. The editor autosave previously retried on a
 duplicate PATCH + duplicate toast on a 403 quota); `updateDashboard` now returns `{ data, status }` and
 the editor retries only on `401` (post-refresh), so a quota rejection is a single request with a single
 toast.
+
+Geo maps → GeoJSON (5.3 revised): the schematic bundled-SVG world map was replaced by real GeoJSON
+choropleth. `packages/renderer/maps/scopes.ts` holds a scope registry (`world` → a public CDN GeoJSON
+URL) plus `scopeKeyOf`/`mapUrlFor` (a `custom` scope + `config.mapUrl` override lets a widget point at
+any GeoJSON — country, region, oblast — e.g. a self-hosted file). `map.ts` fetches the GeoJSON lazily
+(cached per URL), registers it once via `echarts.registerMap(mapNameForUrl(url), geoJson)`, and
+`buildGeoOption` builds a roamable `type:'map'` choropleth (visualMap `0..max`, tooltip, theme colors,
+`region→value` binding via `resolveRegions`). Because loading is async, `renderWidget` has a dedicated
+`renderGeoMap` path: it inits the chart, shows ECharts loading, resolves the map, then applies the
+option; on fetch failure it renders a muted "Map data unavailable" title; `update` re-resolves only when
+the URL changes (otherwise re-applies data synchronously). The config panel exposes a map-scope select
+(`config.mapScope`) and a custom GeoJSON URL field (`config.mapUrl`); `sampleDataFor('svg-map')` returns
+world-country preview rows. GeoJSON is loaded at runtime (needs network in the host env; not bundled),
+so in an offline sandbox only the pure helpers/option are unit-tested (`map.test.ts`). More detailed or
+regional maps are added by registering a scope URL or supplying a custom one. Full gap analysis toward
+reference-grade dashboards lives in `docs/gap-analysis-dashboards.md`.

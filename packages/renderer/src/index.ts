@@ -1,6 +1,7 @@
 import * as echarts from 'echarts'
 
-import { buildMapOption, ensureWorldMap } from './map'
+import { buildGeoOption, ensureMap, mapNameForUrl } from './map'
+import { mapUrlFor } from './maps/scopes'
 import { buildChartOption } from './option'
 import type { RenderInput, WidgetHandle } from './types'
 
@@ -12,8 +13,8 @@ export {
   resolveSeries,
 } from './series'
 export { buildChartOption } from './option'
-export { buildMapOption, ensureWorldMap } from './map'
-export { WORLD_MAP_NAME, WORLD_REGIONS } from './maps/world'
+export { buildGeoOption, ensureMap } from './map'
+export { MAP_SCOPES, DEFAULT_MAP_SCOPE, mapUrlFor, scopeKeyOf } from './maps/scopes'
 export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme } from './themes'
 
 const CHART_TYPES = new Set([
@@ -117,10 +118,68 @@ function renderEcharts(
   }
 }
 
+function errorOption(input: RenderInput, message: string): Record<string, unknown> {
+  return {
+    backgroundColor: 'transparent',
+    title: {
+      text: message,
+      left: 'center',
+      top: 'center',
+      textStyle: { color: input.theme.colorMuted, fontSize: 12, fontWeight: 'normal' },
+    },
+  }
+}
+
+function renderGeoMap(el: HTMLElement, input: RenderInput): WidgetHandle {
+  const chart = echarts.init(el)
+  let current = input
+  let disposed = false
+  let loadedUrl = ''
+
+  function apply(next: RenderInput): void {
+    current = next
+    const url = mapUrlFor(next.config)
+    chart.showLoading()
+    ensureMap(next.config)
+      .then((name) => {
+        if (disposed) {
+          return
+        }
+        loadedUrl = url
+        chart.hideLoading()
+        chart.setOption(buildGeoOption(current, name), true)
+      })
+      .catch(() => {
+        if (disposed) {
+          return
+        }
+        chart.hideLoading()
+        chart.setOption(errorOption(current, 'Map data unavailable'), true)
+      })
+  }
+
+  apply(input)
+
+  return {
+    update: (next) => {
+      if (mapUrlFor(next.config) === loadedUrl && loadedUrl) {
+        current = next
+        chart.setOption(buildGeoOption(next, mapNameForUrl(loadedUrl)), true)
+      } else {
+        apply(next)
+      }
+    },
+    resize: () => chart.resize(),
+    dispose: () => {
+      disposed = true
+      chart.dispose()
+    },
+  }
+}
+
 export function renderWidget(el: HTMLElement, input: RenderInput): WidgetHandle {
   if (input.type === 'svg-map') {
-    ensureWorldMap()
-    return renderEcharts(el, input, buildMapOption)
+    return renderGeoMap(el, input)
   }
 
   if (CHART_TYPES.has(input.type)) {

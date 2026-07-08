@@ -38,9 +38,30 @@ function onText(event: Event): void {
 }
 
 const HAS_MAX = new Set(['gauge', 'progress'])
+const MAP_SCOPE_OPTIONS = ['world', 'custom']
 
 function asNumber(value: unknown): number {
   return typeof value === 'number' ? value : 100
+}
+
+function onMapScope(event: Event): void {
+  if (widget.value) {
+    store.updateConfig(
+      widget.value.id,
+      'map',
+      (event.target as HTMLSelectElement).value,
+    )
+  }
+}
+
+function onMapUrl(event: Event): void {
+  if (widget.value) {
+    store.updateConfig(
+      widget.value.id,
+      'mapUrl',
+      (event.target as HTMLInputElement).value,
+    )
+  }
 }
 
 function onMax(event: Event): void {
@@ -115,6 +136,31 @@ function onDataKey(key: string, event: Event): void {
           @input="onMax"
         >
       </div>
+
+      <template v-if="widget.type === 'svg-map'">
+        <div class="mb-3">
+          <label class="form-label small">{{ $t('config.mapScope') }}</label>
+          <select
+            class="form-select form-select-sm"
+            :value="asString(widget.config.map) || 'world'"
+            @change="onMapScope"
+          >
+            <option v-for="scope in MAP_SCOPE_OPTIONS" :key="scope" :value="scope">
+              {{ $t(`mapScope.${scope}`) }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="asString(widget.config.map) === 'custom'" class="mb-3">
+          <label class="form-label small">{{ $t('config.mapUrl') }}</label>
+          <input
+            class="form-control form-control-sm"
+            :value="asString(widget.config.mapUrl)"
+            placeholder="https://…/regions.geojson"
+            @input="onMapUrl"
+          >
+        </div>
+      </template>
 
       <div v-for="[key, field] in schemaEntries()" :key="key" class="config-field">
         <div class="config-field__name">{{ key }}</div>

@@ -17,12 +17,16 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
   }
   if (type === 'svg-map') {
     return [
-      { region: 'North America', value: 72 },
-      { region: 'South America', value: 34 },
-      { region: 'Europe', value: 88 },
-      { region: 'Africa', value: 21 },
-      { region: 'Asia', value: 95 },
-      { region: 'Oceania', value: 18 },
+      { region: 'Russia', value: 90 },
+      { region: 'China', value: 78 },
+      { region: 'United States', value: 70 },
+      { region: 'India', value: 55 },
+      { region: 'Brazil', value: 40 },
+      { region: 'Germany', value: 60 },
+      { region: 'France', value: 52 },
+      { region: 'Canada', value: 34 },
+      { region: 'Australia', value: 28 },
+      { region: 'Egypt', value: 22 },
     ]
   }
   if (type === 'text-block') {

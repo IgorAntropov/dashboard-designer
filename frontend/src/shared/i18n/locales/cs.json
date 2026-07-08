@@ -23,7 +23,13 @@
     "type": "Typ",
     "dataKey": "Datový klíč",
     "hint": "Vyberte widget k úpravě",
-    "max": "Maximum"
+    "max": "Maximum",
+    "mapScope": "Rozsah mapy",
+    "mapUrl": "URL GeoJSON"
+  },
+  "mapScope": {
+    "world": "Svět",
+    "custom": "Vlastní GeoJSON"
   },
   "palette": {
     "charts": "Grafy",

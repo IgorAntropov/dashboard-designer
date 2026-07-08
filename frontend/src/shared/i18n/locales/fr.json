@@ -23,7 +23,13 @@
     "type": "Type",
     "dataKey": "Clé de données",
     "hint": "Sélectionnez un widget à modifier",
-    "max": "Maximum"
+    "max": "Maximum",
+    "mapScope": "Étendue de la carte",
+    "mapUrl": "URL GeoJSON"
+  },
+  "mapScope": {
+    "world": "Monde",
+    "custom": "GeoJSON personnalisé"
   },
   "palette": {
     "charts": "Graphiques",

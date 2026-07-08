@@ -23,7 +23,13 @@
     "type": "Тип",
     "dataKey": "Ключ данных",
     "hint": "Выберите виджет для настройки",
-    "max": "Максимум"
+    "max": "Максимум",
+    "mapScope": "Охват карты",
+    "mapUrl": "URL GeoJSON"
+  },
+  "mapScope": {
+    "world": "Мир",
+    "custom": "Свой GeoJSON"
   },
   "palette": {
     "charts": "Графики",

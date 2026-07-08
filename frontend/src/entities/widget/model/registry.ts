@@ -130,10 +130,10 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
   },
   {
     key: 'svg-map',
-    label: 'World map',
+    label: 'Map',
     category: 'geo',
     defaultSize: { w: 6, h: 5 },
-    defaultConfig: { title: 'World map' },
+    defaultConfig: { title: 'Map', map: 'world', mapUrl: '' },
     defaultSchema: REGION_SCHEMA,
     defaultBinding: REGION_BINDING,
   },

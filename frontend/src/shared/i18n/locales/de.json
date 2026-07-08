@@ -23,7 +23,13 @@
     "type": "Typ",
     "dataKey": "Datenschlüssel",
     "hint": "Wähle ein Widget zum Bearbeiten",
-    "max": "Maximum"
+    "max": "Maximum",
+    "mapScope": "Kartenbereich",
+    "mapUrl": "GeoJSON-URL"
+  },
+  "mapScope": {
+    "world": "Welt",
+    "custom": "Eigenes GeoJSON"
   },
   "palette": {
     "charts": "Diagramme",

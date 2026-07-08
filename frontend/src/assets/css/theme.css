@@ -202,18 +202,18 @@ body {
 
 .app-content {
   padding: 1.75rem;
-  padding-right: calc(var(--pk-nav-width) + 1.75rem);
-  transition: padding-right 0.25s ease;
+  padding-left: calc(var(--pk-nav-width) + 1.75rem);
+  transition: padding-left 0.25s ease;
 }
 
 .app-nav {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   height: 100vh;
   width: var(--pk-nav-width);
   background-color: var(--pk-surface);
-  border-left: 1px solid var(--pk-border);
+  border-right: 1px solid var(--pk-border);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -451,11 +451,10 @@ body {
 @media (max-width: 768px) {
   .app-shell {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   .app-content {
-    padding-right: 1.25rem;
     padding: 1.25rem;
   }
 
@@ -463,7 +462,7 @@ body {
     position: static;
     width: auto;
     height: auto;
-    border-left: none;
-    border-top: 1px solid var(--pk-border);
+    border-right: none;
+    border-bottom: 1px solid var(--pk-border);
   }
 }

@@ -13,36 +13,44 @@ embed/              framework-agnostic embed SDK (Vite lib mode)
 packages/contract/  shared TS types (data schema/binding, published config)
 ```
 
-## Prerequisites
+## Run locally (one command)
 
-- Python 3.11+
-- Node 20+ and pnpm 9+
-- Docker + docker-compose (for Postgres/Redis)
-
-## Quick start
-
-Bring up Postgres, Redis and the backend:
+The only requirement is **Docker Desktop** (running). No local Python, Node, or pnpm needed —
+everything runs in containers.
 
 ```bash
-cp .env.example .env
-docker compose up -d postgres redis
+./scripts/dev.sh        # or: make dev
 ```
 
-Backend (local):
+This starts Postgres, Redis, the backend (migrations + hot reload) and the frontend:
+
+- Frontend: http://localhost:3000
+- Backend API + Swagger docs: http://localhost:8000/docs
+
+Stop with `Ctrl+C`, or `make down`. First run builds images and installs deps, so it takes a few
+minutes; later runs are fast.
+
+> If you see "Cannot connect to the Docker daemon", start Docker Desktop first.
+
+## Native dev (optional, without Docker)
+
+macOS ships Python as `python3`, and pnpm comes bundled with Node via corepack.
 
 ```bash
+# backend
 cd backend
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
+alembic upgrade head
 uvicorn app.main:app --reload
-```
 
-Frontend (local):
-
-```bash
+# frontend (separate terminal)
+corepack enable
 pnpm install
 pnpm --filter @panelka/frontend dev
 ```
+
+Native dev still needs Postgres and Redis running (e.g. `docker compose up -d postgres redis`).
 
 ## Typed API client
 

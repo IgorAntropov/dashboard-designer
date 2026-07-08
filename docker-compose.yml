@@ -9,6 +9,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U panelka"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   redis:
     image: redis:7-alpine
@@ -19,14 +24,40 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    working_dir: /srv
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
     environment:
+      PYTHONPATH: /srv
       PANELKA_DATABASE_URL: postgresql+asyncpg://panelka:panelka@postgres:5432/panelka
       PANELKA_REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./backend:/srv
+      - ./VERSION:/srv/VERSION:ro
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     ports:
       - "8000:8000"
+
+  frontend:
+    image: node:20-slim
+    working_dir: /workspace
+    command: >
+      sh -c "corepack enable &&
+             pnpm install &&
+             pnpm --filter @panelka/frontend dev --host 0.0.0.0"
+    environment:
+      NUXT_PUBLIC_API_ORIGIN: http://localhost:8000
+    volumes:
+      - ./:/workspace
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

@@ -42,8 +42,11 @@ stay aligned with it.
 
 ## 4. Environments
 
-Local dev via docker-compose (Postgres + Redis + backend). Frontend runs via Nuxt dev server.
-Secrets via `.env` (see `.env.example`); nothing committed.
+Local dev is fully containerized via `docker compose` (Postgres + Redis + backend with migrations and
+hot reload + frontend via corepack/pnpm). One command: `./scripts/dev.sh` (or `make dev`); the only
+host requirement is a running Docker Desktop. Frontend on `:3000`, backend on `:8000`. Native
+(non-Docker) dev is also documented in the README. Secrets via `.env` (see `.env.example`); nothing
+committed.
 
 ## 5. Versioning
 

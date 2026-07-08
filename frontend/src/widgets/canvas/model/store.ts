@@ -26,6 +26,11 @@ function clone<T>(value: T): T {
 export const useCanvasStore = defineStore('canvas', () => {
   const widgets = ref<WidgetInstance[]>([])
   const selectedId = ref<string | null>(null)
+  const themeKey = ref('light-minimal')
+
+  function setTheme(key: string): void {
+    themeKey.value = key
+  }
 
   const selectedWidget = computed(
     () => widgets.value.find((item) => item.id === selectedId.value) ?? null,
@@ -115,6 +120,8 @@ export const useCanvasStore = defineStore('canvas', () => {
     widgets,
     selectedId,
     selectedWidget,
+    themeKey,
+    setTheme,
     setWidgets,
     add,
     addAt,

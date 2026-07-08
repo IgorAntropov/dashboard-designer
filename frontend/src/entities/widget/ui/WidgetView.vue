@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import type { RenderInput, WidgetHandle } from '@panelka/renderer'
+import type { RenderInput, RenderTheme, WidgetHandle } from '@panelka/renderer'
 import { renderWidget } from '@panelka/renderer'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import type { WidgetInstance } from '@entities/widget'
 
 import { sampleDataFor } from '../model/sample'
-import { getRenderTheme } from '../model/theme'
 
-const props = defineProps<{ widget: WidgetInstance }>()
+const props = defineProps<{ widget: WidgetInstance; theme: RenderTheme }>()
 
 const host = ref<HTMLElement | null>(null)
 let handle: WidgetHandle | null = null
@@ -20,7 +19,7 @@ function buildInput(): RenderInput {
     config: props.widget.config,
     binding: props.widget.binding,
     data: sampleDataFor(props.widget.type),
-    theme: getRenderTheme(),
+    theme: props.theme,
   }
 }
 
@@ -34,7 +33,7 @@ onMounted(() => {
 })
 
 watch(
-  () => props.widget,
+  [() => props.widget, () => props.theme],
   () => handle?.update(buildInput()),
   { deep: true },
 )

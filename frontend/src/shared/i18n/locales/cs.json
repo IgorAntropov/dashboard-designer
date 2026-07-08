@@ -67,7 +67,7 @@
     "cancel": "Zrušit",
     "confirmDelete": "Smazat dashboard?"
   },
-  "editor": { "title": "Editor", "back": "Zpět" },
+  "editor": { "title": "Editor", "back": "Zpět", "theme": "Motiv" },
   "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý" },
   "language": { "label": "Jazyk" }
 }

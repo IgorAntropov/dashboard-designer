@@ -67,7 +67,7 @@
     "cancel": "Annuler",
     "confirmDelete": "Supprimer le tableau de bord ?"
   },
-  "editor": { "title": "Éditeur", "back": "Retour" },
+  "editor": { "title": "Éditeur", "back": "Retour", "theme": "Thème" },
   "theme": { "system": "Système", "light": "Clair", "dark": "Sombre" },
   "language": { "label": "Langue" }
 }

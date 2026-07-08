@@ -6,6 +6,7 @@ import type { RenderInput, WidgetHandle } from './types'
 export type { RenderInput, RenderTheme, WidgetHandle } from './types'
 export { resolveSeries } from './series'
 export { buildChartOption } from './option'
+export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme } from './themes'
 
 const CHART_TYPES = new Set(['bar-chart', 'line-chart', 'pie-chart'])
 

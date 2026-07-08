@@ -67,7 +67,7 @@
     "cancel": "Annulla",
     "confirmDelete": "Eliminare la dashboard?"
   },
-  "editor": { "title": "Editor", "back": "Indietro" },
+  "editor": { "title": "Editor", "back": "Indietro", "theme": "Tema" },
   "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },
   "language": { "label": "Lingua" }
 }

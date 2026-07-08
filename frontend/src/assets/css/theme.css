@@ -484,13 +484,24 @@ body {
   margin-bottom: 0.4rem;
 }
 
+.pk-canvas {
+  background-color: var(--pk-bg);
+  color: var(--pk-text);
+  border: 1px solid var(--pk-border);
+  min-height: 240px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
 .pk-widget {
   position: relative;
   height: 100%;
   padding: 0.5rem;
-  border: 1px solid var(--pk-border);
+  border: 1px solid color-mix(in srgb, var(--pk-muted) 30%, transparent);
   border-radius: 0.6rem;
   background-color: var(--pk-surface);
+  color: var(--pk-text);
   overflow: hidden;
   cursor: pointer;
 }

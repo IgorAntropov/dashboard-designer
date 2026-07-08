@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { GridStack, GridStackNode } from 'gridstack'
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { getTheme } from '@panelka/renderer'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { WidgetView } from '@entities/widget'
 import { AppButton } from '@shared/ui'
@@ -8,6 +9,14 @@ import { AppButton } from '@shared/ui'
 import { useCanvasStore } from '../model/store'
 
 const store = useCanvasStore()
+const theme = computed(() => getTheme(store.themeKey))
+const themeVars = computed(() => ({
+  '--pk-bg': theme.value.colorBg,
+  '--pk-surface': theme.value.colorSurface,
+  '--pk-text': theme.value.colorText,
+  '--pk-muted': theme.value.colorMuted,
+  '--pk-accent': theme.value.colorAccent,
+}))
 const gridElement = ref<HTMLDivElement | null>(null)
 let grid: GridStack | null = null
 const registered = new Set<string>()
@@ -96,7 +105,11 @@ function onRemove(id: string): void {
 </script>
 
 <template>
-  <div ref="gridElement" class="grid-stack border rounded bg-light">
+  <div
+    ref="gridElement"
+    class="grid-stack pk-canvas rounded"
+    :style="themeVars"
+  >
     <div
       v-for="widget in store.widgets"
       :key="widget.id"
@@ -121,7 +134,7 @@ function onRemove(id: string): void {
           aria-label="delete"
           @click="onRemove(widget.id)"
         />
-        <WidgetView :widget="widget" class="pk-widget__body" />
+        <WidgetView :widget="widget" :theme="theme" class="pk-widget__body" />
       </div>
     </div>
   </div>

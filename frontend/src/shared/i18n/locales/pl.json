@@ -67,7 +67,7 @@
     "cancel": "Anuluj",
     "confirmDelete": "Usunąć pulpit?"
   },
-  "editor": { "title": "Edytor", "back": "Wstecz" },
+  "editor": { "title": "Edytor", "back": "Wstecz", "theme": "Motyw" },
   "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },
   "language": { "label": "Język" }
 }

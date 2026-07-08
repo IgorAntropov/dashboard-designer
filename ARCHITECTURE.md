@@ -43,6 +43,13 @@ and the canvas store clones them on create. The store tracks `selectedId`/`selec
 `widgets/config-panel/ConfigPanel.vue` edits the title/text, and per schema field the label, type and
 bound data key — mutations flow back into the store so `WidgetView` re-renders live.
 
+Themes (1.6): `packages/renderer` ships 5 dashboard token sets (`light-minimal`, `dark-pro`, `neon`,
+`pastel`, `corporate-blue`) as `RenderTheme`s via `getTheme(key)`. The canvas store holds `themeKey`;
+`DashboardCanvas` applies the theme's colors as inline CSS vars on the grid (so DOM widgets/surfaces
+follow it) and passes the `RenderTheme` to `WidgetView` (charts). `widgets/theme-switcher/ThemeSelector`
+changes it; the editor loads it from the dashboard's `theme_key`. This dashboard theme is independent
+from the app's light/dark color-mode.
+
 ## 3. Data / contract flow
 
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in

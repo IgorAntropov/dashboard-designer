@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     oauth_vk_client_id: str = ""
     oauth_vk_client_secret: str = ""
 
+    cloudpayments_public_id: str = ""
+    cloudpayments_api_secret: str = ""
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:

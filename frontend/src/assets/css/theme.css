@@ -196,6 +196,31 @@ body {
   --bs-btn-active-bg: var(--pk-accent-strong);
   --bs-btn-active-border-color: var(--pk-accent-strong);
   --bs-btn-active-color: var(--pk-accent-contrast);
+  --bs-btn-disabled-bg: var(--pk-accent);
+  --bs-btn-disabled-border-color: var(--pk-accent);
+  --bs-btn-disabled-color: var(--pk-accent-contrast);
+  --bs-btn-disabled-opacity: 0.5;
+}
+
+.pk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.pk-badge--accent {
+  background-color: var(--pk-accent);
+  color: var(--pk-accent-contrast);
+}
+
+.pk-badge--neutral {
+  background-color: color-mix(in srgb, var(--pk-border) 45%, transparent);
+  color: var(--pk-text);
 }
 
 .app-shell {
@@ -342,6 +367,16 @@ body {
 .app-nav__switchers .lang-switch__btn {
   width: 100%;
   justify-content: flex-start;
+}
+
+.app-nav__switchers .theme-switch {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.app-nav--compact .app-nav__switchers .theme-switch {
+  width: auto;
+  justify-content: center;
 }
 
 .app-nav--compact .app-nav__head {

@@ -19,6 +19,34 @@ export const useSessionStore = defineStore('session', () => {
   const user = ref<SessionUser | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
 
+  const ACCESS_REFRESH_MS = 12 * 60 * 1000
+  let refreshTimer: ReturnType<typeof setTimeout> | null = null
+
+  function stopRefreshTimer(): void {
+    if (refreshTimer) {
+      clearTimeout(refreshTimer)
+      refreshTimer = null
+    }
+  }
+
+  function scheduleRefresh(): void {
+    if (!import.meta.client) {
+      return
+    }
+    stopRefreshTimer()
+    refreshTimer = setTimeout(() => {
+      void tick()
+    }, ACCESS_REFRESH_MS)
+  }
+
+  async function tick(): Promise<void> {
+    if (await refresh()) {
+      scheduleRefresh()
+    } else {
+      stopRefreshTimer()
+    }
+  }
+
   function applyAccess(token: string | null): void {
     setAccessToken(token)
     accessCookie.value = token
@@ -53,11 +81,13 @@ export const useSessionStore = defineStore('session', () => {
     if (accessCookie.value) {
       setAccessToken(accessCookie.value)
       if (await fetchMe()) {
+        scheduleRefresh()
         return
       }
     }
     if (await refresh()) {
       await fetchMe()
+      scheduleRefresh()
     }
   }
 
@@ -70,7 +100,11 @@ export const useSessionStore = defineStore('session', () => {
     }
     applyAccess(data.access_token)
     refreshCookie.value = data.refresh_token
-    return fetchMe()
+    const ok = await fetchMe()
+    if (ok) {
+      scheduleRefresh()
+    }
+    return ok
   }
 
   async function register(
@@ -122,6 +156,7 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function logout(): void {
+    stopRefreshTimer()
     user.value = null
     applyAccess(null)
     refreshCookie.value = null

@@ -19,7 +19,7 @@ function toggle(): void {
 
     <aside class="app-nav" :class="{ 'app-nav--compact': compact }">
       <div class="app-nav__head">
-        <NuxtLink to="/" class="text-reset text-decoration-none">
+        <NuxtLink to="/dashboards" class="text-reset text-decoration-none">
           <Logo :show-word="!compact" />
         </NuxtLink>
       </div>

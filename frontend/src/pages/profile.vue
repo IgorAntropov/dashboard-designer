@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { AppButton, AppModal, PasswordField } from '@shared/ui'
+import { AppBadge, AppButton, AppModal, PasswordField } from '@shared/ui'
 
 const { t } = useI18n()
 const session = useSessionStore()
@@ -92,14 +92,12 @@ useHead({ title: computed(() => t('profile.title')) })
           <div class="plan-card__meta text-muted small">
             {{ $t('dashboards.title') }}: {{ plan.dashboards }}
           </div>
-          <AppButton
+          <AppBadge
             v-if="session.user?.subscription_tier === plan.tier"
-            size="sm"
-            variant="ghost"
-            disabled
+            class="align-self-start"
           >
             {{ $t('profile.current') }}
-          </AppButton>
+          </AppBadge>
           <AppButton v-else size="sm" @click="onChooseTier(plan.tier)">
             {{ $t('profile.choose') }}
           </AppButton>
@@ -131,9 +129,11 @@ useHead({ title: computed(() => t('profile.title')) })
 
     <hr class="my-4">
 
-    <AppButton variant="secondary" icon="logout" @click="onLogout">
-      {{ $t('nav.logout') }}
-    </AppButton>
+    <div class="d-flex justify-content-end">
+      <AppButton variant="secondary" icon="logout" @click="onLogout">
+        {{ $t('nav.logout') }}
+      </AppButton>
+    </div>
 
     <AppModal v-model="pwModal" :title="$t('profile.changePassword')">
       <form id="change-password-form" @submit.prevent="onChangePassword">

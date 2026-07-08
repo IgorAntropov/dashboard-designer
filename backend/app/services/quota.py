@@ -6,6 +6,16 @@ DASHBOARD_LIMITS: dict[SubscriptionTier, int | None] = {
     SubscriptionTier.unlimited: None,
 }
 
+WIDGET_LIMITS: dict[SubscriptionTier, int | None] = {
+    SubscriptionTier.free: 5,
+    SubscriptionTier.pro: None,
+    SubscriptionTier.unlimited: None,
+}
+
 
 def dashboard_limit(tier: SubscriptionTier) -> int | None:
     return DASHBOARD_LIMITS[tier]
+
+
+def widget_limit(tier: SubscriptionTier) -> int | None:
+    return WIDGET_LIMITS[tier]

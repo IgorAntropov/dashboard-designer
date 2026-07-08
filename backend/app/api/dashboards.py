@@ -64,6 +64,8 @@ async def update_dashboard(
         )
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
+    except DashboardQuotaExceededError as exc:
+        raise _QUOTA from exc
     await session.commit()
     return dashboard
 

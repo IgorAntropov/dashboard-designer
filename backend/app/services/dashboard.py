@@ -10,7 +10,7 @@ from app.models.embed_token import EmbedToken
 from app.models.enums import DashboardStatus
 from app.models.user import User
 from app.schemas.dashboard import DashboardCreate, DashboardUpdate
-from app.services.quota import dashboard_limit
+from app.services.quota import dashboard_limit, widget_limit
 
 
 class DashboardError(Exception):
@@ -80,10 +80,20 @@ class DashboardService:
         self, user: User, dashboard_id: uuid.UUID, payload: DashboardUpdate
     ) -> Dashboard:
         dashboard = await self.get_owned(user, dashboard_id)
-        for field, value in payload.model_dump(exclude_unset=True).items():
+        data = payload.model_dump(exclude_unset=True)
+        self._ensure_widget_limit(user, data.get("layout"))
+        for field, value in data.items():
             setattr(dashboard, field, value)
         await self._session.flush()
         return dashboard
+
+    def _ensure_widget_limit(self, user: User, layout: object) -> None:
+        limit = widget_limit(user.subscription_tier)
+        if limit is None or not isinstance(layout, dict):
+            return
+        widgets = layout.get("widgets")
+        if isinstance(widgets, list) and len(widgets) > limit:
+            raise DashboardQuotaExceededError
 
     async def publish(
         self, user: User, dashboard_id: uuid.UUID, allowed_domains: list[str]

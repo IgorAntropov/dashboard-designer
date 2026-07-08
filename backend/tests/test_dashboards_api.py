@@ -64,3 +64,24 @@ async def test_dashboard_crud_ownership_and_quota(client: AsyncClient) -> None:
 async def test_requires_authentication(client: AsyncClient) -> None:
     response = await client.get("/api/v1/dashboards")
     assert response.status_code == 401
+
+
+async def test_free_tier_widget_cap(client: AsyncClient) -> None:
+    owner = await _auth_headers(client, "cap@example.com")
+    created = await client.post(
+        "/api/v1/dashboards", json={"title": "Capped"}, headers=owner
+    )
+    dashboard_id = created.json()["id"]
+
+    def widgets(count: int) -> dict[str, object]:
+        return {"layout": {"widgets": [{"id": str(i)} for i in range(count)]}}
+
+    ok = await client.patch(
+        f"/api/v1/dashboards/{dashboard_id}", json=widgets(5), headers=owner
+    )
+    assert ok.status_code == 200
+
+    over = await client.patch(
+        f"/api/v1/dashboards/{dashboard_id}", json=widgets(6), headers=owner
+    )
+    assert over.status_code == 403

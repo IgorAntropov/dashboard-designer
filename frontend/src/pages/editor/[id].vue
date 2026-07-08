@@ -24,11 +24,15 @@ let saveTimer: ReturnType<typeof setTimeout> | null = null
 
 async function save(): Promise<void> {
   saveState.value = 'saving'
-  await updateDashboard(dashboardId, {
+  const patch = {
     layout: { widgets: canvasStore.widgets },
     theme_key: canvasStore.themeKey,
-  })
-  saveState.value = 'saved'
+  }
+  let result = await updateDashboard(dashboardId, patch)
+  if (!result) {
+    result = await updateDashboard(dashboardId, patch)
+  }
+  saveState.value = result ? 'saved' : 'idle'
 }
 
 onMounted(async () => {

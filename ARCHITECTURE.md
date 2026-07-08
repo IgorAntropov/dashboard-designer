@@ -141,7 +141,8 @@ logout (removed from the nav). The nav gained a Profile link; its collapse toggl
 and is left-anchored. Reusable `shared/ui`: `AppButton`, `AppIcon`, `AppModal`, `AppBadge`, `Logo`, `PasswordField`.
 
 Session hardening: the frontend keeps the access token alive with a proactive refresh timer (rotates
-before expiry) rather than only reacting to 401s. Single active session is enforced over a WebSocket
+before expiry) and a reactive guard — the shared api client intercepts `401` (non-auth paths), runs the
+refresh, retries idempotent requests, and on refresh failure logs out and redirects to `/login`. Single active session is enforced over a WebSocket
 `GET /api/v1/ws/session?token=` — an in-memory `SessionConnectionManager` keeps one live socket per
 user and, on a new login, sends `{"type":"kicked"}` to the previous socket and closes it; the client
 shows a modal and logs out. (In-memory is per-process — production scales this via Redis pub/sub, §9.4.)

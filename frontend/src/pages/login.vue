@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { LanguageSwitcher, ThemeToggle } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
@@ -28,34 +27,46 @@ useHead({ title: 'Panelka — Login' })
 </script>
 
 <template>
-  <main class="container py-5" style="max-width: 420px">
-    <div class="d-flex justify-content-end gap-2 mb-4">
-      <LanguageSwitcher />
-      <ThemeToggle />
+  <section class="auth-center">
+    <div class="auth-card">
+      <h1 class="h3 mb-4 text-center">{{ $t('auth.loginTitle') }}</h1>
+
+      <form @submit.prevent="onSubmit">
+        <div class="form-floating mb-3">
+          <input
+            id="login-email"
+            v-model="email"
+            type="email"
+            class="form-control"
+            :placeholder="$t('auth.email')"
+            required
+          >
+          <label for="login-email">{{ $t('auth.email') }}</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            id="login-password"
+            v-model="password"
+            type="password"
+            class="form-control"
+            :placeholder="$t('auth.password')"
+            required
+          >
+          <label for="login-password">{{ $t('auth.password') }}</label>
+        </div>
+
+        <p v-if="failed" class="text-danger small">{{ $t('auth.failed') }}</p>
+
+        <button class="btn btn-primary w-100" type="submit" :disabled="pending">
+          {{ $t('auth.login') }}
+        </button>
+      </form>
+
+      <p class="mt-3 mb-0 small text-center">
+        {{ $t('auth.noAccount') }}
+        <NuxtLink to="/register">{{ $t('auth.register') }}</NuxtLink>
+      </p>
     </div>
-
-    <h1 class="h3 mb-4">{{ $t('auth.loginTitle') }}</h1>
-
-    <form @submit.prevent="onSubmit">
-      <div class="mb-3">
-        <label class="form-label">{{ $t('auth.email') }}</label>
-        <input v-model="email" type="email" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">{{ $t('auth.password') }}</label>
-        <input v-model="password" type="password" class="form-control" required>
-      </div>
-
-      <p v-if="failed" class="text-danger small">{{ $t('auth.failed') }}</p>
-
-      <button class="btn btn-primary w-100" type="submit" :disabled="pending">
-        {{ $t('auth.login') }}
-      </button>
-    </form>
-
-    <p class="mt-3 mb-0 small">
-      {{ $t('auth.noAccount') }}
-      <NuxtLink to="/register">{{ $t('auth.register') }}</NuxtLink>
-    </p>
-  </main>
+  </section>
 </template>

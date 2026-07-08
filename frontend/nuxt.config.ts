@@ -29,8 +29,12 @@ export default defineNuxtConfig({
   i18n: {
     strategy: 'no_prefix',
     defaultLocale: 'ru',
-    detectBrowserLanguage: false,
-    vueI18n: './src/shared/i18n/config.ts',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'panelka_locale',
+      fallbackLocale: 'ru',
+      redirectOn: 'root',
+    },
     locales: [
       { code: 'ru', language: 'ru-RU', name: 'Русский' },
       { code: 'en', language: 'en-US', name: 'English' },
@@ -43,6 +47,20 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+        },
+      ],
+    },
   },
   runtimeConfig: {
     public: {

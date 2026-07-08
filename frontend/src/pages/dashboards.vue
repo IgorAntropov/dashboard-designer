@@ -42,11 +42,15 @@ useHead({ title: 'Panelka — Dashboards' })
     <h1 class="h3 mb-4">{{ $t('dashboards.title') }}</h1>
 
     <form class="d-flex gap-2 mb-4" @submit.prevent="onCreate">
-      <input
-        v-model="newTitle"
-        class="form-control"
-        :placeholder="$t('dashboards.placeholder')"
-      >
+      <div class="form-floating flex-grow-1">
+        <input
+          id="dashboard-title"
+          v-model="newTitle"
+          class="form-control"
+          :placeholder="$t('dashboards.placeholder')"
+        >
+        <label for="dashboard-title">{{ $t('dashboards.placeholder') }}</label>
+      </div>
       <button class="btn btn-primary" type="submit">
         {{ $t('dashboards.create') }}
       </button>

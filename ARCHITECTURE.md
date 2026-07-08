@@ -90,7 +90,12 @@ UX foundation (1.2b): `@nuxtjs/i18n` with 7 locales (ru default, en/de/pl/cs/fr/
 `shared/i18n/config.ts` message bundle; `@nuxtjs/color-mode` (system/light/dark) mapped to Bootstrap's
 `data-bs-theme` in `app.vue`; design tokens in `assets/css/theme.css` (neutral base + yellow accent);
 a right-anchored app-shell `layouts/default.vue` with nav + `shared/ui` `ThemeToggle`/`LanguageSwitcher`;
-landing/auth use `layouts/blank.vue`; page transitions enabled. Locale choice persists via a cookie.
+landing/auth use `layouts/blank.vue`; page transitions enabled. Locale messages are injected via a
+`plugins/i18n.ts` plugin (setLocaleMessage from `shared/i18n/messages.ts`) to avoid path resolution
+issues; the initial locale is auto-detected from the browser (Accept-Language) with `ru` fallback and
+persisted in a cookie. The blank layout floats a glass control cluster (top-right) with a flag-based
+`LanguageSwitcher` and a tri-state (light/system/dark) `ThemeToggle`. Auth forms are centered with
+Bootstrap floating labels. Base font is Inter (covers Latin, Latin-Extended and Cyrillic).
 
 Auth UI (1.2c): `entities/session` Pinia store holds the current user + access/refresh tokens (cookies),
 with `login`/`register`/`logout`/`refresh`/`init`; a client plugin runs `init()` on startup and the

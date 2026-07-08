@@ -484,6 +484,46 @@ body {
   margin-bottom: 0.4rem;
 }
 
+.embed-root {
+  min-height: 100vh;
+  padding: 12px;
+  background-color: var(--pk-bg);
+  color: var(--pk-text);
+}
+
+.embed-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 8px;
+}
+
+.embed-widget {
+  min-width: 0;
+}
+
+.embed-widget__body {
+  width: 100%;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--pk-muted) 30%, transparent);
+  border-radius: 0.5rem;
+  background-color: var(--pk-surface);
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.embed-empty {
+  color: var(--pk-muted);
+  padding: 1rem;
+}
+
+.embed-attr {
+  margin-top: 10px;
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--pk-muted);
+}
+
 .pk-canvas {
   background-color: var(--pk-bg);
   color: var(--pk-text);

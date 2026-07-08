@@ -8,7 +8,8 @@ export default defineNuxtRouteMiddleware((to) => {
   }
 
   const session = useSessionStore()
-  const isPublic = PUBLIC_ROUTES.includes(to.path)
+  const isPublic =
+    PUBLIC_ROUTES.includes(to.path) || to.path.startsWith('/embed/')
 
   if (!session.isAuthenticated && !isPublic) {
     return navigateTo('/login')

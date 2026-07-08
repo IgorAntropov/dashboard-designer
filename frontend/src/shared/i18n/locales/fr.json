@@ -31,7 +31,10 @@
     "security": "Sécurité",
     "changePassword": "Changer le mot de passe",
     "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe"
+    "newPassword": "Nouveau mot de passe",
+    "plans": "Offres",
+    "current": "Actuel",
+    "choose": "Choisir"
   },
   "settings": {
     "title": "Paramètres",

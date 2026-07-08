@@ -104,7 +104,7 @@ useHead({ title: computed(() => t('dashboards.title')) })
           type="submit"
           icon="plus"
           form="create-dashboard-form"
-          :disabled="creating"
+          :disabled="creating || !newTitle.trim()"
         >
           {{ $t('dashboards.create') }}
         </AppButton>

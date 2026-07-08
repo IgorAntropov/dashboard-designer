@@ -54,7 +54,11 @@ useHead({ title: computed(() => t('auth.loginTitle')) })
 
         <p v-if="failed" class="text-danger small">{{ $t('auth.failed') }}</p>
 
-        <AppButton type="submit" block :disabled="pending">
+        <AppButton
+          type="submit"
+          block
+          :disabled="pending || !email.trim() || !password"
+        >
           {{ $t('auth.login') }}
         </AppButton>
       </form>

@@ -15,9 +15,13 @@ const flags: Record<string, string> = {
 }
 
 const localeList = computed(() => locales.value as LocaleObject[])
+const currentName = computed(
+  () => localeList.value.find((item) => item.code === locale.value)?.name ?? '',
+)
+
 const open = ref(false)
-const root = ref<HTMLElement | null>(null)
 const trigger = ref<HTMLElement | null>(null)
+const menu = ref<HTMLElement | null>(null)
 const menuStyle = ref<Record<string, string>>({})
 
 function place(): void {
@@ -46,13 +50,18 @@ function toggle(): void {
   open.value = !open.value
 }
 
-function select(code: string): void {
-  setLocale(code)
+async function select(code: string): Promise<void> {
+  await setLocale(code)
   open.value = false
 }
 
 function onDocumentClick(event: MouseEvent): void {
-  if (open.value && root.value && !root.value.contains(event.target as Node)) {
+  const target = event.target as Node
+  if (
+    open.value &&
+    !trigger.value?.contains(target) &&
+    !menu.value?.contains(target)
+  ) {
     open.value = false
   }
 }
@@ -62,31 +71,34 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick))
 </script>
 
 <template>
-  <div ref="root" class="lang-switch">
+  <div class="lang-switch">
     <button
       ref="trigger"
       type="button"
       class="lang-switch__btn"
       :aria-label="$t('language.label')"
       :aria-expanded="open"
-      @click="toggle"
+      @click.stop="toggle"
     >
       <span class="lang-switch__flag">{{ flags[locale] }}</span>
+      <span class="lang-switch__name">{{ currentName }}</span>
       <span class="lang-switch__caret" aria-hidden="true">▾</span>
     </button>
 
-    <ul v-if="open" class="lang-switch__menu" :style="menuStyle">
-      <li v-for="item in localeList" :key="item.code">
-        <button
-          type="button"
-          class="lang-switch__item"
-          :class="{ 'is-active': item.code === locale }"
-          @click="select(item.code)"
-        >
-          <span class="lang-switch__flag">{{ flags[item.code] }}</span>
-          <span>{{ item.name }}</span>
-        </button>
-      </li>
-    </ul>
+    <Teleport to="body">
+      <ul v-if="open" ref="menu" class="lang-switch__menu" :style="menuStyle">
+        <li v-for="item in localeList" :key="item.code">
+          <button
+            type="button"
+            class="lang-switch__item"
+            :class="{ 'is-active': item.code === locale }"
+            @click="select(item.code)"
+          >
+            <span class="lang-switch__flag">{{ flags[item.code] }}</span>
+            <span>{{ item.name }}</span>
+          </button>
+        </li>
+      </ul>
+    </Teleport>
   </div>
 </template>

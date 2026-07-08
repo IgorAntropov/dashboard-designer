@@ -31,7 +31,10 @@
     "security": "Sicurezza",
     "changePassword": "Cambia password",
     "currentPassword": "Password attuale",
-    "newPassword": "Nuova password"
+    "newPassword": "Nuova password",
+    "plans": "Piani",
+    "current": "Attuale",
+    "choose": "Scegli"
   },
   "settings": {
     "title": "Impostazioni",

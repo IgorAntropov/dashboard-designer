@@ -31,7 +31,10 @@
     "security": "Zabezpečení",
     "changePassword": "Změnit heslo",
     "currentPassword": "Současné heslo",
-    "newPassword": "Nové heslo"
+    "newPassword": "Nové heslo",
+    "plans": "Tarify",
+    "current": "Aktuální",
+    "choose": "Vybrat"
   },
   "settings": {
     "title": "Nastavení",

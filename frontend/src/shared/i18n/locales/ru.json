@@ -31,7 +31,10 @@
     "security": "Безопасность",
     "changePassword": "Сменить пароль",
     "currentPassword": "Текущий пароль",
-    "newPassword": "Новый пароль"
+    "newPassword": "Новый пароль",
+    "plans": "Тарифы",
+    "current": "Текущий",
+    "choose": "Выбрать"
   },
   "settings": {
     "title": "Настройки",

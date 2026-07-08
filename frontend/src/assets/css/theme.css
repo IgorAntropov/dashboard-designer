@@ -84,6 +84,15 @@ body {
   line-height: 1;
 }
 
+.lang-switch__name {
+  flex: 1 1 auto;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+}
+
 .lang-switch__caret {
   font-size: 0.7rem;
   color: var(--pk-muted);
@@ -114,11 +123,8 @@ body {
 }
 
 .lang-switch__menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 0.35rem);
-  z-index: 1050;
-  min-width: 172px;
+  z-index: 1090;
+  min-width: 180px;
   margin: 0;
   padding: 0.25rem;
   list-style: none;
@@ -197,7 +203,7 @@ body {
 }
 
 .app-shell--compact {
-  --pk-nav-width: 84px;
+  --pk-nav-width: 96px;
 }
 
 .app-content {
@@ -304,6 +310,10 @@ body {
   flex: 0 0 auto;
 }
 
+.app-nav__label {
+  transition: opacity 0.2s ease;
+}
+
 .app-nav__link:hover {
   background-color: color-mix(in srgb, var(--pk-accent) 16%, transparent);
 }
@@ -323,40 +333,35 @@ body {
 
 .app-nav__switchers {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.app-nav__logout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.app-nav--compact .app-nav__head {
   flex-direction: column;
-  justify-content: center;
-  gap: 0.75rem;
+  align-items: stretch;
+  gap: 0.5rem;
 }
 
-.app-nav--compact .app-nav__link {
-  justify-content: center;
-  padding: 0.6rem;
+.app-nav__switchers .lang-switch__btn {
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .app-nav--compact .app-nav__label {
+  opacity: 0;
+}
+
+.app-nav--compact .lang-switch__name {
   display: none;
 }
 
 .app-nav--compact .app-nav__switchers {
-  flex-direction: column;
   align-items: center;
 }
 
+.app-nav--compact .app-nav__switchers .lang-switch__btn {
+  width: auto;
+  justify-content: center;
+}
+
 .app-nav--compact .theme-switch__opt {
-  width: 22px;
+  width: 20px;
 }
 
 .glass-controls {
@@ -518,6 +523,46 @@ body {
   z-index: 2;
   background-color: color-mix(in srgb, var(--pk-surface) 80%, transparent);
   backdrop-filter: blur(4px);
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.9rem;
+  background-color: var(--pk-surface);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.plan-card--active {
+  border-color: var(--pk-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pk-accent) 40%, transparent);
+}
+
+.plan-card__name {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-size: 0.85rem;
+  color: var(--pk-muted);
+}
+
+.plan-card__price {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.plan-card__meta {
+  margin-bottom: 0.5rem;
 }
 
 .pk-modal {

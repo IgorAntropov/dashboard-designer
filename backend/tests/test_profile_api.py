@@ -27,6 +27,17 @@ async def test_update_display_name(client: AsyncClient) -> None:
     assert response.json()["display_name"] == "New Name"
 
 
+async def test_update_subscription_tier(client: AsyncClient) -> None:
+    headers = await _auth_headers(client)
+
+    response = await client.patch(
+        "/api/v1/me/subscription", json={"tier": "pro"}, headers=headers
+    )
+
+    assert response.status_code == 200
+    assert response.json()["subscription_tier"] == "pro"
+
+
 async def test_change_password_flow(client: AsyncClient) -> None:
     headers = await _auth_headers(client)
 

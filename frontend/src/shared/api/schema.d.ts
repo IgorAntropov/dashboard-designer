@@ -65,6 +65,17 @@ export interface paths {
     patch: operations['update_me_api_v1_me_patch']
     trace?: never
   }
+  '/api/v1/me/subscription': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch: operations['update_subscription_api_v1_me_subscription_patch']
+    trace?: never
+  }
   '/api/v1/auth/change-password': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get?: never
@@ -134,6 +145,9 @@ export interface components {
     ChangePasswordRequest: {
       current_password: string
       new_password: string
+    }
+    SubscriptionUpdate: {
+      tier: components['schemas']['SubscriptionTier']
     }
     Dashboard: {
       id: string
@@ -235,6 +249,18 @@ export interface operations {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     requestBody: {
       content: { 'application/json': components['schemas']['UserUpdate'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserOut'] }
+      }
+    }
+  }
+  update_subscription_api_v1_me_subscription_patch: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['SubscriptionUpdate'] }
     }
     responses: {
       200: {

@@ -98,6 +98,19 @@ export const useSessionStore = defineStore('session', () => {
     return true
   }
 
+  async function setTier(
+    tier: 'free' | 'pro' | 'unlimited',
+  ): Promise<boolean> {
+    const { data, error } = await api.PATCH('/api/v1/me/subscription', {
+      body: { tier },
+    })
+    if (error || !data) {
+      return false
+    }
+    user.value = data
+    return true
+  }
+
   async function changePassword(
     currentPassword: string,
     newPassword: string,
@@ -123,6 +136,7 @@ export const useSessionStore = defineStore('session', () => {
     refresh,
     updateName,
     changePassword,
+    setTier,
     logout,
   }
 })

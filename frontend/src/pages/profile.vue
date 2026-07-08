@@ -7,8 +7,35 @@ import { AppButton, AppModal, PasswordField } from '@shared/ui'
 const { t } = useI18n()
 const session = useSessionStore()
 
+type Tier = 'free' | 'pro' | 'unlimited'
+
+const plans: { tier: Tier; price: string; dashboards: string }[] = [
+  { tier: 'free', price: '0 ₽', dashboards: '1' },
+  { tier: 'pro', price: '490 ₽', dashboards: '3' },
+  { tier: 'unlimited', price: '990 ₽', dashboards: '∞' },
+]
+
 const displayName = ref(session.user?.display_name ?? '')
 const savingName = ref(false)
+
+const canSaveName = computed(
+  () =>
+    displayName.value.trim().length > 0 &&
+    displayName.value.trim() !== session.user?.display_name,
+)
+
+async function onSaveName(): Promise<void> {
+  savingName.value = true
+  await session.updateName(displayName.value.trim())
+  savingName.value = false
+}
+
+async function onChooseTier(tier: Tier): Promise<void> {
+  if (session.user?.subscription_tier === tier) {
+    return
+  }
+  await session.setTier(tier)
+}
 
 const pwModal = ref(false)
 const currentPassword = ref('')
@@ -16,15 +43,9 @@ const newPassword = ref('')
 const pwPending = ref(false)
 const pwError = ref(false)
 
-async function onSaveName(): Promise<void> {
-  const name = displayName.value.trim()
-  if (!name) {
-    return
-  }
-  savingName.value = true
-  await session.updateName(name)
-  savingName.value = false
-}
+const canChangePassword = computed(
+  () => currentPassword.value.length >= 8 && newPassword.value.length >= 8,
+)
 
 function openPasswordModal(): void {
   currentPassword.value = ''
@@ -54,17 +75,39 @@ useHead({ title: computed(() => t('profile.title')) })
 </script>
 
 <template>
-  <div class="container-xxl" style="max-width: 640px">
+  <div class="container-xxl" style="max-width: 760px">
     <h1 class="h3 mb-4">{{ $t('profile.title') }}</h1>
 
     <section class="mb-4">
-      <p class="mb-1 text-muted small">{{ $t('profile.subscription') }}</p>
-      <span class="badge text-bg-warning text-uppercase">
-        {{ session.user?.subscription_tier }}
-      </span>
+      <h2 class="h6 text-muted">{{ $t('profile.plans') }}</h2>
+      <div class="plan-grid">
+        <div
+          v-for="plan in plans"
+          :key="plan.tier"
+          class="plan-card"
+          :class="{ 'plan-card--active': session.user?.subscription_tier === plan.tier }"
+        >
+          <div class="plan-card__name text-uppercase">{{ plan.tier }}</div>
+          <div class="plan-card__price">{{ plan.price }}</div>
+          <div class="plan-card__meta text-muted small">
+            {{ $t('dashboards.title') }}: {{ plan.dashboards }}
+          </div>
+          <AppButton
+            v-if="session.user?.subscription_tier === plan.tier"
+            size="sm"
+            variant="ghost"
+            disabled
+          >
+            {{ $t('profile.current') }}
+          </AppButton>
+          <AppButton v-else size="sm" @click="onChooseTier(plan.tier)">
+            {{ $t('profile.choose') }}
+          </AppButton>
+        </div>
+      </div>
     </section>
 
-    <section class="mb-4">
+    <section class="mb-4" style="max-width: 420px">
       <div class="form-floating mb-2">
         <input
           id="profile-name"
@@ -74,7 +117,7 @@ useHead({ title: computed(() => t('profile.title')) })
         >
         <label for="profile-name">{{ $t('profile.displayName') }}</label>
       </div>
-      <AppButton :disabled="savingName" @click="onSaveName">
+      <AppButton :disabled="savingName || !canSaveName" @click="onSaveName">
         {{ $t('profile.save') }}
       </AppButton>
     </section>
@@ -88,7 +131,7 @@ useHead({ title: computed(() => t('profile.title')) })
 
     <hr class="my-4">
 
-    <AppButton variant="danger" @click="onLogout">
+    <AppButton variant="secondary" icon="logout" @click="onLogout">
       {{ $t('nav.logout') }}
     </AppButton>
 
@@ -115,7 +158,7 @@ useHead({ title: computed(() => t('profile.title')) })
         <AppButton
           type="submit"
           form="change-password-form"
-          :disabled="pwPending"
+          :disabled="pwPending || !canChangePassword"
         >
           {{ $t('profile.changePassword') }}
         </AppButton>

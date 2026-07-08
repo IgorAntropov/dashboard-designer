@@ -30,7 +30,12 @@
     "period": "Période",
     "info": "Info (infobulle)",
     "target": "Objectif",
-    "decimals": "Décimales"
+    "decimals": "Décimales",
+    "series": "Séries",
+    "seriesName": "Nom de série",
+    "addSeries": "Ajouter une série",
+    "dashed": "Pointillé",
+    "remove": "Supprimer"
   },
   "mapScope": {
     "world": "Monde",

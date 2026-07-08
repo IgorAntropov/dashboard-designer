@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { resolvePoints, resolveScalar, resolveSeries } from './series'
+import {
+  resolveCategories,
+  resolvePoints,
+  resolveScalar,
+  resolveSeries,
+  seriesDefs,
+  valuesForKey,
+} from './series'
 import type { RenderInput, RenderTheme } from './types'
 
 const theme: RenderTheme = {
@@ -62,6 +69,56 @@ describe('resolvePoints', () => {
       [1, 2],
       [3, 4],
     ])
+  })
+})
+
+describe('seriesDefs', () => {
+  it('defaults to a single series from the value binding', () => {
+    const defs = seriesDefs({
+      type: 'bar-chart',
+      config: {},
+      binding: { value: 'amount' },
+      theme,
+      data: [],
+    })
+    expect(defs).toEqual([{ key: 'amount', name: 'amount', dashed: false }])
+  })
+
+  it('reads named/dashed/typed series from config and drops invalid entries', () => {
+    const defs = seriesDefs({
+      type: 'line-chart',
+      config: {
+        series: [
+          { key: 'y2023', name: '2023' },
+          { key: 'y2024', name: '2024', dashed: true, type: 'line' },
+          { name: 'no key' },
+        ],
+      },
+      binding: {},
+      theme,
+      data: [],
+    })
+    expect(defs).toEqual([
+      { key: 'y2023', name: '2023', dashed: false, type: undefined },
+      { key: 'y2024', name: '2024', dashed: true, type: 'line' },
+    ])
+  })
+})
+
+describe('valuesForKey / resolveCategories', () => {
+  it('extracts a numeric column and the category axis', () => {
+    const input: RenderInput = {
+      type: 'bar-chart',
+      config: {},
+      binding: { label: 'month' },
+      theme,
+      data: [
+        { month: 'Jan', v: '3' },
+        { month: 'Feb', v: 5 },
+      ],
+    }
+    expect(resolveCategories(input)).toEqual(['Jan', 'Feb'])
+    expect(valuesForKey(input, 'v')).toEqual([3, 5])
   })
 })
 

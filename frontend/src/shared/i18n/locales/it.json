@@ -30,7 +30,12 @@
     "period": "Periodo",
     "info": "Info (tooltip)",
     "target": "Obiettivo",
-    "decimals": "Decimali"
+    "decimals": "Decimali",
+    "series": "Serie",
+    "seriesName": "Nome serie",
+    "addSeries": "Aggiungi serie",
+    "dashed": "Tratteggiato",
+    "remove": "Rimuovi"
   },
   "mapScope": {
     "world": "Mondo",

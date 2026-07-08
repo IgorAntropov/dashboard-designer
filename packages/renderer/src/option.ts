@@ -1,8 +1,30 @@
-import { resolvePoints, resolveScalar, resolveSeries } from './series'
+import { formatKpiValue } from './kpi'
+import {
+  resolveCategories,
+  resolvePoints,
+  resolveScalar,
+  resolveSeries,
+  seriesDefs,
+  valuesForKey,
+} from './series'
 import type { RenderInput } from './types'
 
 const PIE_TYPES = new Set(['pie-chart', 'donut-chart'])
-const CARTESIAN_TYPES = new Set(['bar-chart', 'line-chart', 'area-chart'])
+
+function decimalsOf(input: RenderInput): number | undefined {
+  return typeof input.config.decimals === 'number' ? input.config.decimals : undefined
+}
+
+function unitOf(input: RenderInput): string {
+  return typeof input.config.unit === 'string' ? input.config.unit : ''
+}
+
+function valueFormatter(input: RenderInput): (value: number) => string {
+  const decimals = decimalsOf(input)
+  const unit = unitOf(input)
+  return (value: number) =>
+    `${formatKpiValue(Number(value), decimals)}${unit ? ` ${unit}` : ''}`
+}
 
 function baseOption(input: RenderInput, title: string): Record<string, unknown> {
   return {
@@ -27,7 +49,7 @@ export function buildChartOption(input: RenderInput): Record<string, unknown> {
     const inner = input.type === 'donut-chart' ? '58%' : '42%'
     return {
       ...base,
-      tooltip: { trigger: 'item' },
+      tooltip: { trigger: 'item', valueFormatter: valueFormatter(input) },
       series: [
         {
           type: 'pie',
@@ -101,31 +123,59 @@ export function buildChartOption(input: RenderInput): Record<string, unknown> {
     }
   }
 
-  const { categories, values } = resolveSeries(input)
-  const isLine = input.type === 'line-chart' || input.type === 'area-chart'
+  const categories = resolveCategories(input)
+  const defs = seriesDefs(input)
+  const baseType = input.type === 'bar-chart' ? 'bar' : 'line'
   const isArea = input.type === 'area-chart'
-  const cartesian = CARTESIAN_TYPES.has(input.type)
+  const palette = input.theme.colorSeries
+  const decimals = decimalsOf(input)
+
+  const series = defs.map((def, index) => {
+    const type = def.type ?? baseType
+    const isLine = type === 'line'
+    const color = palette[index % palette.length]
+    return {
+      name: def.name,
+      type,
+      data: valuesForKey(input, def.key),
+      smooth: isLine,
+      lineStyle: isLine
+        ? { type: def.dashed ? 'dashed' : 'solid', width: 2 }
+        : undefined,
+      itemStyle: { color, borderRadius: type === 'bar' ? 4 : 0 },
+      areaStyle: isLine && isArea ? { opacity: 0.3 } : undefined,
+    }
+  })
+
+  const multi = defs.length > 1
   return {
     ...base,
-    tooltip: { trigger: 'axis' },
-    grid: { left: 44, right: 16, top: title ? 40 : 16, bottom: 28 },
+    tooltip: { trigger: 'axis', valueFormatter: valueFormatter(input) },
+    legend: multi
+      ? {
+          data: defs.map((def) => def.name),
+          bottom: 0,
+          textStyle: { color: input.theme.colorMuted },
+        }
+      : undefined,
+    grid: {
+      left: 48,
+      right: 16,
+      top: title ? 40 : 16,
+      bottom: multi ? 34 : 28,
+    },
     xAxis: {
       type: 'category',
       data: categories,
       axisLabel: { color: input.theme.colorMuted },
     },
-    yAxis: { type: 'value', axisLabel: { color: input.theme.colorMuted } },
-    series: [
-      {
-        type: cartesian && isLine ? 'line' : 'bar',
-        data: values,
-        smooth: isLine,
-        itemStyle: {
-          color: input.theme.colorAccent,
-          borderRadius: isLine ? 0 : 4,
-        },
-        areaStyle: isArea ? { opacity: 0.35 } : isLine ? { opacity: 0.15 } : undefined,
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        color: input.theme.colorMuted,
+        formatter: (value: number) => formatKpiValue(Number(value), decimals),
       },
-    ],
+    },
+    series,
   }
 }

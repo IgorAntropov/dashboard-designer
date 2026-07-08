@@ -30,7 +30,12 @@
     "period": "Období",
     "info": "Popis (nápověda)",
     "target": "Cíl",
-    "decimals": "Desetiny"
+    "decimals": "Desetiny",
+    "series": "Řady",
+    "seriesName": "Název řady",
+    "addSeries": "Přidat řadu",
+    "dashed": "Čárkovaně",
+    "remove": "Odebrat"
   },
   "mapScope": {
     "world": "Svět",

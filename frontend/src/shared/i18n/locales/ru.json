@@ -30,7 +30,12 @@
     "period": "Период",
     "info": "Описание (тултип)",
     "target": "Цель",
-    "decimals": "Знаки"
+    "decimals": "Знаки",
+    "series": "Ряды",
+    "seriesName": "Название ряда",
+    "addSeries": "Добавить ряд",
+    "dashed": "Пунктир",
+    "remove": "Удалить"
   },
   "mapScope": {
     "world": "Мир",

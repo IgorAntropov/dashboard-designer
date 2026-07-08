@@ -255,3 +255,15 @@ a bound `delta` field, a `config.period` caption, and — when `config.target` i
 config (unit/period/info); `sampleDataFor` returns `{value, delta}`; the config panel exposes
 unit/period/info/target/decimals (`config.*`). Old `.pk-stat*` styles were replaced by `.pk-kpi*` in
 both `assets/css/theme.css` and the embed `renderer/styles.ts`.
+
+Multi-series charts (5.5): bar/line/area charts render N series. `packages/renderer/series.ts` gained
+`resolveCategories`, `seriesDefs` (reads `config.series: [{key,name,type?,dashed?}]`, falling back to a
+single series from `binding.value`), and `valuesForKey`. `option.ts` builds one ECharts series per def
+with per-series palette color, `type` override (bar/line — enabling bar+line combos), dashed line style
+(for forecast/estimate), and area fill on area charts; a legend appears when >1 series. Number
+formatting is centralized: `valueFormatter(input)` (unit + `config.decimals`, via `formatKpiValue`) feeds
+the tooltip, and the yAxis label formatter formats ticks — applied to cartesian and pie tooltips. The
+config panel gained a series editor for cartesian charts (add/remove rows; each row edits data key,
+display name, type auto/bar/line, dashed) plus unit/decimals inputs; `sampleDataFor` adds a `value2`
+column so multi-series preview shows data. Backward compatible: charts without `config.series` render a
+single series exactly as before. Covered by `series.test.ts` + `option.test.ts`.

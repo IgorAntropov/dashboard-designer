@@ -517,6 +517,14 @@ body {
   margin-bottom: 0.4rem;
 }
 
+.pk-series {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.5rem;
+  background-color: var(--pk-bg);
+}
+
 .embed-root {
   min-height: 100vh;
   padding: 12px;

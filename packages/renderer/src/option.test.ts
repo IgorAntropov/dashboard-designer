@@ -47,7 +47,53 @@ describe('buildChartOption', () => {
   it('renders area as a filled line series', () => {
     const series = firstSeries(buildChartOption(input('area-chart')))
     expect(series.type).toBe('line')
-    expect(series.areaStyle).toEqual({ opacity: 0.35 })
+    expect(series.areaStyle).toEqual({ opacity: 0.3 })
+  })
+
+  it('falls back to a single series from the value binding', () => {
+    const option = buildChartOption(input('bar-chart'))
+    expect((option.series as unknown[]).length).toBe(1)
+    expect(option.legend).toBeUndefined()
+  })
+
+  it('builds one series per config.series entry with a legend', () => {
+    const option = buildChartOption(
+      input('line-chart', {
+        config: {
+          series: [
+            { key: 'y2023', name: '2023' },
+            { key: 'y2024', name: '2024', dashed: true },
+          ],
+        },
+        data: [
+          { label: 'Jan', y2023: 10, y2024: 12 },
+          { label: 'Feb', y2023: 14, y2024: 9 },
+        ],
+      }),
+    )
+    const series = option.series as Array<Record<string, unknown>>
+    expect(series.map((entry) => entry.name)).toEqual(['2023', '2024'])
+    expect(series[0].data).toEqual([10, 14])
+    expect(series[1].data).toEqual([12, 9])
+    expect((series[1].lineStyle as Record<string, unknown>).type).toBe('dashed')
+    expect((option.legend as Record<string, unknown>).data).toEqual(['2023', '2024'])
+  })
+
+  it('supports per-series type for a bar+line combo', () => {
+    const option = buildChartOption(
+      input('bar-chart', {
+        config: {
+          series: [
+            { key: 'a', name: 'A' },
+            { key: 'b', name: 'B', type: 'line' },
+          ],
+        },
+        data: [{ label: 'x', a: 1, b: 2 }],
+      }),
+    )
+    const series = option.series as Array<Record<string, unknown>>
+    expect(series[0].type).toBe('bar')
+    expect(series[1].type).toBe('line')
   })
 
   it('uses a wider hole for donut than pie', () => {

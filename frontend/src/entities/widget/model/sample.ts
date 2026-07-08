@@ -33,10 +33,10 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
     return []
   }
   return [
-    { label: 'Mon', value: 12 },
-    { label: 'Tue', value: 19 },
-    { label: 'Wed', value: 7 },
-    { label: 'Thu', value: 15 },
-    { label: 'Fri', value: 22 },
+    { label: 'Mon', value: 12, value2: 8 },
+    { label: 'Tue', value: 19, value2: 14 },
+    { label: 'Wed', value: 7, value2: 11 },
+    { label: 'Thu', value: 15, value2: 9 },
+    { label: 'Fri', value: 22, value2: 17 },
   ]
 }

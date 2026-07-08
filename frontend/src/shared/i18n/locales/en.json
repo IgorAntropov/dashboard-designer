@@ -30,7 +30,12 @@
     "period": "Period",
     "info": "Info (tooltip)",
     "target": "Target",
-    "decimals": "Decimals"
+    "decimals": "Decimals",
+    "series": "Series",
+    "seriesName": "Series name",
+    "addSeries": "Add series",
+    "dashed": "Dashed",
+    "remove": "Remove"
   },
   "mapScope": {
     "world": "World",

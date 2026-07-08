@@ -30,7 +30,12 @@
     "period": "Okres",
     "info": "Opis (dymek)",
     "target": "Cel",
-    "decimals": "Miejsca dz."
+    "decimals": "Miejsca dz.",
+    "series": "Serie",
+    "seriesName": "Nazwa serii",
+    "addSeries": "Dodaj serię",
+    "dashed": "Przerywana",
+    "remove": "Usuń"
   },
   "mapScope": {
     "world": "Świat",

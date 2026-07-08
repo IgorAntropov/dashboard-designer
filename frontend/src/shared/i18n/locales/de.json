@@ -30,7 +30,12 @@
     "period": "Zeitraum",
     "info": "Info (Tooltip)",
     "target": "Ziel",
-    "decimals": "Dezimalen"
+    "decimals": "Dezimalen",
+    "series": "Reihen",
+    "seriesName": "Reihenname",
+    "addSeries": "Reihe hinzufügen",
+    "dashed": "Gestrichelt",
+    "remove": "Entfernen"
   },
   "mapScope": {
     "world": "Welt",

@@ -267,3 +267,13 @@ config panel gained a series editor for cartesian charts (add/remove rows; each 
 display name, type auto/bar/line, dashed) plus unit/decimals inputs; `sampleDataFor` adds a `value2`
 column so multi-series preview shows data. Backward compatible: charts without `config.series` render a
 single series exactly as before. Covered by `series.test.ts` + `option.test.ts`.
+
+Ranking Top-N (5.6): a `ranking` widget (new `data` palette category) renders a leaders/outsiders list —
+each row shows rank, name, formatted value (+unit), an inline bar scaled to the top value, and a colored
+delta badge. Pure logic is in `packages/renderer/ranking.ts` (`rankRows`: sorts by value desc for `top`
+or asc for `bottom` via `config.direction`, applies `config.limit`, returns the rows + max for bar
+scaling), unit-tested in `ranking.test.ts`. `renderRanking` (DOM, theme colors inline; reuses
+`formatKpiValue`/`deltaMeta`) is registered in `DOM_RENDERERS` and styled by `.pk-rank*` in both
+`assets/css/theme.css` and the embed `renderer/styles.ts`. The registry adds the `ranking` type
+(label/value/delta schema) and `data` to `WIDGET_CATEGORIES`; `sampleDataFor` returns region-style rows;
+the config panel exposes limit / direction (leaders vs bottom) / unit / decimals.

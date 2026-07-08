@@ -34,6 +34,17 @@ export const ENGINE_CSS = `
 .pk-kpi__track { width: 100%; height: 6px; margin-top: 2px; border-radius: 999px; background-color: rgba(128,128,128,0.22); overflow: hidden; }
 .pk-kpi__bar { height: 100%; border-radius: 999px; }
 .pk-kpi__target { font-size: 0.72rem; }
+.pk-rank { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 6px 8px; overflow-y: auto; }
+.pk-rank__title { font-size: 0.8rem; font-weight: 600; }
+.pk-rank__row { display: flex; align-items: center; gap: 8px; }
+.pk-rank__num { flex: 0 0 auto; width: 20px; text-align: right; font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pk-rank__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.pk-rank__top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.pk-rank__name { font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pk-rank__value { flex: 0 0 auto; font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pk-rank__track { width: 100%; height: 5px; border-radius: 999px; background-color: rgba(128,128,128,0.18); overflow: hidden; }
+.pk-rank__bar { height: 100%; border-radius: 999px; }
+.pk-rank__delta { flex: 0 0 auto; font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
 .pk-text { height: 100%; display: flex; align-items: center; padding: 4px 8px; }
 .pk-progress { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; padding: 4px 8px; }
 .pk-progress__label { font-size: 0.85rem; }

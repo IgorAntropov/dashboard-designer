@@ -44,6 +44,18 @@ const REGION_SCHEMA: WidgetSchema = {
 
 const REGION_BINDING: WidgetBinding = { region: 'region', value: 'value' }
 
+const RANK_SCHEMA: WidgetSchema = {
+  label: { key: 'label', type: 'string', label: 'Name' },
+  value: { key: 'value', type: 'number', label: 'Value' },
+  delta: { key: 'delta', type: 'number', label: 'Delta %' },
+}
+
+const RANK_BINDING: WidgetBinding = {
+  label: 'label',
+  value: 'value',
+  delta: 'delta',
+}
+
 export const WIDGET_TYPES: WidgetTypeDef[] = [
   {
     key: 'bar-chart',
@@ -145,6 +157,15 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: REGION_BINDING,
   },
   {
+    key: 'ranking',
+    label: 'Ranking',
+    category: 'data',
+    defaultSize: { w: 4, h: 4 },
+    defaultConfig: { title: 'Ranking', limit: 5, direction: 'top', unit: '' },
+    defaultSchema: RANK_SCHEMA,
+    defaultBinding: RANK_BINDING,
+  },
+  {
     key: 'text-block',
     label: 'Text',
     category: 'text',
@@ -155,7 +176,7 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
   },
 ]
 
-export const WIDGET_CATEGORIES = ['charts', 'kpi', 'geo', 'text'] as const
+export const WIDGET_CATEGORIES = ['charts', 'kpi', 'geo', 'data', 'text'] as const
 
 export function widgetTypeByKey(key: string): WidgetTypeDef | undefined {
   return WIDGET_TYPES.find((definition) => definition.key === key)

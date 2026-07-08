@@ -4,10 +4,12 @@ import { deltaMeta, formatKpiValue } from './kpi'
 import { buildGeoOption, ensureMap, mapNameForUrl } from './map'
 import { mapUrlFor } from './maps/scopes'
 import { buildChartOption } from './option'
+import { rankRows } from './ranking'
 import type { RenderInput, WidgetHandle } from './types'
 
 export type { RenderInput, RenderTheme, WidgetHandle } from './types'
 export { formatKpiValue, deltaMeta } from './kpi'
+export { rankRows } from './ranking'
 export {
   resolvePoints,
   resolveRegions,
@@ -187,12 +189,85 @@ function renderProgress(el: HTMLElement, input: RenderInput): void {
   el.append(wrap)
 }
 
+function renderRanking(el: HTMLElement, input: RenderInput): void {
+  const { rows, max } = rankRows(input)
+  const decimals =
+    typeof input.config.decimals === 'number' ? input.config.decimals : undefined
+  const unit = textConfig(input, 'unit')
+
+  el.replaceChildren()
+  const wrap = document.createElement('div')
+  wrap.className = 'pk-rank'
+
+  const title = textConfig(input, 'title')
+  if (title) {
+    const head = document.createElement('div')
+    head.className = 'pk-rank__title'
+    head.style.color = input.theme.colorMuted
+    head.textContent = title
+    wrap.append(head)
+  }
+
+  rows.forEach((row, index) => {
+    const rowEl = document.createElement('div')
+    rowEl.className = 'pk-rank__row'
+
+    const rank = document.createElement('span')
+    rank.className = 'pk-rank__num'
+    rank.style.color = input.theme.colorMuted
+    rank.textContent = String(index + 1)
+
+    const body = document.createElement('div')
+    body.className = 'pk-rank__body'
+
+    const top = document.createElement('div')
+    top.className = 'pk-rank__top'
+
+    const name = document.createElement('span')
+    name.className = 'pk-rank__name'
+    name.style.color = input.theme.colorText
+    name.textContent = row.name
+
+    const value = document.createElement('span')
+    value.className = 'pk-rank__value'
+    value.style.color = input.theme.colorText
+    value.textContent = `${formatKpiValue(row.value, decimals)}${unit ? ` ${unit}` : ''}`
+
+    top.append(name, value)
+
+    const track = document.createElement('div')
+    track.className = 'pk-rank__track'
+    const bar = document.createElement('div')
+    bar.className = 'pk-rank__bar'
+    bar.style.width = `${Math.max(0, Math.min(100, (Math.abs(row.value) / max) * 100))}%`
+    bar.style.backgroundColor = input.theme.colorAccent
+    track.append(bar)
+
+    body.append(top, track)
+    rowEl.append(rank, body)
+
+    if (row.delta != null && Number.isFinite(row.delta)) {
+      const delta = deltaMeta(row.delta, input.theme)
+      const badge = document.createElement('span')
+      badge.className = 'pk-rank__delta'
+      badge.style.color = delta.color
+      badge.textContent = `${delta.arrow} ${delta.text}`
+      rowEl.append(badge)
+    }
+
+    wrap.append(rowEl)
+  })
+
+  el.append(wrap)
+}
+
 const DOM_RENDERERS: Record<
   string,
   (el: HTMLElement, input: RenderInput) => void
 > = {
   'stat-tile': renderKpi,
   progress: renderProgress,
+  ranking: renderRanking,
   'text-block': renderText,
 }
 

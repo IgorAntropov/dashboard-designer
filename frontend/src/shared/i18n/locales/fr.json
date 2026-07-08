@@ -35,16 +35,23 @@
     "seriesName": "Nom de série",
     "addSeries": "Ajouter une série",
     "dashed": "Pointillé",
-    "remove": "Supprimer"
+    "remove": "Supprimer",
+    "limit": "Top N",
+    "direction": "Direction"
   },
   "mapScope": {
     "world": "Monde",
     "custom": "GeoJSON personnalisé"
   },
+  "direction": {
+    "top": "En tête",
+    "bottom": "En bas"
+  },
   "palette": {
     "charts": "Graphiques",
     "kpi": "KPI",
     "geo": "Cartes",
+    "data": "Données",
     "text": "Texte"
   },
   "session": {

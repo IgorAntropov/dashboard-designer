@@ -35,16 +35,23 @@
     "seriesName": "Nazwa serii",
     "addSeries": "Dodaj serię",
     "dashed": "Przerywana",
-    "remove": "Usuń"
+    "remove": "Usuń",
+    "limit": "Top N",
+    "direction": "Kierunek"
   },
   "mapScope": {
     "world": "Świat",
     "custom": "Własny GeoJSON"
   },
+  "direction": {
+    "top": "Liderzy",
+    "bottom": "Ostatni"
+  },
   "palette": {
     "charts": "Wykresy",
     "kpi": "KPI",
     "geo": "Mapy",
+    "data": "Dane",
     "text": "Tekst"
   },
   "session": {

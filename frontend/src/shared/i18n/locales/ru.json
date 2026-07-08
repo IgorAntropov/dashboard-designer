@@ -35,16 +35,23 @@
     "seriesName": "Название ряда",
     "addSeries": "Добавить ряд",
     "dashed": "Пунктир",
-    "remove": "Удалить"
+    "remove": "Удалить",
+    "limit": "Топ-N",
+    "direction": "Направление"
   },
   "mapScope": {
     "world": "Мир",
     "custom": "Свой GeoJSON"
   },
+  "direction": {
+    "top": "Лидеры",
+    "bottom": "Аутсайдеры"
+  },
   "palette": {
     "charts": "Графики",
     "kpi": "KPI",
     "geo": "Карты",
+    "data": "Данные",
     "text": "Текст"
   },
   "session": {

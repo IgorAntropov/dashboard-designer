@@ -35,16 +35,23 @@
     "seriesName": "Název řady",
     "addSeries": "Přidat řadu",
     "dashed": "Čárkovaně",
-    "remove": "Odebrat"
+    "remove": "Odebrat",
+    "limit": "Top N",
+    "direction": "Směr"
   },
   "mapScope": {
     "world": "Svět",
     "custom": "Vlastní GeoJSON"
   },
+  "direction": {
+    "top": "Lídři",
+    "bottom": "Nejhorší"
+  },
   "palette": {
     "charts": "Grafy",
     "kpi": "KPI",
     "geo": "Mapy",
+    "data": "Data",
     "text": "Text"
   },
   "session": {

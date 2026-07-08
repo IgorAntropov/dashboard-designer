@@ -29,6 +29,15 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
       { region: 'Egypt', value: 22 },
     ]
   }
+  if (type === 'ranking') {
+    return [
+      { label: 'Москва', value: 8.12, delta: 11.5 },
+      { label: 'Краснодарский край', value: 6.74, delta: 16.1 },
+      { label: 'Санкт-Петербург', value: 4.13, delta: 22.3 },
+      { label: 'Московская область', value: 3.83, delta: 19.6 },
+      { label: 'Татарстан', value: 1.7, delta: -3.7 },
+    ]
+  }
   if (type === 'text-block') {
     return []
   }

@@ -31,6 +31,11 @@
 - **embed/** — framework-agnostic SDK (Vite lib mode). Not scaffolded yet (iteration 3.x).
 - **packages/contract/** — shared TS types for the data contract (`WidgetSchema`, `WidgetBinding`,
   `PublishedConfig`, `PanelkaData`). Consumed by `frontend` and `embed`; mirrored by backend Pydantic.
+- **packages/renderer/** — framework-agnostic rendering core (1.4). `renderWidget(el, {type, config,
+  binding, data, theme})` returns a handle (`update`/`resize`/`dispose`); charts (bar/line/pie) via
+  ECharts, `stat-tile`/`text-block` via safe DOM (textContent, no innerHTML). Pure helpers
+  `resolveSeries`/`buildChartOption` are unit-tested. The editor wraps it in `entities/widget/WidgetView.vue`
+  (sample data + theme read from CSS vars, ResizeObserver → resize); the embed SDK will call the same core.
 
 ## 3. Data / contract flow
 

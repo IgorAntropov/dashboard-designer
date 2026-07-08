@@ -50,6 +50,15 @@ export async function publishDashboard(
   return data ?? null
 }
 
+export async function exportDashboard(
+  id: string,
+): Promise<Record<string, unknown> | null> {
+  const { data } = await api.POST('/api/v1/dashboards/{dashboard_id}/export', {
+    params: { path: { dashboard_id: id } },
+  })
+  return (data as Record<string, unknown>) ?? null
+}
+
 export async function deleteDashboard(id: string): Promise<void> {
   await api.DELETE('/api/v1/dashboards/{dashboard_id}', {
     params: { path: { dashboard_id: id } },

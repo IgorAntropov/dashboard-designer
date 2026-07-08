@@ -74,7 +74,8 @@
     "loading": "Loading…",
     "new": "New",
     "cancel": "Cancel",
-    "confirmDelete": "Delete dashboard?"
+    "confirmDelete": "Delete dashboard?",
+    "export": "Export"
   },
   "editor": {
     "title": "Editor",

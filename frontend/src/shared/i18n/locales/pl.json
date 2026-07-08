@@ -74,7 +74,8 @@
     "loading": "Ładowanie…",
     "new": "Nowy",
     "cancel": "Anuluj",
-    "confirmDelete": "Usunąć pulpit?"
+    "confirmDelete": "Usunąć pulpit?",
+    "export": "Eksportuj"
   },
   "editor": {
     "title": "Edytor",

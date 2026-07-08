@@ -74,7 +74,8 @@
     "loading": "Chargement…",
     "new": "Nouveau",
     "cancel": "Annuler",
-    "confirmDelete": "Supprimer le tableau de bord ?"
+    "confirmDelete": "Supprimer le tableau de bord ?",
+    "export": "Exporter"
   },
   "editor": {
     "title": "Éditeur",

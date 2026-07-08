@@ -74,7 +74,8 @@
     "loading": "Wird geladen…",
     "new": "Neu",
     "cancel": "Abbrechen",
-    "confirmDelete": "Dashboard löschen?"
+    "confirmDelete": "Dashboard löschen?",
+    "export": "Exportieren"
   },
   "editor": {
     "title": "Editor",

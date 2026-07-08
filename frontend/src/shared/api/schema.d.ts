@@ -98,6 +98,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/dashboards/{dashboard_id}/export': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['export_dashboard_api_v1_dashboards__dashboard_id__export_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/dashboards/{dashboard_id}/publish': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get?: never
@@ -346,6 +357,21 @@ export interface operations {
       200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['Dashboard'] }
+      }
+    }
+  }
+  export_dashboard_api_v1_dashboards__dashboard_id__export_post: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': { [key: string]: unknown } }
       }
     }
   }

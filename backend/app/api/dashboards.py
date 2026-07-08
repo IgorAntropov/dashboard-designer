@@ -1,9 +1,12 @@
 import uuid
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import JSONResponse
 
 from app.api.deps import CurrentUserDep, SessionDep
 from app.models.dashboard import Dashboard
+from app.models.enums import SubscriptionTier
 from app.schemas.dashboard import DashboardCreate, DashboardOut, DashboardUpdate
 from app.schemas.embed import PublishRequest, PublishResponse
 from app.services.dashboard import (
@@ -98,6 +101,37 @@ async def duplicate_dashboard(
         raise _QUOTA from exc
     await session.commit()
     return dashboard
+
+
+@router.post("/{dashboard_id}/export")
+async def export_dashboard(
+    dashboard_id: uuid.UUID, current_user: CurrentUserDep, session: SessionDep
+) -> JSONResponse:
+    if current_user.subscription_tier == SubscriptionTier.free:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Export requires a paid plan",
+        )
+    try:
+        dashboard = await DashboardService(session).get_owned(
+            current_user, dashboard_id
+        )
+    except DashboardNotFoundError as exc:
+        raise _NOT_FOUND from exc
+
+    payload = {
+        "title": dashboard.title,
+        "slug": dashboard.slug,
+        "theme_key": dashboard.theme_key,
+        "layout": dashboard.layout,
+        "exported_at": datetime.now(tz=timezone.utc).isoformat(),
+    }
+    return JSONResponse(
+        payload,
+        headers={
+            "Content-Disposition": f'attachment; filename="{dashboard.slug}.json"'
+        },
+    )
 
 
 @router.post("/{dashboard_id}/publish", response_model=PublishResponse)

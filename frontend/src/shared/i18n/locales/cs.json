@@ -74,7 +74,8 @@
     "loading": "Načítání…",
     "new": "Nový",
     "cancel": "Zrušit",
-    "confirmDelete": "Smazat dashboard?"
+    "confirmDelete": "Smazat dashboard?",
+    "export": "Exportovat"
   },
   "editor": {
     "title": "Editor",

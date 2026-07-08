@@ -5,8 +5,15 @@ import { AppButton, Logo } from '@shared/ui'
 
 import type { Dashboard } from '../api/repository'
 
-const props = defineProps<{ dashboard: Dashboard }>()
-const emit = defineEmits<{ delete: [id: string]; embed: [id: string] }>()
+const props = withDefaults(
+  defineProps<{ dashboard: Dashboard; canExport?: boolean }>(),
+  { canExport: false },
+)
+const emit = defineEmits<{
+  delete: [id: string]
+  embed: [id: string]
+  export: [id: string]
+}>()
 
 interface PreviewTile {
   x: number
@@ -52,6 +59,16 @@ function styleFor(tile: PreviewTile): Record<string, string> {
       </NuxtLink>
 
       <div class="dash-card__actions">
+        <AppButton
+          v-if="props.canExport"
+          variant="secondary"
+          size="sm"
+          icon="download"
+          icon-only
+          :aria-label="$t('dashboards.export')"
+          :title="$t('dashboards.export')"
+          @click="emit('export', dashboard.id)"
+        />
         <AppButton
           variant="secondary"
           size="sm"

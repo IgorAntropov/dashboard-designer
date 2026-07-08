@@ -74,7 +74,8 @@
     "loading": "Caricamento…",
     "new": "Nuovo",
     "cancel": "Annulla",
-    "confirmDelete": "Eliminare la dashboard?"
+    "confirmDelete": "Eliminare la dashboard?",
+    "export": "Esporta"
   },
   "editor": {
     "title": "Editor",

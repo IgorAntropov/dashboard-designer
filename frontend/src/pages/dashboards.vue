@@ -6,12 +6,34 @@ import {
   createDashboard,
   DashboardCard,
   deleteDashboard,
+  exportDashboard,
   listDashboards,
   publishDashboard,
 } from '@entities/dashboard'
+import { useSessionStore } from '@entities/session'
 import { AppButton, AppModal } from '@shared/ui'
 
 const { t } = useI18n()
+const session = useSessionStore()
+const canExport = computed(
+  () => (session.user?.subscription_tier ?? 'free') !== 'free',
+)
+
+async function onExport(id: string): Promise<void> {
+  const data = await exportDashboard(id)
+  if (!data) {
+    return
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: 'application/json',
+  })
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = `${id}.json`
+  anchor.click()
+  URL.revokeObjectURL(url)
+}
 
 const dashboards = ref<Dashboard[]>([])
 const loading = ref(true)
@@ -135,8 +157,10 @@ useHead({ title: computed(() => t('dashboards.title')) })
         v-for="dashboard in dashboards"
         :key="dashboard.id"
         :dashboard="dashboard"
+        :can-export="canExport"
         @delete="askDelete"
         @embed="openEmbed"
+        @export="onExport"
       />
     </div>
 

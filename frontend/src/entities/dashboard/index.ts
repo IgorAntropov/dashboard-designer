@@ -1,6 +1,7 @@
 export {
   createDashboard,
   deleteDashboard,
+  exportDashboard,
   getDashboard,
   listDashboards,
   publishDashboard,

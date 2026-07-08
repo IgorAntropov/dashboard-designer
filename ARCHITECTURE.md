@@ -73,6 +73,15 @@ cap), and live WebSocket (`live` attr → `/public/embed/{token}/live`, backend 
 broadcasts frames pushed to the token-scoped `POST` ingest; in-memory now, Redis pub/sub for scale).
 Builds emit ESM + UMD (script-tag) + `.d.ts`. Docs for all three integration methods live in `embed/README.md`.
 
+Billing (Phase 4): a swappable `BillingProvider` interface (`services/billing/`) with a CloudPayments
+implementation (checkout session + HMAC webhook verification) behind `get_billing_provider`. `POST
+/billing/subscribe` returns a CloudPayments checkout for a paid tier; `POST /billing/webhook/{provider}`
+verifies the signature, dedupes on a `processed_webhooks` row (idempotent), and drives the subscription
+lifecycle via `BillingService` (activate/downgrade/past_due on the `subscriptions` table + `users.tier`).
+Quotas are server-side: dashboard count and a free-tier 5-widget cap (`services/quota`). `POST
+/dashboards/{id}/export` (paid tiers only) returns the dashboard config as a JSON download. Migrations
+`0005_subscriptions`, `0006_processed_webhooks`. (Async job queue + PNG/PDF export remain future work.)
+
 ## 3. Data / contract flow
 
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in

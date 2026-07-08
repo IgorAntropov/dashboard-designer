@@ -34,7 +34,9 @@
     "empty": "Noch keine Dashboards.",
     "open": "Öffnen",
     "delete": "Löschen",
-    "loading": "Wird geladen…"
+    "loading": "Wird geladen…",
+    "new": "Neu",
+    "cancel": "Abbrechen"
   },
   "editor": { "title": "Editor", "back": "Zurück" },
   "theme": { "system": "System", "light": "Hell", "dark": "Dunkel" },

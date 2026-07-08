@@ -34,7 +34,9 @@
     "empty": "Aucun tableau de bord.",
     "open": "Ouvrir",
     "delete": "Supprimer",
-    "loading": "Chargement…"
+    "loading": "Chargement…",
+    "new": "Nouveau",
+    "cancel": "Annuler"
   },
   "editor": { "title": "Éditeur", "back": "Retour" },
   "theme": { "system": "Système", "light": "Clair", "dark": "Sombre" },

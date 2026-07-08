@@ -4,14 +4,19 @@ import { computed, onMounted, ref } from 'vue'
 import type { Dashboard } from '@entities/dashboard'
 import {
   createDashboard,
+  DashboardCard,
   deleteDashboard,
   listDashboards,
 } from '@entities/dashboard'
-import { AppButton } from '@shared/ui'
+import { AppButton, AppModal } from '@shared/ui'
+
+const { t } = useI18n()
 
 const dashboards = ref<Dashboard[]>([])
-const newTitle = ref('')
 const loading = ref(true)
+const creating = ref(false)
+const modalOpen = ref(false)
+const newTitle = ref('')
 
 async function refresh(): Promise<void> {
   loading.value = true
@@ -19,14 +24,25 @@ async function refresh(): Promise<void> {
   loading.value = false
 }
 
+function openModal(): void {
+  newTitle.value = ''
+  modalOpen.value = true
+}
+
 async function onCreate(): Promise<void> {
   const title = newTitle.value.trim()
   if (!title) {
     return
   }
-  await createDashboard({ title })
-  newTitle.value = ''
-  await refresh()
+  creating.value = true
+  const created = await createDashboard({ title })
+  creating.value = false
+  modalOpen.value = false
+  if (created) {
+    await navigateTo(`/editor/${created.id}`)
+  } else {
+    await refresh()
+  }
 }
 
 async function onDelete(id: string): Promise<void> {
@@ -34,62 +50,65 @@ async function onDelete(id: string): Promise<void> {
   await refresh()
 }
 
-const { t } = useI18n()
-
 onMounted(refresh)
 useHead({ title: computed(() => t('dashboards.title')) })
 </script>
 
 <template>
   <div class="container-xxl">
-    <h1 class="h3 mb-4">{{ $t('dashboards.title') }}</h1>
-
-    <form class="d-flex gap-2 mb-4" @submit.prevent="onCreate">
-      <div class="form-floating flex-grow-1">
-        <input
-          id="dashboard-title"
-          v-model="newTitle"
-          class="form-control"
-          :placeholder="$t('dashboards.placeholder')"
-        >
-        <label for="dashboard-title">{{ $t('dashboards.placeholder') }}</label>
-      </div>
-      <AppButton type="submit" icon="plus">
-        {{ $t('dashboards.create') }}
-      </AppButton>
-    </form>
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <h1 class="h3 mb-0">{{ $t('dashboards.title') }}</h1>
+      <AppButton
+        icon="plus"
+        icon-only
+        :aria-label="$t('dashboards.new')"
+        :title="$t('dashboards.new')"
+        @click="openModal"
+      />
+    </div>
 
     <p v-if="loading">{{ $t('dashboards.loading') }}</p>
     <p v-else-if="dashboards.length === 0" class="text-muted">
       {{ $t('dashboards.empty') }}
     </p>
-    <ul v-else class="list-group">
-      <li
+    <div v-else class="dash-grid">
+      <DashboardCard
         v-for="dashboard in dashboards"
         :key="dashboard.id"
-        class="list-group-item d-flex justify-content-between align-items-center"
-      >
-        <span>{{ dashboard.title }}</span>
-        <span class="d-flex gap-2">
-          <AppButton
-            :to="`/editor/${dashboard.id}`"
-            variant="secondary"
-            size="sm"
-            icon="open"
+        :dashboard="dashboard"
+        @delete="onDelete"
+      />
+    </div>
+
+    <AppModal v-model="modalOpen" :title="$t('dashboards.create')">
+      <form id="create-dashboard-form" @submit.prevent="onCreate">
+        <div class="form-floating">
+          <input
+            id="new-dashboard-title"
+            v-model="newTitle"
+            class="form-control"
+            :placeholder="$t('dashboards.placeholder')"
+            required
           >
-            {{ $t('dashboards.open') }}
-          </AppButton>
-          <AppButton
-            variant="danger"
-            size="sm"
-            icon="trash"
-            icon-only
-            :aria-label="$t('dashboards.delete')"
-            :title="$t('dashboards.delete')"
-            @click="onDelete(dashboard.id)"
-          />
-        </span>
-      </li>
-    </ul>
+          <label for="new-dashboard-title">
+            {{ $t('dashboards.placeholder') }}
+          </label>
+        </div>
+      </form>
+
+      <template #footer>
+        <AppButton variant="secondary" @click="modalOpen = false">
+          {{ $t('dashboards.cancel') }}
+        </AppButton>
+        <AppButton
+          type="submit"
+          icon="plus"
+          form="create-dashboard-form"
+          :disabled="creating"
+        >
+          {{ $t('dashboards.create') }}
+        </AppButton>
+      </template>
+    </AppModal>
   </div>
 </template>

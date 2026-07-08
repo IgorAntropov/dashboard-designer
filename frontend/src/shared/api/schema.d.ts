@@ -78,7 +78,7 @@ export interface paths {
   }
   '/api/v1/dashboards/{dashboard_id}': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
-    get?: never
+    get: operations['get_dashboard_api_v1_dashboards__dashboard_id__get']
     put?: never
     post?: never
     delete: operations['delete_dashboard_api_v1_dashboards__dashboard_id__delete']
@@ -232,6 +232,21 @@ export interface operations {
     }
     responses: {
       201: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['Dashboard'] }
+      }
+    }
+  }
+  get_dashboard_api_v1_dashboards__dashboard_id__get: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['Dashboard'] }
       }

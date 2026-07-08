@@ -30,7 +30,9 @@
     "empty": "Nessuna dashboard.",
     "open": "Apri",
     "delete": "Elimina",
-    "loading": "Caricamento…"
+    "loading": "Caricamento…",
+    "new": "Nuovo",
+    "cancel": "Annulla"
   },
   "editor": { "title": "Editor", "back": "Indietro" },
   "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },

@@ -19,6 +19,13 @@ export async function createDashboard(
   return data ?? null
 }
 
+export async function getDashboard(id: string): Promise<Dashboard | null> {
+  const { data } = await api.GET('/api/v1/dashboards/{dashboard_id}', {
+    params: { path: { dashboard_id: id } },
+  })
+  return data ?? null
+}
+
 export async function deleteDashboard(id: string): Promise<void> {
   await api.DELETE('/api/v1/dashboards/{dashboard_id}', {
     params: { path: { dashboard_id: id } },

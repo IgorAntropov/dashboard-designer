@@ -30,7 +30,9 @@
     "empty": "Brak pulpitów.",
     "open": "Otwórz",
     "delete": "Usuń",
-    "loading": "Ładowanie…"
+    "loading": "Ładowanie…",
+    "new": "Nowy",
+    "cancel": "Anuluj"
   },
   "editor": { "title": "Edytor", "back": "Wstecz" },
   "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },

@@ -34,7 +34,9 @@
     "empty": "Zatím žádné dashboardy.",
     "open": "Otevřít",
     "delete": "Smazat",
-    "loading": "Načítání…"
+    "loading": "Načítání…",
+    "new": "Nový",
+    "cancel": "Zrušit"
   },
   "editor": { "title": "Editor", "back": "Zpět" },
   "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý" },

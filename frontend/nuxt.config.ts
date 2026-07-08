@@ -86,4 +86,9 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+  vite: {
+    optimizeDeps: {
+      exclude: ['@panelka/renderer', '@panelka/contract'],
+    },
+  },
 })

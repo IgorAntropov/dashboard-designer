@@ -38,21 +38,23 @@ useHead({ title: 'Panelka — Dashboards' })
 </script>
 
 <template>
-  <main class="container py-5">
-    <h1 class="h3 mb-4">Dashboards</h1>
+  <div class="container-xxl">
+    <h1 class="h3 mb-4">{{ $t('dashboards.title') }}</h1>
 
     <form class="d-flex gap-2 mb-4" @submit.prevent="onCreate">
       <input
         v-model="newTitle"
         class="form-control"
-        placeholder="New dashboard title"
+        :placeholder="$t('dashboards.placeholder')"
       >
-      <button class="btn btn-primary" type="submit">Create</button>
+      <button class="btn btn-primary" type="submit">
+        {{ $t('dashboards.create') }}
+      </button>
     </form>
 
-    <p v-if="loading">Loading…</p>
+    <p v-if="loading">{{ $t('dashboards.loading') }}</p>
     <p v-else-if="dashboards.length === 0" class="text-muted">
-      No dashboards yet.
+      {{ $t('dashboards.empty') }}
     </p>
     <ul v-else class="list-group">
       <li
@@ -66,17 +68,17 @@ useHead({ title: 'Panelka — Dashboards' })
             class="btn btn-sm btn-outline-primary"
             :to="`/editor/${dashboard.id}`"
           >
-            Open
+            {{ $t('dashboards.open') }}
           </NuxtLink>
           <button
             class="btn btn-sm btn-outline-danger"
             type="button"
             @click="onDelete(dashboard.id)"
           >
-            Delete
+            {{ $t('dashboards.delete') }}
           </button>
         </span>
       </li>
     </ul>
-  </main>
+  </div>
 </template>

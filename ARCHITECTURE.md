@@ -85,3 +85,9 @@ Canvas (1.2): FSD `widgets/canvas` — a GridStack-backed `DashboardCanvas.vue` 
 import for SSR safety) driven by a Pinia store (`add`/`updatePosition`/`remove`) holding
 `WidgetInstance`s; `entities/widget` exposes the widget-type registry and contract types; editor route
 `/editor/:id` renders the canvas. Store logic is unit-tested with vitest.
+
+UX foundation (1.2b): `@nuxtjs/i18n` with 7 locales (ru default, en/de/pl/cs/fr/it) driven by a
+`shared/i18n/config.ts` message bundle; `@nuxtjs/color-mode` (system/light/dark) mapped to Bootstrap's
+`data-bs-theme` in `app.vue`; design tokens in `assets/css/theme.css` (neutral base + yellow accent);
+a right-anchored app-shell `layouts/default.vue` with nav + `shared/ui` `ThemeToggle`/`LanguageSwitcher`;
+landing/auth use `layouts/blank.vue`; page transitions enabled. Locale choice persists via a cookie.

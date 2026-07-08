@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Tableaux de bord", "settings": "Paramètres" },
+  "landing": {
+    "subtitle": "Créez des tableaux de bord, personnalisez-les et intégrez-les partout.",
+    "getStarted": "Commencer",
+    "settings": "Paramètres"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "about": "À propos",
+    "appBuild": "Version de l'app",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Tableaux de bord",
+    "placeholder": "Titre du nouveau tableau de bord",
+    "create": "Créer",
+    "empty": "Aucun tableau de bord.",
+    "open": "Ouvrir",
+    "delete": "Supprimer",
+    "loading": "Chargement…"
+  },
+  "editor": { "title": "Éditeur", "back": "Retour" },
+  "theme": { "system": "Système", "light": "Clair", "dark": "Sombre" },
+  "language": { "label": "Langue" }
+}

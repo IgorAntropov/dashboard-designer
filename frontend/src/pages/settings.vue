@@ -16,15 +16,15 @@ useHead({ title: 'Panelka — Settings' })
 </script>
 
 <template>
-  <main class="container py-5">
-    <h1 class="h3 mb-4">Settings</h1>
+  <div class="container-xxl">
+    <h1 class="h3 mb-4">{{ $t('settings.title') }}</h1>
 
     <section>
-      <h2 class="h5">About</h2>
+      <h2 class="h5">{{ $t('settings.about') }}</h2>
       <ul class="list-unstyled">
-        <li>App build: <code>v{{ buildVersion }}</code></li>
-        <li>API: <code>v{{ apiVersion }}</code></li>
+        <li>{{ $t('settings.appBuild') }}: <code>v{{ buildVersion }}</code></li>
+        <li>{{ $t('settings.api') }}: <code>v{{ apiVersion }}</code></li>
       </ul>
     </section>
-  </main>
+  </div>
 </template>

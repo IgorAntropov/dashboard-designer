@@ -10,11 +10,40 @@ const apiOrigin = process.env.NUXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000'
 
 export default defineNuxtConfig({
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxt/eslint'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/eslint',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n',
+  ],
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
     'gridstack/dist/gridstack.min.css',
+    '@/assets/css/theme.css',
   ],
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    classSuffix: '',
+  },
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'ru',
+    detectBrowserLanguage: false,
+    vueI18n: './src/shared/i18n/config.ts',
+    locales: [
+      { code: 'ru', language: 'ru-RU', name: 'Русский' },
+      { code: 'en', language: 'en-US', name: 'English' },
+      { code: 'de', language: 'de-DE', name: 'Deutsch' },
+      { code: 'pl', language: 'pl-PL', name: 'Polski' },
+      { code: 'cs', language: 'cs-CZ', name: 'Čeština' },
+      { code: 'fr', language: 'fr-FR', name: 'Français' },
+      { code: 'it', language: 'it-IT', name: 'Italiano' },
+    ],
+  },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
   runtimeConfig: {
     public: {
       apiOrigin,

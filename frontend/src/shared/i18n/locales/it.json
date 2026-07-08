@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Dashboard", "settings": "Impostazioni" },
+  "landing": {
+    "subtitle": "Crea dashboard, personalizzale e incorporale ovunque.",
+    "getStarted": "Inizia",
+    "settings": "Impostazioni"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "about": "Informazioni",
+    "appBuild": "Build dell'app",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Dashboard",
+    "placeholder": "Titolo nuova dashboard",
+    "create": "Crea",
+    "empty": "Nessuna dashboard.",
+    "open": "Apri",
+    "delete": "Elimina",
+    "loading": "Caricamento…"
+  },
+  "editor": { "title": "Editor", "back": "Indietro" },
+  "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },
+  "language": { "label": "Lingua" }
+}

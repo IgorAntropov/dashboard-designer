@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Dashboards", "settings": "Settings" },
+  "landing": {
+    "subtitle": "Build dashboards, theme them, and embed them anywhere.",
+    "getStarted": "Get started",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "about": "About",
+    "appBuild": "App build",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Dashboards",
+    "placeholder": "New dashboard title",
+    "create": "Create",
+    "empty": "No dashboards yet.",
+    "open": "Open",
+    "delete": "Delete",
+    "loading": "Loading…"
+  },
+  "editor": { "title": "Editor", "back": "Back" },
+  "theme": { "system": "System", "light": "Light", "dark": "Dark" },
+  "language": { "label": "Language" }
+}

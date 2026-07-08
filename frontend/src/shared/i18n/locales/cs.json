@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Dashboardy", "settings": "Nastavení" },
+  "landing": {
+    "subtitle": "Tvořte dashboardy, stylujte je a vkládejte je kamkoli.",
+    "getStarted": "Začít",
+    "settings": "Nastavení"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "about": "O aplikaci",
+    "appBuild": "Sestavení aplikace",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Dashboardy",
+    "placeholder": "Název nového dashboardu",
+    "create": "Vytvořit",
+    "empty": "Zatím žádné dashboardy.",
+    "open": "Otevřít",
+    "delete": "Smazat",
+    "loading": "Načítání…"
+  },
+  "editor": { "title": "Editor", "back": "Zpět" },
+  "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý" },
+  "language": { "label": "Jazyk" }
+}

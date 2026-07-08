@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Pulpity", "settings": "Ustawienia" },
+  "landing": {
+    "subtitle": "Twórz pulpity, nadawaj im styl i osadzaj je wszędzie.",
+    "getStarted": "Zaczynaj",
+    "settings": "Ustawienia"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "about": "O aplikacji",
+    "appBuild": "Wersja aplikacji",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Pulpity",
+    "placeholder": "Nazwa nowego pulpitu",
+    "create": "Utwórz",
+    "empty": "Brak pulpitów.",
+    "open": "Otwórz",
+    "delete": "Usuń",
+    "loading": "Ładowanie…"
+  },
+  "editor": { "title": "Edytor", "back": "Wstecz" },
+  "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },
+  "language": { "label": "Język" }
+}

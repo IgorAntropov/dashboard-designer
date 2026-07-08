@@ -1,0 +1,26 @@
+{
+  "nav": { "dashboards": "Dashboards", "settings": "Einstellungen" },
+  "landing": {
+    "subtitle": "Erstelle Dashboards, gestalte sie und binde sie überall ein.",
+    "getStarted": "Loslegen",
+    "settings": "Einstellungen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "about": "Über",
+    "appBuild": "App-Build",
+    "api": "API"
+  },
+  "dashboards": {
+    "title": "Dashboards",
+    "placeholder": "Titel des neuen Dashboards",
+    "create": "Erstellen",
+    "empty": "Noch keine Dashboards.",
+    "open": "Öffnen",
+    "delete": "Löschen",
+    "loading": "Wird geladen…"
+  },
+  "editor": { "title": "Editor", "back": "Zurück" },
+  "theme": { "system": "System", "light": "Hell", "dark": "Dunkel" },
+  "language": { "label": "Sprache" }
+}

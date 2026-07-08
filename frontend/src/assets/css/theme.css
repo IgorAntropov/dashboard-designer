@@ -1,0 +1,147 @@
+:root {
+  --pk-accent: #ffd400;
+  --pk-accent-strong: #e6bf00;
+  --pk-accent-contrast: #1a1a1a;
+  --pk-bg: #ffffff;
+  --pk-surface: #f6f6f7;
+  --pk-text: #1a1a1a;
+  --pk-muted: #6b7280;
+  --pk-border: #e5e7eb;
+  --pk-nav-width: 248px;
+}
+
+[data-bs-theme='dark'] {
+  --pk-bg: #0f0f10;
+  --pk-surface: #17181b;
+  --pk-text: #f3f4f6;
+  --pk-muted: #9ca3af;
+  --pk-border: #26272b;
+}
+
+body {
+  background-color: var(--pk-bg);
+  color: var(--pk-text);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--pk-accent);
+  --bs-btn-border-color: var(--pk-accent);
+  --bs-btn-color: var(--pk-accent-contrast);
+  --bs-btn-hover-bg: var(--pk-accent-strong);
+  --bs-btn-hover-border-color: var(--pk-accent-strong);
+  --bs-btn-hover-color: var(--pk-accent-contrast);
+  --bs-btn-active-bg: var(--pk-accent-strong);
+  --bs-btn-active-border-color: var(--pk-accent-strong);
+  --bs-btn-active-color: var(--pk-accent-contrast);
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: 1.75rem;
+  padding-right: calc(var(--pk-nav-width) + 1.75rem);
+}
+
+.app-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: var(--pk-nav-width);
+  background-color: var(--pk-surface);
+  border-left: 1px solid var(--pk-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1.25rem;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.app-nav__brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+.app-nav__brand::after {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 3px;
+  margin-top: 0.35rem;
+  border-radius: 2px;
+  background-color: var(--pk-accent);
+}
+
+.app-nav__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.app-nav__link {
+  color: var(--pk-text);
+  text-decoration: none;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.6rem;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.app-nav__link:hover {
+  background-color: color-mix(in srgb, var(--pk-accent) 16%, transparent);
+}
+
+.app-nav__link.router-link-active {
+  background-color: var(--pk-accent);
+  color: var(--pk-accent-contrast);
+  font-weight: 600;
+}
+
+.app-nav__tools {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .app-content {
+    padding-right: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .app-nav {
+    position: static;
+    width: auto;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid var(--pk-border);
+  }
+}

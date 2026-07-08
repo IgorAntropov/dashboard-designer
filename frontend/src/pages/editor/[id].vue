@@ -16,7 +16,7 @@ const canvasStore = useCanvasStore()
 const dashboardId = route.params.id as string
 
 const dashboard = ref<Dashboard | null>(null)
-const title = computed(() => dashboard.value?.title ?? t('editor.title'))
+const titleInput = ref('')
 
 const ready = ref(false)
 const saveState = ref<'idle' | 'saving' | 'saved'>('idle')
@@ -25,6 +25,7 @@ let saveTimer: ReturnType<typeof setTimeout> | null = null
 async function save(): Promise<void> {
   saveState.value = 'saving'
   const patch = {
+    title: titleInput.value.trim() || t('editor.title'),
     layout: { widgets: canvasStore.widgets },
     theme_key: canvasStore.themeKey,
   }
@@ -38,6 +39,7 @@ async function save(): Promise<void> {
 onMounted(async () => {
   const loaded = await getDashboard(dashboardId)
   dashboard.value = loaded
+  titleInput.value = loaded?.title ?? ''
   const layout = (loaded?.layout ?? {}) as { widgets?: WidgetInstance[] }
   canvasStore.hydrate(
     Array.isArray(layout.widgets) ? layout.widgets : [],
@@ -47,7 +49,7 @@ onMounted(async () => {
 })
 
 watch(
-  [() => canvasStore.widgets, () => canvasStore.themeKey],
+  [() => canvasStore.widgets, () => canvasStore.themeKey, titleInput],
   () => {
     if (!ready.value) {
       return
@@ -61,13 +63,17 @@ watch(
   { deep: true },
 )
 
-useHead({ title })
+useHead({ title: computed(() => titleInput.value || t('editor.title')) })
 </script>
 
 <template>
   <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
-      <h1 class="h4 mb-0 text-truncate">{{ title }}</h1>
+      <input
+        v-model="titleInput"
+        class="editor-title-input"
+        :placeholder="$t('editor.title')"
+      >
 
       <div class="d-flex align-items-center gap-2">
         <ClientOnly>

@@ -439,6 +439,31 @@ body {
   max-width: 400px;
 }
 
+.editor-title-input {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--pk-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  min-width: 0;
+  max-width: 32rem;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.editor-title-input:hover {
+  border-color: var(--pk-border);
+}
+
+.editor-title-input:focus {
+  outline: none;
+  border-color: var(--pk-accent);
+  background-color: var(--pk-surface);
+}
+
 .editor-workspace {
   display: flex;
   gap: 1rem;

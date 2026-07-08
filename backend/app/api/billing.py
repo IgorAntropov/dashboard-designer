@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from typing import Any
 
-from app.api.deps import CurrentUserDep
+from fastapi import APIRouter, HTTPException, Request, status
+
+from app.api.deps import CurrentUserDep, SessionDep
 from app.core.config import get_settings
 from app.models.enums import SubscriptionTier
 from app.schemas.billing import (
@@ -9,6 +11,7 @@ from app.schemas.billing import (
     SubscriptionStatus,
 )
 from app.services.billing.factory import get_billing_provider
+from app.services.billing.service import BillingService
 
 router = APIRouter(prefix="/billing", tags=["billing"])
 
@@ -40,3 +43,28 @@ async def subscribe(
 @router.get("/status", response_model=SubscriptionStatus)
 async def billing_status(current_user: CurrentUserDep) -> SubscriptionStatus:
     return SubscriptionStatus(tier=current_user.subscription_tier, status="active")
+
+
+@router.post("/webhook/{provider}")
+async def webhook(
+    provider: str, request: Request, session: SessionDep
+) -> dict[str, Any]:
+    active = get_billing_provider(get_settings())
+    if provider != active.name:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Unknown provider"
+        )
+
+    raw_body = await request.body()
+    signature = request.headers.get("Content-HMAC") or request.headers.get(
+        "X-Content-HMAC"
+    )
+    event = active.verify_and_parse(raw_body, signature)
+    if event is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid signature"
+        )
+
+    await BillingService(session).apply_event(active.name, event)
+    await session.commit()
+    return {"code": 0}

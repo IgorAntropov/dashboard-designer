@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: panelka
       POSTGRES_DB: panelka
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -18,7 +18,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6380}:6379"
 
   backend:
     build:
@@ -41,7 +41,7 @@ services:
       redis:
         condition: service_started
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
 
   frontend:
     image: node:20-slim
@@ -55,7 +55,7 @@ services:
     volumes:
       - ./:/workspace
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
       - backend
 

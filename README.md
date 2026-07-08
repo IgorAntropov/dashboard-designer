@@ -31,6 +31,10 @@ Stop with `Ctrl+C`, or `make down`. First run builds images and installs deps, s
 minutes; later runs are fast.
 
 > If you see "Cannot connect to the Docker daemon", start Docker Desktop first.
+>
+> If a port is already in use (e.g. a local Postgres on 5432), change the host ports in `.env`
+> (`POSTGRES_PORT`, `REDIS_PORT`, `BACKEND_PORT`, `FRONTEND_PORT`). Defaults are 5433/6380/8000/3000
+> to avoid clashing with a local database.
 
 ## Native dev (optional, without Docker)
 

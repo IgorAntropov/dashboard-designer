@@ -6,6 +6,10 @@
     "logout": "Log out",
     "collapse": "Collapse"
   },
+  "session": {
+    "kickedTitle": "Session ended",
+    "kickedMessage": "Someone signed in to your account on another device."
+  },
   "landing": {
     "subtitle": "Build dashboards, theme them, and embed them anywhere.",
     "getStarted": "Get started",

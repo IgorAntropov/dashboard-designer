@@ -114,4 +114,10 @@ Profile (1.2d): backend adds `PATCH /me` (update display name, `UserService`) an
 `POST /auth/change-password` (verify current, rehash, revoke refresh tokens). Frontend `/profile`
 page shows subscription tier, edits the name, changes the password via an `AppModal`, and hosts
 logout (removed from the nav). The nav gained a Profile link; its collapse toggle moved to the bottom
-and is left-anchored. Reusable `shared/ui`: `AppButton`, `AppIcon`, `AppModal`, `Logo`, `PasswordField`.
+and is left-anchored. Reusable `shared/ui`: `AppButton`, `AppIcon`, `AppModal`, `AppBadge`, `Logo`, `PasswordField`.
+
+Session hardening: the frontend keeps the access token alive with a proactive refresh timer (rotates
+before expiry) rather than only reacting to 401s. Single active session is enforced over a WebSocket
+`GET /api/v1/ws/session?token=` — an in-memory `SessionConnectionManager` keeps one live socket per
+user and, on a new login, sends `{"type":"kicked"}` to the previous socket and closes it; the client
+shows a modal and logs out. (In-memory is per-process — production scales this via Redis pub/sub, §9.4.)

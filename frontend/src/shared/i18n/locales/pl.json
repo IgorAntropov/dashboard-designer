@@ -6,6 +6,10 @@
     "logout": "Wyloguj",
     "collapse": "Zwiń"
   },
+  "session": {
+    "kickedTitle": "Sesja zakończona",
+    "kickedMessage": "Ktoś zalogował się do Twojego konta na innym urządzeniu."
+  },
   "landing": {
     "subtitle": "Twórz pulpity, nadawaj im styl i osadzaj je wszędzie.",
     "getStarted": "Zaczynaj",

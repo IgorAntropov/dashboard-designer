@@ -1,0 +1,54 @@
+import uuid
+
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+
+from app.core.tokens import decode_token
+
+router = APIRouter()
+
+
+class SessionConnectionManager:
+    def __init__(self) -> None:
+        self._connections: dict[str, tuple[str, WebSocket]] = {}
+
+    async def connect(
+        self, user_id: str, session_id: str, websocket: WebSocket
+    ) -> None:
+        existing = self._connections.get(user_id)
+        if existing is not None:
+            _, old_socket = existing
+            try:
+                await old_socket.send_json({"type": "kicked"})
+                await old_socket.close(code=4000)
+            except Exception:
+                pass
+        self._connections[user_id] = (session_id, websocket)
+
+    def disconnect(self, user_id: str, session_id: str) -> None:
+        current = self._connections.get(user_id)
+        if current is not None and current[0] == session_id:
+            self._connections.pop(user_id, None)
+
+
+manager = SessionConnectionManager()
+
+
+@router.websocket("/ws/session")
+async def session_ws(websocket: WebSocket, token: str) -> None:
+    try:
+        payload = decode_token(token, "access")
+    except ValueError:
+        await websocket.close(code=1008)
+        return
+
+    user_id = str(payload["sub"])
+    session_id = str(uuid.uuid4())
+
+    await websocket.accept()
+    await manager.connect(user_id, session_id, websocket)
+
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        manager.disconnect(user_id, session_id)

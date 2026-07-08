@@ -6,6 +6,10 @@
     "logout": "Esci",
     "collapse": "Comprimi"
   },
+  "session": {
+    "kickedTitle": "Sessione terminata",
+    "kickedMessage": "Qualcuno ha effettuato l'accesso al tuo account su un altro dispositivo."
+  },
   "landing": {
     "subtitle": "Crea dashboard, personalizzale e incorporale ovunque.",
     "getStarted": "Inizia",

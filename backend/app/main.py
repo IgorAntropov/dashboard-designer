@@ -7,6 +7,7 @@ from app.api.health import router as health_router
 from app.api.oauth import router as oauth_router
 from app.api.users import router as users_router
 from app.api.version import router as version_router
+from app.api.ws import router as ws_router
 from app.core.config import Settings, get_settings
 from app.core.security import customize_openapi
 
@@ -38,6 +39,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(oauth_router, prefix=prefix)
     app.include_router(users_router, prefix=prefix)
     app.include_router(dashboards_router, prefix=prefix)
+    app.include_router(ws_router, prefix=prefix)
     customize_openapi(app, settings)
     return app
 

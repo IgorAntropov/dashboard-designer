@@ -6,6 +6,10 @@
     "logout": "Odhlásit",
     "collapse": "Sbalit"
   },
+  "session": {
+    "kickedTitle": "Relace ukončena",
+    "kickedMessage": "Někdo se přihlásil k vašemu účtu na jiném zařízení."
+  },
   "landing": {
     "subtitle": "Tvořte dashboardy, stylujte je a vkládejte je kamkoli.",
     "getStarted": "Začít",

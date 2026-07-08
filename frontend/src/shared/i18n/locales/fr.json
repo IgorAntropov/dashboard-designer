@@ -6,6 +6,10 @@
     "logout": "Déconnexion",
     "collapse": "Réduire"
   },
+  "session": {
+    "kickedTitle": "Session terminée",
+    "kickedMessage": "Quelqu'un s'est connecté à votre compte sur un autre appareil."
+  },
   "landing": {
     "subtitle": "Créez des tableaux de bord, personnalisez-les et intégrez-les partout.",
     "getStarted": "Commencer",

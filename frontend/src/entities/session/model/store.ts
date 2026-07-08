@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 
 import type { components } from '@shared/api'
 import { api, setAccessToken } from '@shared/api'
+import { config } from '@shared/config'
 
 export type SessionUser = components['schemas']['UserOut']
 
@@ -18,6 +19,40 @@ export const useSessionStore = defineStore('session', () => {
 
   const user = ref<SessionUser | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
+  const kicked = ref(false)
+
+  let socket: WebSocket | null = null
+
+  function disconnectWs(): void {
+    if (socket) {
+      socket.onmessage = null
+      socket.onclose = null
+      socket.close()
+      socket = null
+    }
+  }
+
+  function connectWs(): void {
+    if (!import.meta.client || !accessCookie.value) {
+      return
+    }
+    disconnectWs()
+    const wsOrigin = config.apiOrigin.replace(/^http/, 'ws')
+    const ws = new WebSocket(
+      `${wsOrigin}/api/v1/ws/session?token=${accessCookie.value}`,
+    )
+    ws.onmessage = (event) => {
+      if (String(event.data).includes('"kicked"')) {
+        kicked.value = true
+        logout()
+      }
+    }
+    socket = ws
+  }
+
+  function resetKicked(): void {
+    kicked.value = false
+  }
 
   const ACCESS_REFRESH_MS = 12 * 60 * 1000
   let refreshTimer: ReturnType<typeof setTimeout> | null = null
@@ -82,12 +117,14 @@ export const useSessionStore = defineStore('session', () => {
       setAccessToken(accessCookie.value)
       if (await fetchMe()) {
         scheduleRefresh()
+        connectWs()
         return
       }
     }
     if (await refresh()) {
       await fetchMe()
       scheduleRefresh()
+      connectWs()
     }
   }
 
@@ -103,6 +140,7 @@ export const useSessionStore = defineStore('session', () => {
     const ok = await fetchMe()
     if (ok) {
       scheduleRefresh()
+      connectWs()
     }
     return ok
   }
@@ -157,6 +195,7 @@ export const useSessionStore = defineStore('session', () => {
 
   function logout(): void {
     stopRefreshTimer()
+    disconnectWs()
     user.value = null
     applyAccess(null)
     refreshCookie.value = null
@@ -165,6 +204,7 @@ export const useSessionStore = defineStore('session', () => {
   return {
     user,
     isAuthenticated,
+    kicked,
     init,
     login,
     register,
@@ -172,6 +212,7 @@ export const useSessionStore = defineStore('session', () => {
     updateName,
     changePassword,
     setTier,
+    resetKicked,
     logout,
   }
 })

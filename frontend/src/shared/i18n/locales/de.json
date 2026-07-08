@@ -6,6 +6,10 @@
     "logout": "Abmelden",
     "collapse": "Einklappen"
   },
+  "session": {
+    "kickedTitle": "Sitzung beendet",
+    "kickedMessage": "Jemand hat sich auf einem anderen Gerät in Ihr Konto eingeloggt."
+  },
   "landing": {
     "subtitle": "Erstelle Dashboards, gestalte sie und binde sie überall ein.",
     "getStarted": "Loslegen",

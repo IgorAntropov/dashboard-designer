@@ -51,7 +51,8 @@
     "delete": "Usuń",
     "loading": "Ładowanie…",
     "new": "Nowy",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "confirmDelete": "Usunąć pulpit?"
   },
   "editor": { "title": "Edytor", "back": "Wstecz" },
   "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },

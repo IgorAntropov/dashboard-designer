@@ -51,7 +51,8 @@
     "delete": "Удалить",
     "loading": "Загрузка…",
     "new": "Новый",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "confirmDelete": "Удалить дашборд?"
   },
   "editor": { "title": "Редактор", "back": "Назад" },
   "theme": { "system": "Системная", "light": "Светлая", "dark": "Тёмная" },

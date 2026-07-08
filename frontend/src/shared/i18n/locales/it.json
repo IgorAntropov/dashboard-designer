@@ -51,7 +51,8 @@
     "delete": "Elimina",
     "loading": "Caricamento…",
     "new": "Nuovo",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "confirmDelete": "Eliminare la dashboard?"
   },
   "editor": { "title": "Editor", "back": "Indietro" },
   "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },

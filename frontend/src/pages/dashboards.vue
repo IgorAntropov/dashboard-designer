@@ -17,6 +17,8 @@ const loading = ref(true)
 const creating = ref(false)
 const modalOpen = ref(false)
 const newTitle = ref('')
+const confirmOpen = ref(false)
+const pendingDeleteId = ref<string | null>(null)
 
 async function refresh(): Promise<void> {
   loading.value = true
@@ -45,8 +47,17 @@ async function onCreate(): Promise<void> {
   }
 }
 
-async function onDelete(id: string): Promise<void> {
-  await deleteDashboard(id)
+function askDelete(id: string): void {
+  pendingDeleteId.value = id
+  confirmOpen.value = true
+}
+
+async function confirmDelete(): Promise<void> {
+  if (pendingDeleteId.value) {
+    await deleteDashboard(pendingDeleteId.value)
+  }
+  confirmOpen.value = false
+  pendingDeleteId.value = null
   await refresh()
 }
 
@@ -76,7 +87,7 @@ useHead({ title: computed(() => t('dashboards.title')) })
         v-for="dashboard in dashboards"
         :key="dashboard.id"
         :dashboard="dashboard"
-        @delete="onDelete"
+        @delete="askDelete"
       />
     </div>
 
@@ -110,5 +121,19 @@ useHead({ title: computed(() => t('dashboards.title')) })
         </AppButton>
       </template>
     </AppModal>
+
+    <AppModal v-model="confirmOpen" :title="$t('dashboards.confirmDelete')">
+      <p class="mb-0">{{ $t('dashboards.confirmDelete') }}</p>
+
+      <template #footer>
+        <AppButton variant="secondary" @click="confirmOpen = false">
+          {{ $t('dashboards.cancel') }}
+        </AppButton>
+        <AppButton variant="danger" icon="trash" @click="confirmDelete">
+          {{ $t('dashboards.delete') }}
+        </AppButton>
+      </template>
+    </AppModal>
   </div>
 </template>
+

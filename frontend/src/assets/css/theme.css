@@ -45,7 +45,7 @@ body {
   border: none;
   background: transparent;
   color: var(--pk-muted);
-  width: 30px;
+  width: 26px;
   height: 26px;
   border-radius: 999px;
   display: grid;
@@ -203,7 +203,7 @@ body {
 }
 
 .app-shell--compact {
-  --pk-nav-width: 96px;
+  --pk-nav-width: 120px;
 }
 
 .app-content {
@@ -300,6 +300,7 @@ body {
   border-radius: 0.6rem;
   white-space: nowrap;
   transition:
+    padding 0.2s ease,
     background-color 0.2s ease,
     color 0.2s ease;
 }
@@ -343,6 +344,16 @@ body {
   justify-content: flex-start;
 }
 
+.app-nav--compact .app-nav__head {
+  justify-content: center;
+}
+
+.app-nav--compact .app-nav__link {
+  padding-left: 2.1rem;
+  padding-right: 2.1rem;
+  transition-delay: 0.12s;
+}
+
 .app-nav--compact .app-nav__label {
   opacity: 0;
 }
@@ -358,10 +369,6 @@ body {
 .app-nav--compact .app-nav__switchers .lang-switch__btn {
   width: auto;
   justify-content: center;
-}
-
-.app-nav--compact .theme-switch__opt {
-  width: 20px;
 }
 
 .glass-controls {
@@ -450,19 +457,17 @@ body {
 
 .dash-card {
   position: relative;
-  border: 1px solid var(--pk-border);
+  border: 1px solid transparent;
   border-radius: 0.9rem;
   overflow: hidden;
   background-color: var(--pk-surface);
   transition:
     border-color 0.15s ease,
-    transform 0.15s ease,
     box-shadow 0.15s ease;
 }
 
 .dash-card:hover {
   border-color: var(--pk-accent);
-  transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
 }
 

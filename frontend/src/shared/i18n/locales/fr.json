@@ -51,7 +51,8 @@
     "delete": "Supprimer",
     "loading": "Chargement…",
     "new": "Nouveau",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "confirmDelete": "Supprimer le tableau de bord ?"
   },
   "editor": { "title": "Éditeur", "back": "Retour" },
   "theme": { "system": "Système", "light": "Clair", "dark": "Sombre" },

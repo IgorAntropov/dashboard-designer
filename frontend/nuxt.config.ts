@@ -51,6 +51,11 @@ export default defineNuxtConfig({
       titleTemplate: (title?: string) =>
         title ? `${title} · Panelka` : 'Panelka — dashboard constructor',
       link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzExMTIxNCIgLz4KICA8cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iOSIgaGVpZ2h0PSI5IiByeD0iMi40IiBmaWxsPSIjZmZkNDAwIiAvPgogIDxyZWN0IHg9IjE4IiB5PSI1IiB3aWR0aD0iOSIgaGVpZ2h0PSI5IiByeD0iMi40IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjg1IiAvPgogIDxyZWN0IHg9IjUiIHk9IjE4IiB3aWR0aD0iOSIgaGVpZ2h0PSI5IiByeD0iMi40IiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjg1IiAvPgogIDxyZWN0IHg9IjE4IiB5PSIxOCIgd2lkdGg9IjkiIGhlaWdodD0iOSIgcng9IjIuNCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC41NSIgLz4KPC9zdmc+Cg==',
+        },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {

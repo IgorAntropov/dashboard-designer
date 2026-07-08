@@ -51,7 +51,8 @@
     "delete": "Smazat",
     "loading": "Načítání…",
     "new": "Nový",
-    "cancel": "Zrušit"
+    "cancel": "Zrušit",
+    "confirmDelete": "Smazat dashboard?"
   },
   "editor": { "title": "Editor", "back": "Zpět" },
   "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý" },

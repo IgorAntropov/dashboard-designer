@@ -51,7 +51,8 @@
     "delete": "Löschen",
     "loading": "Wird geladen…",
     "new": "Neu",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "confirmDelete": "Dashboard löschen?"
   },
   "editor": { "title": "Editor", "back": "Zurück" },
   "theme": { "system": "System", "light": "Hell", "dark": "Dunkel" },

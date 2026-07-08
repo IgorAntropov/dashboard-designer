@@ -1,4 +1,5 @@
 import { DEFAULT_ORIGIN } from './constants'
+import { UrlPuller } from './data/url-pull'
 import type { EmbedConfig, EmbedData } from './renderer/engine'
 import { DashboardEngine } from './renderer/engine'
 
@@ -6,9 +7,10 @@ export class PanelkaDashboard extends HTMLElement {
   private engine: DashboardEngine | null = null
   private pushedData: EmbedData = {}
   private resizeObserver: ResizeObserver | null = null
+  private puller: UrlPuller | null = null
 
   static get observedAttributes(): string[] {
-    return ['token', 'origin']
+    return ['token', 'origin', 'data-url', 'refresh']
   }
 
   connectedCallback(): void {
@@ -23,6 +25,7 @@ export class PanelkaDashboard extends HTMLElement {
 
   disconnectedCallback(): void {
     this.resizeObserver?.disconnect()
+    this.puller?.stop()
     this.engine?.destroy()
   }
 
@@ -82,5 +85,22 @@ export class PanelkaDashboard extends HTMLElement {
     this.resizeObserver?.disconnect()
     this.resizeObserver = new ResizeObserver(() => this.engine?.resize())
     this.resizeObserver.observe(this)
+
+    this.startPull()
+  }
+
+  private startPull(): void {
+    this.puller?.stop()
+    const url = this.getAttribute('data-url')
+    if (!url) {
+      return
+    }
+    const refresh = Number(this.getAttribute('refresh') ?? '0')
+    this.puller = new UrlPuller(
+      url,
+      (data) => this.engine?.setData(data),
+      Number.isFinite(refresh) ? refresh : 0,
+    )
+    this.puller.start()
   }
 }

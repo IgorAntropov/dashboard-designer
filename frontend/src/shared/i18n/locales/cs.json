@@ -2,7 +2,9 @@
   "nav": {
     "dashboards": "Dashboardy",
     "settings": "Nastavení",
-    "logout": "Odhlásit"
+    "profile": "Profil",
+    "logout": "Odhlásit",
+    "collapse": "Sbalit"
   },
   "landing": {
     "subtitle": "Tvořte dashboardy, stylujte je a vkládejte je kamkoli.",
@@ -20,6 +22,16 @@
     "noAccount": "Nemáte účet?",
     "haveAccount": "Už máte účet?",
     "failed": "Nezdařilo se. Zkontrolujte údaje."
+  },
+  "profile": {
+    "title": "Profil",
+    "subscription": "Předplatné",
+    "displayName": "Jméno",
+    "save": "Uložit",
+    "security": "Zabezpečení",
+    "changePassword": "Změnit heslo",
+    "currentPassword": "Současné heslo",
+    "newPassword": "Nové heslo"
   },
   "settings": {
     "title": "Nastavení",

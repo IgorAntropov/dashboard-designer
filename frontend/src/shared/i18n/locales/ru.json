@@ -1,5 +1,11 @@
 {
-  "nav": { "dashboards": "Дашборды", "settings": "Настройки", "logout": "Выйти" },
+  "nav": {
+    "dashboards": "Дашборды",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "collapse": "Свернуть"
+  },
   "landing": {
     "subtitle": "Собирайте дашборды, оформляйте и встраивайте куда угодно.",
     "getStarted": "Начать",
@@ -16,6 +22,16 @@
     "noAccount": "Нет аккаунта?",
     "haveAccount": "Уже есть аккаунт?",
     "failed": "Не удалось. Проверьте данные."
+  },
+  "profile": {
+    "title": "Профиль",
+    "subscription": "Тариф",
+    "displayName": "Имя",
+    "save": "Сохранить",
+    "security": "Безопасность",
+    "changePassword": "Сменить пароль",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль"
   },
   "settings": {
     "title": "Настройки",

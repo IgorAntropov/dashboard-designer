@@ -133,3 +133,19 @@ class AuthService:
         )
         await self._session.flush()
         return user
+
+    async def change_password(self, user: User, current: str, new: str) -> None:
+        if user.password_hash is None or not verify_password(
+            current, user.password_hash
+        ):
+            raise InvalidCredentialsError
+        user.password_hash = hash_password(new)
+        tokens = await self._session.scalars(
+            select(RefreshToken).where(
+                RefreshToken.user_id == user.id,
+                RefreshToken.revoked.is_(False),
+            )
+        )
+        for token in tokens:
+            token.revoked = True
+        await self._session.flush()

@@ -2,7 +2,9 @@
   "nav": {
     "dashboards": "Dashboards",
     "settings": "Einstellungen",
-    "logout": "Abmelden"
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "collapse": "Einklappen"
   },
   "landing": {
     "subtitle": "Erstelle Dashboards, gestalte sie und binde sie überall ein.",
@@ -20,6 +22,16 @@
     "noAccount": "Kein Konto?",
     "haveAccount": "Schon ein Konto?",
     "failed": "Fehlgeschlagen. Prüfe deine Angaben."
+  },
+  "profile": {
+    "title": "Profil",
+    "subscription": "Abo",
+    "displayName": "Name",
+    "save": "Speichern",
+    "security": "Sicherheit",
+    "changePassword": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort"
   },
   "settings": {
     "title": "Einstellungen",

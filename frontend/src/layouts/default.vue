@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useSessionStore } from '@entities/session'
 import { LanguageSwitcher, Logo, ThemeToggle } from '@shared/ui'
 
-const session = useSessionStore()
 const compact = useCookie<boolean>('panelka_nav_compact', {
   default: () => false,
   maxAge: 60 * 60 * 24 * 365,
@@ -10,11 +8,6 @@ const compact = useCookie<boolean>('panelka_nav_compact', {
 
 function toggle(): void {
   compact.value = !compact.value
-}
-
-async function onLogout(): Promise<void> {
-  session.logout()
-  await navigateTo('/')
 }
 </script>
 
@@ -29,26 +22,6 @@ async function onLogout(): Promise<void> {
         <NuxtLink to="/" class="text-reset text-decoration-none">
           <Logo :show-word="!compact" />
         </NuxtLink>
-        <button
-          class="app-nav__collapse"
-          type="button"
-          :aria-label="$t('nav.settings')"
-          @click="toggle"
-        >
-          <svg
-            class="app-nav__chevron"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
       </div>
 
       <nav class="app-nav__links">
@@ -72,6 +45,22 @@ async function onLogout(): Promise<void> {
             <rect x="3" y="14" width="7" height="7" rx="1.5" />
           </svg>
           <span class="app-nav__label">{{ $t('nav.dashboards') }}</span>
+        </NuxtLink>
+
+        <NuxtLink to="/profile" class="app-nav__link" :title="$t('nav.profile')">
+          <svg
+            class="app-nav__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="app-nav__label">{{ $t('nav.profile') }}</span>
         </NuxtLink>
 
         <NuxtLink to="/settings" class="app-nav__link" :title="$t('nav.settings')">
@@ -99,26 +88,22 @@ async function onLogout(): Promise<void> {
       </nav>
 
       <div class="app-nav__tools">
-        <p
-          v-if="session.user && !compact"
-          class="small text-muted mb-1 text-truncate"
-        >
-          {{ session.user.email }}
-        </p>
-
         <div class="app-nav__switchers">
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
 
         <button
-          class="btn btn-sm btn-outline-secondary app-nav__logout"
+          class="app-nav__collapse"
           type="button"
-          :title="$t('nav.logout')"
-          @click="onLogout"
+          :title="$t('nav.collapse')"
+          :aria-label="$t('nav.collapse')"
+          @click="toggle"
         >
           <svg
-            class="app-nav__icon"
+            class="app-nav__chevron"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -126,11 +111,8 @@ async function onLogout(): Promise<void> {
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
+            <polyline points="15 18 9 12 15 6" />
           </svg>
-          <span class="app-nav__label">{{ $t('nav.logout') }}</span>
         </button>
       </div>
     </aside>

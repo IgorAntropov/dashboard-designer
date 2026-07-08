@@ -1,5 +1,11 @@
 {
-  "nav": { "dashboards": "Dashboards", "settings": "Settings", "logout": "Log out" },
+  "nav": {
+    "dashboards": "Dashboards",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Log out",
+    "collapse": "Collapse"
+  },
   "landing": {
     "subtitle": "Build dashboards, theme them, and embed them anywhere.",
     "getStarted": "Get started",
@@ -16,6 +22,16 @@
     "noAccount": "No account?",
     "haveAccount": "Already have an account?",
     "failed": "Failed. Check your details."
+  },
+  "profile": {
+    "title": "Profile",
+    "subscription": "Subscription",
+    "displayName": "Name",
+    "save": "Save",
+    "security": "Security",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password"
   },
   "settings": {
     "title": "Settings",

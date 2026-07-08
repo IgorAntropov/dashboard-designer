@@ -2,7 +2,9 @@
   "nav": {
     "dashboards": "Tableaux de bord",
     "settings": "Paramètres",
-    "logout": "Déconnexion"
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "collapse": "Réduire"
   },
   "landing": {
     "subtitle": "Créez des tableaux de bord, personnalisez-les et intégrez-les partout.",
@@ -20,6 +22,16 @@
     "noAccount": "Pas de compte ?",
     "haveAccount": "Déjà un compte ?",
     "failed": "Échec. Vérifiez vos informations."
+  },
+  "profile": {
+    "title": "Profil",
+    "subscription": "Abonnement",
+    "displayName": "Nom",
+    "save": "Enregistrer",
+    "security": "Sécurité",
+    "changePassword": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe"
   },
   "settings": {
     "title": "Paramètres",

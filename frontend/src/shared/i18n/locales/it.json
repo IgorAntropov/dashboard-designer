@@ -1,5 +1,11 @@
 {
-  "nav": { "dashboards": "Dashboard", "settings": "Impostazioni", "logout": "Esci" },
+  "nav": {
+    "dashboards": "Dashboard",
+    "settings": "Impostazioni",
+    "profile": "Profilo",
+    "logout": "Esci",
+    "collapse": "Comprimi"
+  },
   "landing": {
     "subtitle": "Crea dashboard, personalizzale e incorporale ovunque.",
     "getStarted": "Inizia",
@@ -16,6 +22,16 @@
     "noAccount": "Non hai un account?",
     "haveAccount": "Hai già un account?",
     "failed": "Operazione fallita. Controlla i dati."
+  },
+  "profile": {
+    "title": "Profilo",
+    "subscription": "Abbonamento",
+    "displayName": "Nome",
+    "save": "Salva",
+    "security": "Sicurezza",
+    "changePassword": "Cambia password",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password"
   },
   "settings": {
     "title": "Impostazioni",

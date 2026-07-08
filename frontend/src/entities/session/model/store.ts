@@ -87,11 +87,42 @@ export const useSessionStore = defineStore('session', () => {
     return login(email, password)
   }
 
+  async function updateName(displayName: string): Promise<boolean> {
+    const { data, error } = await api.PATCH('/api/v1/me', {
+      body: { display_name: displayName },
+    })
+    if (error || !data) {
+      return false
+    }
+    user.value = data
+    return true
+  }
+
+  async function changePassword(
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<boolean> {
+    const { error } = await api.POST('/api/v1/auth/change-password', {
+      body: { current_password: currentPassword, new_password: newPassword },
+    })
+    return !error
+  }
+
   function logout(): void {
     user.value = null
     applyAccess(null)
     refreshCookie.value = null
   }
 
-  return { user, isAuthenticated, init, login, register, refresh, logout }
+  return {
+    user,
+    isAuthenticated,
+    init,
+    login,
+    register,
+    refresh,
+    updateName,
+    changePassword,
+    logout,
+  }
 })

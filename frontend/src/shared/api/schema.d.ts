@@ -62,6 +62,17 @@ export interface paths {
     delete?: never
     options?: never
     head?: never
+    patch: operations['update_me_api_v1_me_patch']
+    trace?: never
+  }
+  '/api/v1/auth/change-password': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['change_password_api_v1_auth_change_password_post']
+    delete?: never
+    options?: never
+    head?: never
     patch?: never
     trace?: never
   }
@@ -116,6 +127,13 @@ export interface components {
     }
     RefreshRequest: {
       refresh_token: string
+    }
+    UserUpdate: {
+      display_name: string
+    }
+    ChangePasswordRequest: {
+      current_password: string
+      new_password: string
     }
     Dashboard: {
       id: string
@@ -210,6 +228,32 @@ export interface operations {
       200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['UserOut'] }
+      }
+    }
+  }
+  update_me_api_v1_me_patch: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['UserUpdate'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserOut'] }
+      }
+    }
+  }
+  change_password_api_v1_auth_change_password_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ChangePasswordRequest']
+      }
+    }
+    responses: {
+      204: {
+        headers: { [name: string]: unknown }
+        content?: never
       }
     }
   }

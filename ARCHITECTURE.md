@@ -109,3 +109,9 @@ shared api middleware attaches the access token. `login`/`register` pages (blank
 endpoints; a global `auth.global` middleware redirects unauthenticated users to `/login` and authed
 users away from auth pages, so the right-side nav (with user email + logout) is only reached after
 sign-in. FIXME: move the refresh token to a backend-set httpOnly cookie to reduce XSS exposure.
+
+Profile (1.2d): backend adds `PATCH /me` (update display name, `UserService`) and
+`POST /auth/change-password` (verify current, rehash, revoke refresh tokens). Frontend `/profile`
+page shows subscription tier, edits the name, changes the password via an `AppModal`, and hosts
+logout (removed from the nav). The nav gained a Profile link; its collapse toggle moved to the bottom
+and is left-anchored. Reusable `shared/ui`: `AppButton`, `AppIcon`, `AppModal`, `Logo`, `PasswordField`.

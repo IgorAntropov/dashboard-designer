@@ -1,4 +1,5 @@
 import { DEFAULT_ORIGIN } from './constants'
+import { LiveConnection } from './data/live'
 import { UrlPuller } from './data/url-pull'
 import type { EmbedConfig, EmbedData } from './renderer/engine'
 import { DashboardEngine } from './renderer/engine'
@@ -8,9 +9,10 @@ export class PanelkaDashboard extends HTMLElement {
   private pushedData: EmbedData = {}
   private resizeObserver: ResizeObserver | null = null
   private puller: UrlPuller | null = null
+  private live: LiveConnection | null = null
 
   static get observedAttributes(): string[] {
-    return ['token', 'origin', 'data-url', 'refresh']
+    return ['token', 'origin', 'data-url', 'refresh', 'live']
   }
 
   connectedCallback(): void {
@@ -26,6 +28,7 @@ export class PanelkaDashboard extends HTMLElement {
   disconnectedCallback(): void {
     this.resizeObserver?.disconnect()
     this.puller?.stop()
+    this.live?.stop()
     this.engine?.destroy()
   }
 
@@ -87,6 +90,7 @@ export class PanelkaDashboard extends HTMLElement {
     this.resizeObserver.observe(this)
 
     this.startPull()
+    this.startLive(token)
   }
 
   private startPull(): void {
@@ -102,5 +106,18 @@ export class PanelkaDashboard extends HTMLElement {
       Number.isFinite(refresh) ? refresh : 0,
     )
     this.puller.start()
+  }
+
+  private startLive(token: string): void {
+    this.live?.stop()
+    if (!this.hasAttribute('live')) {
+      return
+    }
+    const wsOrigin = this.origin().replace(/^http/, 'ws')
+    this.live = new LiveConnection(
+      `${wsOrigin}/api/v1/public/embed/${token}/live`,
+      (data) => this.engine?.setData(data),
+    )
+    this.live.start()
   }
 }

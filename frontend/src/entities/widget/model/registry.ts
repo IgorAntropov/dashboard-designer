@@ -17,16 +17,20 @@ const CHART_SCHEMA: WidgetSchema = {
 
 const CHART_BINDING: WidgetBinding = { label: 'label', value: 'value' }
 
+const POINT_SCHEMA: WidgetSchema = {
+  x: { key: 'x', type: 'number', label: 'X' },
+  y: { key: 'y', type: 'number', label: 'Y' },
+}
+
+const POINT_BINDING: WidgetBinding = { x: 'x', y: 'y' }
+
+const VALUE_SCHEMA: WidgetSchema = {
+  value: { key: 'value', type: 'number', label: 'Value' },
+}
+
+const VALUE_BINDING: WidgetBinding = { value: 'value' }
+
 export const WIDGET_TYPES: WidgetTypeDef[] = [
-  {
-    key: 'stat-tile',
-    label: 'Stat',
-    category: 'kpi',
-    defaultSize: { w: 3, h: 2 },
-    defaultConfig: { title: 'Stat' },
-    defaultSchema: { value: { key: 'value', type: 'number', label: 'Value' } },
-    defaultBinding: { value: 'value' },
-  },
   {
     key: 'bar-chart',
     label: 'Bar chart',
@@ -46,6 +50,15 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: CHART_BINDING,
   },
   {
+    key: 'area-chart',
+    label: 'Area chart',
+    category: 'charts',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: { title: 'Area chart' },
+    defaultSchema: CHART_SCHEMA,
+    defaultBinding: CHART_BINDING,
+  },
+  {
     key: 'pie-chart',
     label: 'Pie chart',
     category: 'charts',
@@ -53,6 +66,60 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultConfig: { title: 'Pie chart' },
     defaultSchema: CHART_SCHEMA,
     defaultBinding: CHART_BINDING,
+  },
+  {
+    key: 'donut-chart',
+    label: 'Donut chart',
+    category: 'charts',
+    defaultSize: { w: 4, h: 4 },
+    defaultConfig: { title: 'Donut chart' },
+    defaultSchema: CHART_SCHEMA,
+    defaultBinding: CHART_BINDING,
+  },
+  {
+    key: 'scatter-chart',
+    label: 'Scatter',
+    category: 'charts',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: { title: 'Scatter' },
+    defaultSchema: POINT_SCHEMA,
+    defaultBinding: POINT_BINDING,
+  },
+  {
+    key: 'radar-chart',
+    label: 'Radar',
+    category: 'charts',
+    defaultSize: { w: 5, h: 4 },
+    defaultConfig: { title: 'Radar' },
+    defaultSchema: CHART_SCHEMA,
+    defaultBinding: CHART_BINDING,
+  },
+  {
+    key: 'stat-tile',
+    label: 'Stat',
+    category: 'kpi',
+    defaultSize: { w: 3, h: 2 },
+    defaultConfig: { title: 'Stat' },
+    defaultSchema: VALUE_SCHEMA,
+    defaultBinding: VALUE_BINDING,
+  },
+  {
+    key: 'gauge',
+    label: 'Gauge',
+    category: 'kpi',
+    defaultSize: { w: 4, h: 4 },
+    defaultConfig: { title: 'Gauge', max: 100 },
+    defaultSchema: VALUE_SCHEMA,
+    defaultBinding: VALUE_BINDING,
+  },
+  {
+    key: 'progress',
+    label: 'Progress',
+    category: 'kpi',
+    defaultSize: { w: 4, h: 2 },
+    defaultConfig: { title: 'Progress', max: 100 },
+    defaultSchema: VALUE_SCHEMA,
+    defaultBinding: VALUE_BINDING,
   },
   {
     key: 'text-block',
@@ -64,6 +131,8 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: {},
   },
 ]
+
+export const WIDGET_CATEGORIES = ['charts', 'kpi', 'text'] as const
 
 export function widgetTypeByKey(key: string): WidgetTypeDef | undefined {
   return WIDGET_TYPES.find((definition) => definition.key === key)

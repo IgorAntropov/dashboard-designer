@@ -25,6 +25,11 @@ export const ENGINE_CSS = `
 .pk-stat__value { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
 .pk-stat__label { color: var(--pk-muted, #6b7280); font-size: 0.85rem; }
 .pk-text { height: 100%; display: flex; align-items: center; padding: 4px 8px; }
+.pk-progress { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; padding: 4px 8px; }
+.pk-progress__label { font-size: 0.85rem; }
+.pk-progress__value { font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
+.pk-progress__track { width: 100%; height: 8px; border-radius: 999px; background-color: rgba(128, 128, 128, 0.22); overflow: hidden; }
+.pk-progress__bar { height: 100%; border-radius: 999px; }
 .pk-embed-attr {
   text-align: right;
   font-size: 0.72rem;

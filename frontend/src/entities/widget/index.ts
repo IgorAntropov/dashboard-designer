@@ -1,4 +1,4 @@
-export { WIDGET_TYPES, widgetTypeByKey } from './model/registry'
+export { WIDGET_CATEGORIES, WIDGET_TYPES, widgetTypeByKey } from './model/registry'
 export type { WidgetTypeDef } from './model/registry'
 export { sampleDataFor } from './model/sample'
 export { getRenderTheme } from './model/theme'

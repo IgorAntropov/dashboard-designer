@@ -22,7 +22,13 @@
     "label": "Popisek",
     "type": "Typ",
     "dataKey": "Datový klíč",
-    "hint": "Vyberte widget k úpravě"
+    "hint": "Vyberte widget k úpravě",
+    "max": "Maximum"
+  },
+  "palette": {
+    "charts": "Grafy",
+    "kpi": "KPI",
+    "text": "Text"
   },
   "session": {
     "kickedTitle": "Relace ukončena",

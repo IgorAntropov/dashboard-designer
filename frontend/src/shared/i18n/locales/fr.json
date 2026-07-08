@@ -22,7 +22,13 @@
     "label": "Libellé",
     "type": "Type",
     "dataKey": "Clé de données",
-    "hint": "Sélectionnez un widget à modifier"
+    "hint": "Sélectionnez un widget à modifier",
+    "max": "Maximum"
+  },
+  "palette": {
+    "charts": "Graphiques",
+    "kpi": "KPI",
+    "text": "Texte"
   },
   "session": {
     "kickedTitle": "Session terminée",

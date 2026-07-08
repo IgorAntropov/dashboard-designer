@@ -37,6 +37,23 @@ function onText(event: Event): void {
   }
 }
 
+const HAS_MAX = new Set(['gauge', 'progress'])
+
+function asNumber(value: unknown): number {
+  return typeof value === 'number' ? value : 100
+}
+
+function onMax(event: Event): void {
+  if (widget.value) {
+    const parsed = Number((event.target as HTMLInputElement).value)
+    store.updateConfig(
+      widget.value.id,
+      'max',
+      Number.isFinite(parsed) && parsed > 0 ? parsed : 100,
+    )
+  }
+}
+
 function onLabel(key: string, event: Event): void {
   if (widget.value) {
     store.updateSchemaField(widget.value.id, key, {
@@ -85,6 +102,17 @@ function onDataKey(key: string, event: Event): void {
           class="form-control form-control-sm"
           :value="asString(widget.config.title)"
           @input="onTitle"
+        >
+      </div>
+
+      <div v-if="HAS_MAX.has(widget.type)" class="mb-3">
+        <label class="form-label small">{{ $t('config.max') }}</label>
+        <input
+          type="number"
+          min="1"
+          class="form-control form-control-sm"
+          :value="asNumber(widget.config.max)"
+          @input="onMax"
         >
       </div>
 

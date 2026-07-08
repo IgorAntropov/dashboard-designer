@@ -22,7 +22,13 @@
     "label": "Etykieta",
     "type": "Typ",
     "dataKey": "Klucz danych",
-    "hint": "Wybierz widżet do edycji"
+    "hint": "Wybierz widżet do edycji",
+    "max": "Maksimum"
+  },
+  "palette": {
+    "charts": "Wykresy",
+    "kpi": "KPI",
+    "text": "Tekst"
   },
   "session": {
     "kickedTitle": "Sesja zakończona",

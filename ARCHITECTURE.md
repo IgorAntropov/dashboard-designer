@@ -185,3 +185,17 @@ shared `lib/useReveal` IntersectionObserver composable; anchor nav relies on `sc
 `scroll-behavior: smooth` (both disabled under `prefers-reduced-motion`). All copy is i18n-driven under
 the `landing.*` namespace across the 7 locales; styling is scoped per component on `--pk-*` tokens so
 light/dark themes cascade. The old `blank` layout still serves auth pages.
+
+Widget library (5.2): the shared rendering core (`packages/renderer`) now covers 11 widget types.
+ECharts-backed via `buildChartOption`: `bar-chart`, `line-chart`, `area-chart`, `pie-chart`,
+`donut-chart` (wider inner radius), `scatter-chart` (x/y points via `resolvePoints`), `radar-chart`
+(indicators from categories), and `gauge` (single value via `resolveScalar`, `config.max`). DOM-rendered
+(no ECharts) via a `DOM_RENDERERS` map: `stat-tile`, `progress` (accent bar, `config.max`, colors taken
+from the theme inline so it works both in the editor and inside the embed Shadow DOM), and `text-block`.
+Both the editor (`entities/widget/WidgetView`) and the embed engine call the same `renderWidget`, so a
+new type appears everywhere at once. The `entities/widget` registry gained the new type defs (with
+`POINT`/`VALUE` schema+binding presets) and a `WIDGET_CATEGORIES` order; `sampleDataFor` returns
+type-appropriate preview data (scatter points, gauge/progress scalars). The palette (`widgets/palette`)
+is grouped by localized category headers (`palette.charts|kpi|text`); the config panel exposes a `max`
+field for gauge/progress (`config.max`). New progress styles live in both `assets/css/theme.css` and the
+embed `renderer/styles.ts`. Renderer logic is unit-tested (`option.test.ts`, `series.test.ts`).

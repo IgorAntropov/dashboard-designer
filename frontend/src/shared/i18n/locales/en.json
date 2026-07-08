@@ -22,7 +22,13 @@
     "label": "Label",
     "type": "Type",
     "dataKey": "Data key",
-    "hint": "Select a widget to edit"
+    "hint": "Select a widget to edit",
+    "max": "Maximum"
+  },
+  "palette": {
+    "charts": "Charts",
+    "kpi": "KPI",
+    "text": "Text"
   },
   "session": {
     "kickedTitle": "Session ended",

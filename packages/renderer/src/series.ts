@@ -19,3 +19,19 @@ export function resolveSeries(input: RenderInput): ResolvedSeries {
 
   return { categories, values }
 }
+
+export function resolvePoints(input: RenderInput): Array<[number, number]> {
+  const xKey = input.binding.x ?? 'x'
+  const yKey = input.binding.y ?? 'y'
+
+  return input.data.map((row) => [
+    Number(row[xKey] ?? 0),
+    Number(row[yKey] ?? 0),
+  ])
+}
+
+export function resolveScalar(input: RenderInput): number {
+  const valueKey = input.binding.value ?? 'value'
+  const first = input.data[0]
+  return first ? Number(first[valueKey] ?? 0) : 0
+}

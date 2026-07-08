@@ -22,7 +22,13 @@
     "label": "Bezeichnung",
     "type": "Typ",
     "dataKey": "Datenschlüssel",
-    "hint": "Wähle ein Widget zum Bearbeiten"
+    "hint": "Wähle ein Widget zum Bearbeiten",
+    "max": "Maximum"
+  },
+  "palette": {
+    "charts": "Diagramme",
+    "kpi": "KPI",
+    "text": "Text"
   },
   "session": {
     "kickedTitle": "Sitzung beendet",

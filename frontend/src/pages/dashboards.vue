@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import type { Dashboard } from '@entities/dashboard'
 import {
@@ -33,8 +33,10 @@ async function onDelete(id: string): Promise<void> {
   await refresh()
 }
 
+const { t } = useI18n()
+
 onMounted(refresh)
-useHead({ title: 'Panelka — Dashboards' })
+useHead({ title: computed(() => t('dashboards.title')) })
 </script>
 
 <template>

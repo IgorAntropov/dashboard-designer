@@ -167,9 +167,14 @@ body {
   min-height: 100vh;
 }
 
+.app-shell--compact {
+  --pk-nav-width: 84px;
+}
+
 .app-content {
   padding: 1.75rem;
   padding-right: calc(var(--pk-nav-width) + 1.75rem);
+  transition: padding-right 0.25s ease;
 }
 
 .app-nav {
@@ -183,26 +188,66 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 1.5rem 1.25rem;
+  padding: 1.25rem 1rem;
+  overflow: hidden;
   transition:
+    width 0.25s ease,
     background-color 0.3s ease,
     border-color 0.3s ease;
 }
 
-.app-nav__brand {
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.01em;
+.app-nav__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.app-nav__brand::after {
-  content: '';
-  display: block;
-  width: 34px;
-  height: 3px;
-  margin-top: 0.35rem;
-  border-radius: 2px;
-  background-color: var(--pk-accent);
+.pk-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--pk-text);
+}
+
+.pk-logo__mark {
+  flex: 0 0 auto;
+}
+
+.pk-logo__word {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.app-nav__collapse {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--pk-muted);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.app-nav__collapse:hover {
+  color: var(--pk-text);
+  border-color: var(--pk-accent);
+}
+
+.app-nav__chevron {
+  transition: transform 0.25s ease;
+}
+
+.app-nav--compact .app-nav__chevron {
+  transform: rotate(180deg);
 }
 
 .app-nav__links {
@@ -212,13 +257,23 @@ body {
 }
 
 .app-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
   color: var(--pk-text);
   text-decoration: none;
-  padding: 0.55rem 0.8rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 0.6rem;
+  white-space: nowrap;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+.app-nav__icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
 }
 
 .app-nav__link:hover {
@@ -235,7 +290,45 @@ body {
   margin-top: auto;
   display: flex;
   flex-direction: column;
+  gap: 0.6rem;
+}
+
+.app-nav__switchers {
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.app-nav__logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.app-nav--compact .app-nav__head {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.app-nav--compact .app-nav__link {
+  justify-content: center;
+  padding: 0.6rem;
+}
+
+.app-nav--compact .app-nav__label {
+  display: none;
+}
+
+.app-nav--compact .app-nav__switchers {
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-nav--compact .theme-switch__opt {
+  width: 22px;
 }
 
 .glass-controls {

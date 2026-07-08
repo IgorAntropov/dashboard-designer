@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
 import { PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
+const { t } = useI18n()
 const session = useSessionStore()
 const email = ref('')
 const password = ref('')
@@ -25,7 +26,7 @@ async function onSubmit(): Promise<void> {
   }
 }
 
-useHead({ title: 'Panelka — Register' })
+useHead({ title: computed(() => t('auth.registerTitle')) })
 </script>
 
 <template>

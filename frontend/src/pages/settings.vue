@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { api } from '@shared/api'
 
+const { t } = useI18n()
 const runtimeConfig = useRuntimeConfig()
 const buildVersion = runtimeConfig.public.appVersion as string
 const apiVersion = ref('…')
@@ -12,7 +13,7 @@ onMounted(async () => {
   apiVersion.value = error || !data ? 'unavailable' : (data.version ?? 'unavailable')
 })
 
-useHead({ title: 'Panelka — Settings' })
+useHead({ title: computed(() => t('settings.title')) })
 </script>
 
 <template>

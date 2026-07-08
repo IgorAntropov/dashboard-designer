@@ -717,13 +717,13 @@ body {
   text-overflow: ellipsis;
 }
 
-.dash-card__delete {
+.dash-card__actions {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
   z-index: 2;
-  background-color: color-mix(in srgb, var(--pk-surface) 80%, transparent);
-  backdrop-filter: blur(4px);
+  display: flex;
+  gap: 0.35rem;
 }
 
 .plan-grid {

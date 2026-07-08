@@ -56,6 +56,15 @@ then a debounced watch persists `{ layout: { widgets }, theme_key }` via `PATCH 
 (`hydrate`/`record`/`undo`/`redo`, `canUndo`/`canRedo`) so structural edits and settled typing collapse
 into undoable steps. This closes Phase 1 (Editor MVP).
 
+Publish + embed (Phase 2): `embed_tokens` table (opaque revocable token + domain allowlist);
+`POST /dashboards/{id}/publish` marks the dashboard published and upserts its token. The public,
+auth-free `GET /public/embed/{token}` returns a read-only `PublishedConfig` (theme, layout,
+attribution derived from the owner's tier) cached in Redis (60s, fails open to DB). A public Nuxt route
+`/embed/[token]` (layout-less, bypasses the auth guard) fetches that config and renders the dashboard
+read-only with `@panelka/renderer`, accepts `postMessage {type:'panelka:data'}` and reports its height
+back to the parent (`panelka:height`). The dashboards page exposes an Embed modal (publish + copy link
+and iframe snippet). The production-grade Web Component/loader remains Phase 3 (embed SDK).
+
 ## 3. Data / contract flow
 
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in

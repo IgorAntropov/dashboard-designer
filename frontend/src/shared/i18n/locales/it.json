@@ -6,6 +6,15 @@
     "logout": "Esci",
     "collapse": "Comprimi"
   },
+  "embed": {
+    "title": "Incorpora",
+    "domains": "Domini consentiti (separati da virgole, vuoto = tutti)",
+    "publish": "Pubblica",
+    "link": "Link",
+    "snippet": "Snippet iframe",
+    "copy": "Copia",
+    "copied": "Copiato"
+  },
   "config": {
     "heading": "Widget",
     "titleField": "Titolo",

@@ -6,6 +6,15 @@
     "logout": "Déconnexion",
     "collapse": "Réduire"
   },
+  "embed": {
+    "title": "Intégration",
+    "domains": "Domaines autorisés (séparés par des virgules, vide = tous)",
+    "publish": "Publier",
+    "link": "Lien",
+    "snippet": "Extrait iframe",
+    "copy": "Copier",
+    "copied": "Copié"
+  },
   "config": {
     "heading": "Widget",
     "titleField": "Titre",

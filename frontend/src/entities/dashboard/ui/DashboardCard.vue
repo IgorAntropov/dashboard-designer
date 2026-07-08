@@ -6,7 +6,7 @@ import { AppButton, Logo } from '@shared/ui'
 import type { Dashboard } from '../api/repository'
 
 const props = defineProps<{ dashboard: Dashboard }>()
-const emit = defineEmits<{ delete: [id: string] }>()
+const emit = defineEmits<{ delete: [id: string]; embed: [id: string] }>()
 
 interface PreviewTile {
   x: number
@@ -49,15 +49,25 @@ function styleFor(tile: PreviewTile): Record<string, string> {
       </div>
     </NuxtLink>
 
-    <AppButton
-      variant="danger"
-      size="sm"
-      icon="trash"
-      icon-only
-      class="dash-card__delete"
-      :aria-label="$t('dashboards.delete')"
-      :title="$t('dashboards.delete')"
-      @click="emit('delete', dashboard.id)"
-    />
+    <div class="dash-card__actions">
+      <AppButton
+        variant="secondary"
+        size="sm"
+        icon="link"
+        icon-only
+        :aria-label="$t('embed.title')"
+        :title="$t('embed.title')"
+        @click="emit('embed', dashboard.id)"
+      />
+      <AppButton
+        variant="danger"
+        size="sm"
+        icon="trash"
+        icon-only
+        :aria-label="$t('dashboards.delete')"
+        :title="$t('dashboards.delete')"
+        @click="emit('delete', dashboard.id)"
+      />
+    </div>
   </div>
 </template>

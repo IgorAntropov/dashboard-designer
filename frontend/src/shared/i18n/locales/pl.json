@@ -6,6 +6,15 @@
     "logout": "Wyloguj",
     "collapse": "Zwiń"
   },
+  "embed": {
+    "title": "Osadzanie",
+    "domains": "Dozwolone domeny (po przecinku, puste = dowolne)",
+    "publish": "Opublikuj",
+    "link": "Link",
+    "snippet": "Fragment iframe",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano"
+  },
   "config": {
     "heading": "Widżet",
     "titleField": "Tytuł",

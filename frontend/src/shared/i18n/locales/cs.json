@@ -6,6 +6,15 @@
     "logout": "Odhlásit",
     "collapse": "Sbalit"
   },
+  "embed": {
+    "title": "Vložení",
+    "domains": "Povolené domény (oddělené čárkou, prázdné = jakékoli)",
+    "publish": "Publikovat",
+    "link": "Odkaz",
+    "snippet": "Úryvek iframe",
+    "copy": "Kopírovat",
+    "copied": "Zkopírováno"
+  },
   "config": {
     "heading": "Widget",
     "titleField": "Titulek",

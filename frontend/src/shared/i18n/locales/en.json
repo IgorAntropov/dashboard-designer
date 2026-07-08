@@ -6,6 +6,15 @@
     "logout": "Log out",
     "collapse": "Collapse"
   },
+  "embed": {
+    "title": "Embed",
+    "domains": "Allowed domains (comma-separated, empty = any)",
+    "publish": "Publish",
+    "link": "Embed link",
+    "snippet": "iframe snippet",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
   "config": {
     "heading": "Widget",
     "titleField": "Title",

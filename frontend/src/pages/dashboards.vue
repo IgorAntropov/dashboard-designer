@@ -7,6 +7,7 @@ import {
   DashboardCard,
   deleteDashboard,
   listDashboards,
+  publishDashboard,
 } from '@entities/dashboard'
 import { AppButton, AppModal } from '@shared/ui'
 
@@ -19,6 +20,53 @@ const modalOpen = ref(false)
 const newTitle = ref('')
 const confirmOpen = ref(false)
 const pendingDeleteId = ref<string | null>(null)
+
+const embedOpen = ref(false)
+const embedDashboardId = ref<string | null>(null)
+const allowedDomains = ref('')
+const embedToken = ref<string | null>(null)
+const publishing = ref(false)
+const copied = ref('')
+
+const embedUrl = computed(() =>
+  embedToken.value && import.meta.client
+    ? `${window.location.origin}/embed/${embedToken.value}`
+    : '',
+)
+const iframeSnippet = computed(() =>
+  embedUrl.value
+    ? `<iframe src="${embedUrl.value}" width="100%" height="600" frameborder="0"></iframe>`
+    : '',
+)
+
+function openEmbed(id: string): void {
+  embedDashboardId.value = id
+  allowedDomains.value = ''
+  embedToken.value = null
+  copied.value = ''
+  embedOpen.value = true
+}
+
+async function doPublish(): Promise<void> {
+  if (!embedDashboardId.value) {
+    return
+  }
+  publishing.value = true
+  const domains = allowedDomains.value
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+  const result = await publishDashboard(embedDashboardId.value, domains)
+  publishing.value = false
+  if (result) {
+    embedToken.value = result.token
+  }
+}
+
+async function copy(text: string, key: string): Promise<void> {
+  await navigator.clipboard.writeText(text)
+  copied.value = key
+}
 
 async function refresh(): Promise<void> {
   loading.value = true
@@ -88,6 +136,7 @@ useHead({ title: computed(() => t('dashboards.title')) })
         :key="dashboard.id"
         :dashboard="dashboard"
         @delete="askDelete"
+        @embed="openEmbed"
       />
     </div>
 
@@ -131,6 +180,50 @@ useHead({ title: computed(() => t('dashboards.title')) })
         </AppButton>
         <AppButton variant="danger" icon="trash" @click="confirmDelete">
           {{ $t('dashboards.delete') }}
+        </AppButton>
+      </template>
+    </AppModal>
+
+    <AppModal v-model="embedOpen" :title="$t('embed.title')">
+      <div class="mb-3">
+        <label class="form-label small">{{ $t('embed.domains') }}</label>
+        <input
+          v-model="allowedDomains"
+          class="form-control form-control-sm"
+          placeholder="example.com, app.example.com"
+        >
+      </div>
+
+      <div v-if="embedToken">
+        <label class="form-label small">{{ $t('embed.link') }}</label>
+        <div class="input-group input-group-sm mb-3">
+          <input class="form-control" :value="embedUrl" readonly>
+          <AppButton
+            variant="secondary"
+            size="sm"
+            @click="copy(embedUrl, 'link')"
+          >
+            {{ copied === 'link' ? $t('embed.copied') : $t('embed.copy') }}
+          </AppButton>
+        </div>
+
+        <label class="form-label small">{{ $t('embed.snippet') }}</label>
+        <textarea class="form-control form-control-sm mb-2" rows="3" readonly>{{ iframeSnippet }}</textarea>
+        <AppButton
+          variant="secondary"
+          size="sm"
+          @click="copy(iframeSnippet, 'snippet')"
+        >
+          {{ copied === 'snippet' ? $t('embed.copied') : $t('embed.copy') }}
+        </AppButton>
+      </div>
+
+      <template #footer>
+        <AppButton variant="secondary" @click="embedOpen = false">
+          {{ $t('dashboards.cancel') }}
+        </AppButton>
+        <AppButton icon="link" :disabled="publishing" @click="doPublish">
+          {{ $t('embed.publish') }}
         </AppButton>
       </template>
     </AppModal>

@@ -28,6 +28,7 @@
   "palette": {
     "charts": "Графики",
     "kpi": "KPI",
+    "geo": "Карты",
     "text": "Текст"
   },
   "session": {

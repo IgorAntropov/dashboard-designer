@@ -30,6 +30,13 @@ const VALUE_SCHEMA: WidgetSchema = {
 
 const VALUE_BINDING: WidgetBinding = { value: 'value' }
 
+const REGION_SCHEMA: WidgetSchema = {
+  region: { key: 'region', type: 'string', label: 'Region' },
+  value: { key: 'value', type: 'number', label: 'Value' },
+}
+
+const REGION_BINDING: WidgetBinding = { region: 'region', value: 'value' }
+
 export const WIDGET_TYPES: WidgetTypeDef[] = [
   {
     key: 'bar-chart',
@@ -122,6 +129,15 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: VALUE_BINDING,
   },
   {
+    key: 'svg-map',
+    label: 'World map',
+    category: 'geo',
+    defaultSize: { w: 6, h: 5 },
+    defaultConfig: { title: 'World map' },
+    defaultSchema: REGION_SCHEMA,
+    defaultBinding: REGION_BINDING,
+  },
+  {
     key: 'text-block',
     label: 'Text',
     category: 'text',
@@ -132,7 +148,7 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
   },
 ]
 
-export const WIDGET_CATEGORIES = ['charts', 'kpi', 'text'] as const
+export const WIDGET_CATEGORIES = ['charts', 'kpi', 'geo', 'text'] as const
 
 export function widgetTypeByKey(key: string): WidgetTypeDef | undefined {
   return WIDGET_TYPES.find((definition) => definition.key === key)

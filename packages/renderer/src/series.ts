@@ -35,3 +35,18 @@ export function resolveScalar(input: RenderInput): number {
   const first = input.data[0]
   return first ? Number(first[valueKey] ?? 0) : 0
 }
+
+export interface ResolvedRegion {
+  name: string
+  value: number
+}
+
+export function resolveRegions(input: RenderInput): ResolvedRegion[] {
+  const regionKey = input.binding.region ?? 'region'
+  const valueKey = input.binding.value ?? 'value'
+
+  return input.data.map((row) => ({
+    name: String(row[regionKey] ?? ''),
+    value: Number(row[valueKey] ?? 0),
+  }))
+}

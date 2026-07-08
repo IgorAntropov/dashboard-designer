@@ -1,11 +1,19 @@
 import * as echarts from 'echarts'
 
+import { buildMapOption, ensureWorldMap } from './map'
 import { buildChartOption } from './option'
 import type { RenderInput, WidgetHandle } from './types'
 
 export type { RenderInput, RenderTheme, WidgetHandle } from './types'
-export { resolvePoints, resolveScalar, resolveSeries } from './series'
+export {
+  resolvePoints,
+  resolveRegions,
+  resolveScalar,
+  resolveSeries,
+} from './series'
 export { buildChartOption } from './option'
+export { buildMapOption, ensureWorldMap } from './map'
+export { WORLD_MAP_NAME, WORLD_REGIONS } from './maps/world'
 export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme } from './themes'
 
 const CHART_TYPES = new Set([
@@ -95,15 +103,28 @@ const DOM_RENDERERS: Record<
   'text-block': renderText,
 }
 
+function renderEcharts(
+  el: HTMLElement,
+  input: RenderInput,
+  build: (input: RenderInput) => Record<string, unknown>,
+): WidgetHandle {
+  const chart = echarts.init(el)
+  chart.setOption(build(input))
+  return {
+    update: (next) => chart.setOption(build(next), true),
+    resize: () => chart.resize(),
+    dispose: () => chart.dispose(),
+  }
+}
+
 export function renderWidget(el: HTMLElement, input: RenderInput): WidgetHandle {
+  if (input.type === 'svg-map') {
+    ensureWorldMap()
+    return renderEcharts(el, input, buildMapOption)
+  }
+
   if (CHART_TYPES.has(input.type)) {
-    const chart = echarts.init(el)
-    chart.setOption(buildChartOption(input))
-    return {
-      update: (next) => chart.setOption(buildChartOption(next), true),
-      resize: () => chart.resize(),
-      dispose: () => chart.dispose(),
-    }
+    return renderEcharts(el, input, buildChartOption)
   }
 
   const renderDom = DOM_RENDERERS[input.type] ?? renderText

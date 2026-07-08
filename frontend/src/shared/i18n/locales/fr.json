@@ -28,6 +28,7 @@
   "palette": {
     "charts": "Graphiques",
     "kpi": "KPI",
+    "geo": "Cartes",
     "text": "Texte"
   },
   "session": {

@@ -199,3 +199,16 @@ type-appropriate preview data (scatter points, gauge/progress scalars). The pale
 is grouped by localized category headers (`palette.charts|kpi|text`); the config panel exposes a `max`
 field for gauge/progress (`config.max`). New progress styles live in both `assets/css/theme.css` and the
 embed `renderer/styles.ts`. Renderer logic is unit-tested (`option.test.ts`, `series.test.ts`).
+
+SVG geo maps (5.3): a `svg-map` widget (new `geo` palette category) renders a choropleth over a
+bundled, self-contained SVG world map. `packages/renderer/maps/world.ts` holds the SVG (six named
+continent regions via the `name` attribute) and `WORLD_MAP_NAME`; `map.ts` lazily registers it once
+with `echarts.registerMap(name, { svg })` (`ensureWorldMap`, idempotent) and builds the option
+(`buildMapOption`) — a `type: 'map'` series plus a `visualMap` that scales `0..max(value)` from
+`colorSurface` to `colorAccent`, all theme-driven. Region values come from a `region`→`value` binding
+via `resolveRegions`. `renderWidget` gained a `svg-map` branch and a shared `renderEcharts(el, input,
+build)` helper (removing the init/update/resize/dispose duplication across charts and maps). The
+registry adds the `svg-map` type (REGION schema/binding) and `geo` to `WIDGET_CATEGORIES`;
+`sampleDataFor` returns region rows whose names match the SVG. Editor and embed share the same path, so
+the map renders identically in both. Unit-tested in `map.test.ts`. The map is intentionally a compact
+schematic (continent-level) — swapping in a detailed GeoJSON/SVG per country is a later extension.

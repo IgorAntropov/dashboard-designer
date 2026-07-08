@@ -15,6 +15,16 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
       { x: 36, y: 19 },
     ]
   }
+  if (type === 'svg-map') {
+    return [
+      { region: 'North America', value: 72 },
+      { region: 'South America', value: 34 },
+      { region: 'Europe', value: 88 },
+      { region: 'Africa', value: 21 },
+      { region: 'Asia', value: 95 },
+      { region: 'Oceania', value: 18 },
+    ]
+  }
   if (type === 'text-block') {
     return []
   }

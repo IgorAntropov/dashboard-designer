@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { DashboardCanvas } from '@widgets/canvas'
+import { WidgetPalette } from '@widgets/palette'
 
 const route = useRoute()
 const dashboardId = route.params.id as string
@@ -18,6 +19,7 @@ useHead({ title: 'Panelka — Editor' })
     <p class="text-muted small">{{ dashboardId }}</p>
 
     <ClientOnly>
+      <WidgetPalette class="mb-3" />
       <DashboardCanvas />
     </ClientOnly>
   </div>

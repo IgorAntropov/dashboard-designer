@@ -86,6 +86,12 @@ import for SSR safety) driven by a Pinia store (`add`/`updatePosition`/`remove`)
 `WidgetInstance`s; `entities/widget` exposes the widget-type registry and contract types; editor route
 `/editor/:id` renders the canvas. Store logic is unit-tested with vitest.
 
+Widget palette (1.3): FSD `widgets/palette` renders a scrollable strip of `WIDGET_TYPES`; items are
+GridStack drag-in sources (`setupDragIn`, `gs-w`/`gs-h`/`data-widget-type`) and also add on click. The
+canvas has `acceptWidgets: true`, converts a `dropped` node into a store `addAt(type, box)` entry, and
+registers store widgets with GridStack via a `watch` + `makeWidget` sync (tracked in a `registered`
+set). The editor page composes palette + canvas.
+
 UX foundation (1.2b): `@nuxtjs/i18n` with 7 locales (ru default, en/de/pl/cs/fr/it) driven by a
 `shared/i18n/config.ts` message bundle; `@nuxtjs/color-mode` (system/light/dark) mapped to Bootstrap's
 `data-bs-theme` in `app.vue`; design tokens in `assets/css/theme.css` (neutral base + yellow accent);

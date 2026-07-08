@@ -271,6 +271,51 @@ body {
   max-width: 400px;
 }
 
+.palette {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.7rem;
+  background-color: var(--pk-surface);
+}
+
+.palette-item {
+  flex: 0 0 auto;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  align-items: flex-start;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.6rem;
+  background-color: var(--pk-bg);
+  color: var(--pk-text);
+  cursor: grab;
+  transition:
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.palette-item:hover {
+  border-color: var(--pk-accent);
+}
+
+.palette-item:active {
+  cursor: grabbing;
+}
+
+.palette-item__label {
+  font-weight: 600;
+}
+
+.palette-item__cat {
+  font-size: 0.75rem;
+  color: var(--pk-muted);
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.2s ease;

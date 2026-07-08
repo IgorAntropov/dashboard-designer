@@ -26,13 +26,17 @@ export const useCanvasStore = defineStore('canvas', () => {
   }
 
   function add(type: string, size: { w: number; h: number }): WidgetInstance {
+    return addAt(type, { x: 0, y: 0, w: size.w, h: size.h })
+  }
+
+  function addAt(type: string, box: WidgetPosition): WidgetInstance {
     const widget: WidgetInstance = {
       id: createId(),
       type,
-      x: 0,
-      y: 0,
-      w: size.w,
-      h: size.h,
+      x: box.x,
+      y: box.y,
+      w: box.w,
+      h: box.h,
       config: {},
       schema: {},
       binding: {},
@@ -55,5 +59,5 @@ export const useCanvasStore = defineStore('canvas', () => {
     widgets.value = widgets.value.filter((item) => item.id !== id)
   }
 
-  return { widgets, setWidgets, add, updatePosition, remove }
+  return { widgets, setWidgets, add, addAt, updatePosition, remove }
 })

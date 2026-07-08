@@ -35,4 +35,13 @@ describe('canvas store', () => {
 
     expect(store.widgets).toHaveLength(0)
   })
+
+  it('adds a widget at an explicit position', () => {
+    const store = useCanvasStore()
+
+    const widget = store.addAt('pie-chart', { x: 3, y: 2, w: 4, h: 4 })
+
+    expect(widget).toMatchObject({ type: 'pie-chart', x: 3, y: 2, w: 4, h: 4 })
+    expect(store.widgets).toHaveLength(1)
+  })
 })

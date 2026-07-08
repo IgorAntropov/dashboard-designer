@@ -61,13 +61,21 @@ useHead({ title: 'Panelka — Dashboards' })
         class="list-group-item d-flex justify-content-between align-items-center"
       >
         <span>{{ dashboard.title }}</span>
-        <button
-          class="btn btn-sm btn-outline-danger"
-          type="button"
-          @click="onDelete(dashboard.id)"
-        >
-          Delete
-        </button>
+        <span class="d-flex gap-2">
+          <NuxtLink
+            class="btn btn-sm btn-outline-primary"
+            :to="`/editor/${dashboard.id}`"
+          >
+            Open
+          </NuxtLink>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            type="button"
+            @click="onDelete(dashboard.id)"
+          >
+            Delete
+          </button>
+        </span>
       </li>
     </ul>
   </main>

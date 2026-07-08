@@ -77,3 +77,8 @@ quota (`services/quota`, free=1/pro=3/unlimited=∞); routes `GET/POST /dashboar
 `GET/PATCH/DELETE /dashboards/{id}`, `POST /dashboards/{id}/duplicate`; migration `0003_dashboards`.
 Frontend `entities/dashboard` (typed `openapi-fetch` repository) + `pages/dashboards` list page;
 a shared auth middleware attaches the access token via `setAccessToken`.
+
+Canvas (1.2): FSD `widgets/canvas` — a GridStack-backed `DashboardCanvas.vue` (client-only, dynamic
+import for SSR safety) driven by a Pinia store (`add`/`updatePosition`/`remove`) holding
+`WidgetInstance`s; `entities/widget` exposes the widget-type registry and contract types; editor route
+`/editor/:id` renders the canvas. Store logic is unit-tested with vitest.

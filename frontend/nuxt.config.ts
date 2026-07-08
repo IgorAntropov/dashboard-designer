@@ -11,7 +11,10 @@ const apiOrigin = process.env.NUXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000'
 export default defineNuxtConfig({
   srcDir: 'src/',
   modules: ['@pinia/nuxt', '@nuxt/eslint'],
-  css: ['bootstrap/dist/css/bootstrap.min.css'],
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    'gridstack/dist/gridstack.min.css',
+  ],
   runtimeConfig: {
     public: {
       apiOrigin,

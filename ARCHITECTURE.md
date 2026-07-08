@@ -63,7 +63,15 @@ attribution derived from the owner's tier) cached in Redis (60s, fails open to D
 `/embed/[token]` (layout-less, bypasses the auth guard) fetches that config and renders the dashboard
 read-only with `@panelka/renderer`, accepts `postMessage {type:'panelka:data'}` and reports its height
 back to the parent (`panelka:height`). The dashboards page exposes an Embed modal (publish + copy link
-and iframe snippet). The production-grade Web Component/loader remains Phase 3 (embed SDK).
+and iframe snippet).
+
+Embed SDK (Phase 3): `embed/` is a Vite lib-mode package `@panelka/embed`. `src/index.ts` auto-registers
+the `<panelka-dashboard>` Web Component (Shadow DOM, isolated) which fetches the public config and
+renders via a `DashboardEngine` built on `@panelka/renderer`; a `render(target, opts)` helper serves the
+NPM path. Data arrives three ways: runtime push (`el.data`), URL pull (`data-url`/`refresh` attrs, ~1 MB
+cap), and live WebSocket (`live` attr → `/public/embed/{token}/live`, backend `LiveChannelManager`
+broadcasts frames pushed to the token-scoped `POST` ingest; in-memory now, Redis pub/sub for scale).
+Builds emit ESM + UMD (script-tag) + `.d.ts`. Docs for all three integration methods live in `embed/README.md`.
 
 ## 3. Data / contract flow
 

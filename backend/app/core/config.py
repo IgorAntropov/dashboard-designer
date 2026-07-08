@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     app_version: str = Field(default_factory=read_version)
     environment: str = "development"
     api_v1_prefix: str = "/api/v1"
+    cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:3000"])
 
     database_url: str = "postgresql+asyncpg://panelka:panelka@localhost:5432/panelka"
     redis_url: str = "redis://localhost:6379/0"
@@ -35,6 +36,13 @@ class Settings(BaseSettings):
     oauth_yandex_client_secret: str = ""
     oauth_vk_client_id: str = ""
     oauth_vk_client_secret: str = ""
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def _split_origins(cls, value: object) -> object:
+        if isinstance(value, str):
+            return [part.strip() for part in value.split(",") if part.strip()]
+        return value
 
     @property
     def docs_enabled(self) -> bool:

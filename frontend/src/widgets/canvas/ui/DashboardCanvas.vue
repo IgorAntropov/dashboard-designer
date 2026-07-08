@@ -107,7 +107,11 @@ function onRemove(id: string): void {
       :gs-w="widget.w"
       :gs-h="widget.h"
     >
-      <div class="grid-stack-item-content pk-widget">
+      <div
+        class="grid-stack-item-content pk-widget"
+        :class="{ 'pk-widget--selected': store.selectedId === widget.id }"
+        @click="store.select(widget.id)"
+      >
         <AppButton
           class="pk-widget__delete"
           variant="danger"

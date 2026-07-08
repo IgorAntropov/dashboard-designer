@@ -6,6 +6,15 @@
     "logout": "Abmelden",
     "collapse": "Einklappen"
   },
+  "config": {
+    "heading": "Widget",
+    "titleField": "Titel",
+    "text": "Text",
+    "label": "Bezeichnung",
+    "type": "Typ",
+    "dataKey": "Datenschlüssel",
+    "hint": "Wähle ein Widget zum Bearbeiten"
+  },
   "session": {
     "kickedTitle": "Sitzung beendet",
     "kickedMessage": "Jemand hat sich auf einem anderen Gerät in Ihr Konto eingeloggt."

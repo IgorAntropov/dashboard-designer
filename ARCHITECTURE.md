@@ -37,6 +37,12 @@
   `resolveSeries`/`buildChartOption` are unit-tested. The editor wraps it in `entities/widget/WidgetView.vue`
   (sample data + theme read from CSS vars, ResizeObserver → resize); the embed SDK will call the same core.
 
+Config panel (1.5): widget types carry `defaultConfig`/`defaultSchema`/`defaultBinding` in the registry
+and the canvas store clones them on create. The store tracks `selectedId`/`selectedWidget` and exposes
+`updateConfig`/`updateBinding`/`updateSchemaField`. Clicking a canvas widget selects it (accent ring);
+`widgets/config-panel/ConfigPanel.vue` edits the title/text, and per schema field the label, type and
+bound data key — mutations flow back into the store so `WidgetView` re-renders live.
+
 ## 3. Data / contract flow
 
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in

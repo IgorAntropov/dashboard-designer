@@ -6,6 +6,15 @@
     "logout": "Esci",
     "collapse": "Comprimi"
   },
+  "config": {
+    "heading": "Widget",
+    "titleField": "Titolo",
+    "text": "Testo",
+    "label": "Etichetta",
+    "type": "Tipo",
+    "dataKey": "Chiave dati",
+    "hint": "Seleziona un widget da modificare"
+  },
   "session": {
     "kickedTitle": "Sessione terminata",
     "kickedMessage": "Qualcuno ha effettuato l'accesso al tuo account su un altro dispositivo."

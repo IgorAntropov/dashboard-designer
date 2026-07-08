@@ -6,6 +6,15 @@
     "logout": "Wyloguj",
     "collapse": "Zwiń"
   },
+  "config": {
+    "heading": "Widżet",
+    "titleField": "Tytuł",
+    "text": "Tekst",
+    "label": "Etykieta",
+    "type": "Typ",
+    "dataKey": "Klucz danych",
+    "hint": "Wybierz widżet do edycji"
+  },
   "session": {
     "kickedTitle": "Sesja zakończona",
     "kickedMessage": "Ktoś zalogował się do Twojego konta na innym urządzeniu."

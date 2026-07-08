@@ -6,6 +6,15 @@
     "logout": "Déconnexion",
     "collapse": "Réduire"
   },
+  "config": {
+    "heading": "Widget",
+    "titleField": "Titre",
+    "text": "Texte",
+    "label": "Libellé",
+    "type": "Type",
+    "dataKey": "Clé de données",
+    "hint": "Sélectionnez un widget à modifier"
+  },
   "session": {
     "kickedTitle": "Session terminée",
     "kickedMessage": "Quelqu'un s'est connecté à votre compte sur un autre appareil."

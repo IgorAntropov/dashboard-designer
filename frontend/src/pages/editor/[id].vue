@@ -5,6 +5,7 @@ import type { Dashboard } from '@entities/dashboard'
 import { getDashboard } from '@entities/dashboard'
 import { AppButton } from '@shared/ui'
 import { DashboardCanvas } from '@widgets/canvas'
+import { ConfigPanel } from '@widgets/config-panel'
 import { WidgetPalette } from '@widgets/palette'
 
 const { t } = useI18n()
@@ -32,7 +33,10 @@ useHead({ title })
 
     <ClientOnly>
       <WidgetPalette class="mb-3" />
-      <DashboardCanvas />
+      <div class="editor-workspace">
+        <DashboardCanvas class="editor-workspace__canvas" />
+        <ConfigPanel class="editor-workspace__panel" />
+      </div>
     </ClientOnly>
   </div>
 </template>

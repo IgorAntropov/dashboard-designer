@@ -6,6 +6,15 @@
     "logout": "Log out",
     "collapse": "Collapse"
   },
+  "config": {
+    "heading": "Widget",
+    "titleField": "Title",
+    "text": "Text",
+    "label": "Label",
+    "type": "Type",
+    "dataKey": "Data key",
+    "hint": "Select a widget to edit"
+  },
   "session": {
     "kickedTitle": "Session ended",
     "kickedMessage": "Someone signed in to your account on another device."

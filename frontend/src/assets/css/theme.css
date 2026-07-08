@@ -439,6 +439,51 @@ body {
   max-width: 400px;
 }
 
+.editor-workspace {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.editor-workspace__canvas {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editor-workspace__panel {
+  flex: 0 0 280px;
+}
+
+@media (max-width: 900px) {
+  .editor-workspace {
+    flex-direction: column;
+  }
+
+  .editor-workspace__panel {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
+
+.config-panel {
+  padding: 1rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.8rem;
+  background-color: var(--pk-surface);
+}
+
+.config-field {
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--pk-border);
+}
+
+.config-field__name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
 .pk-widget {
   position: relative;
   height: 100%;
@@ -447,6 +492,12 @@ body {
   border-radius: 0.6rem;
   background-color: var(--pk-surface);
   overflow: hidden;
+  cursor: pointer;
+}
+
+.pk-widget--selected {
+  border-color: var(--pk-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pk-accent) 40%, transparent);
 }
 
 .pk-widget__delete {

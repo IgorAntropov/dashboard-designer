@@ -6,6 +6,15 @@
     "logout": "Odhlásit",
     "collapse": "Sbalit"
   },
+  "config": {
+    "heading": "Widget",
+    "titleField": "Titulek",
+    "text": "Text",
+    "label": "Popisek",
+    "type": "Typ",
+    "dataKey": "Datový klíč",
+    "hint": "Vyberte widget k úpravě"
+  },
   "session": {
     "kickedTitle": "Relace ukončena",
     "kickedMessage": "Někdo se přihlásil k vašemu účtu na jiném zařízení."

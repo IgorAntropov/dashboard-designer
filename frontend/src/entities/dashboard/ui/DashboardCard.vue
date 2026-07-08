@@ -44,30 +44,33 @@ function styleFor(tile: PreviewTile): Record<string, string> {
           <Logo :show-word="false" />
         </div>
       </div>
-      <div class="dash-card__body">
-        <span class="dash-card__title">{{ dashboard.title }}</span>
-      </div>
     </NuxtLink>
 
-    <div class="dash-card__actions">
-      <AppButton
-        variant="secondary"
-        size="sm"
-        icon="link"
-        icon-only
-        :aria-label="$t('embed.title')"
-        :title="$t('embed.title')"
-        @click="emit('embed', dashboard.id)"
-      />
-      <AppButton
-        variant="danger"
-        size="sm"
-        icon="trash"
-        icon-only
-        :aria-label="$t('dashboards.delete')"
-        :title="$t('dashboards.delete')"
-        @click="emit('delete', dashboard.id)"
-      />
+    <div class="dash-card__body">
+      <NuxtLink :to="`/editor/${dashboard.id}`" class="dash-card__title">
+        {{ dashboard.title }}
+      </NuxtLink>
+
+      <div class="dash-card__actions">
+        <AppButton
+          variant="secondary"
+          size="sm"
+          icon="link"
+          icon-only
+          :aria-label="$t('embed.title')"
+          :title="$t('embed.title')"
+          @click="emit('embed', dashboard.id)"
+        />
+        <AppButton
+          variant="danger"
+          size="sm"
+          icon="trash"
+          icon-only
+          :aria-label="$t('dashboards.delete')"
+          :title="$t('dashboards.delete')"
+          @click="emit('delete', dashboard.id)"
+        />
+      </div>
     </div>
   </div>
 </template>

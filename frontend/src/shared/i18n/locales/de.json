@@ -186,7 +186,8 @@
     "choose": "Wählen",
     "paymentProcessing": "Zahlung erhalten, Tarif wird aktiviert…",
     "paymentFailed": "Zahlung fehlgeschlagen.",
-    "billingUnavailable": "Zahlungen sind noch nicht verfügbar."
+    "billingUnavailable": "Zahlungen sind noch nicht verfügbar.",
+    "account": "Konto"
   },
   "settings": {
     "title": "Einstellungen",

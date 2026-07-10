@@ -150,6 +150,14 @@ async function remove(theme: UserTheme): Promise<void> {
 </template>
 
 <style scoped>
+.theme-manager {
+  background-color: var(--pk-surface);
+  border: 1px solid var(--pk-border);
+  border-radius: var(--pk-radius-lg);
+  box-shadow: var(--pk-shadow-card);
+  padding: 1.25rem;
+}
+
 .theme-manager__list {
   list-style: none;
   padding: 0;

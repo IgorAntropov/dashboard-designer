@@ -186,7 +186,8 @@
     "choose": "Scegli",
     "paymentProcessing": "Pagamento ricevuto, attivazione del piano…",
     "paymentFailed": "Pagamento non riuscito.",
-    "billingUnavailable": "I pagamenti non sono ancora disponibili."
+    "billingUnavailable": "I pagamenti non sono ancora disponibili.",
+    "account": "Account"
   },
   "settings": {
     "title": "Impostazioni",

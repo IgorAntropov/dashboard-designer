@@ -186,7 +186,8 @@
     "choose": "Vybrat",
     "paymentProcessing": "Platba přijata, aktivujeme tarif…",
     "paymentFailed": "Platba se nezdařila.",
-    "billingUnavailable": "Platby zatím nejsou dostupné."
+    "billingUnavailable": "Platby zatím nejsou dostupné.",
+    "account": "Účet"
   },
   "settings": {
     "title": "Nastavení",

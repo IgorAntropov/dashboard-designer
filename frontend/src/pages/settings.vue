@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 
 import { api } from '@shared/api'
+import { AppCard } from '@shared/ui'
 import { ThemeManager } from '@widgets/theme-manager'
 
 const { t } = useI18n()
@@ -19,18 +20,21 @@ useHead({ title: computed(() => t('settings.title')) })
 
 <template>
   <div class="container-xxl">
-    <h1 class="h3 mb-4">{{ $t('settings.title') }}</h1>
+    <header class="page-head">
+      <h1 class="page-head__title">{{ $t('settings.title') }}</h1>
+    </header>
 
-    <section class="mb-5">
+    <div class="page-stack">
       <ClientOnly><ThemeManager /></ClientOnly>
-    </section>
 
-    <section>
-      <h2 class="h5">{{ $t('settings.about') }}</h2>
-      <ul class="list-unstyled">
-        <li>{{ $t('settings.appBuild') }}: <code>v{{ buildVersion }}</code></li>
-        <li>{{ $t('settings.api') }}: <code>v{{ apiVersion }}</code></li>
-      </ul>
-    </section>
+      <AppCard :title="$t('settings.about')">
+        <ul class="list-unstyled mb-0 small">
+          <li class="mb-1">
+            {{ $t('settings.appBuild') }}: <code>v{{ buildVersion }}</code>
+          </li>
+          <li>{{ $t('settings.api') }}: <code>v{{ apiVersion }}</code></li>
+        </ul>
+      </AppCard>
+    </div>
   </div>
 </template>

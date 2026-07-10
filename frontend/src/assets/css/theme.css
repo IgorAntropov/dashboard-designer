@@ -1285,10 +1285,64 @@ body {
   font-size: 1.2rem;
 }
 
+.page-head {
+  margin-bottom: 1.5rem;
+}
+
+.page-head__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.page-head__sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: var(--pk-muted);
+}
+
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 780px;
+}
+
+.pk-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--pk-accent);
+  color: var(--pk-accent-contrast);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+.profile-account {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.profile-account__fields {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.profile-account__email {
+  font-size: 0.8rem;
+  color: var(--pk-muted);
+}
+
 .plan-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
 }
 
 .plan-card {
@@ -1297,8 +1351,8 @@ body {
   gap: 0.35rem;
   padding: 1rem 1.1rem;
   border: 1px solid var(--pk-border);
-  border-radius: 0.9rem;
-  background-color: var(--pk-surface);
+  border-radius: var(--pk-radius);
+  background-color: var(--pk-bg);
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;

@@ -186,7 +186,8 @@
     "choose": "Wybierz",
     "paymentProcessing": "Płatność przyjęta, aktywujemy plan…",
     "paymentFailed": "Płatność nieudana.",
-    "billingUnavailable": "Płatności są jeszcze niedostępne."
+    "billingUnavailable": "Płatności są jeszcze niedostępne.",
+    "account": "Konto"
   },
   "settings": {
     "title": "Ustawienia",

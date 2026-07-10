@@ -186,7 +186,8 @@
     "choose": "Выбрать",
     "paymentProcessing": "Платёж принят, активируем тариф…",
     "paymentFailed": "Платёж не прошёл.",
-    "billingUnavailable": "Оплата пока недоступна."
+    "billingUnavailable": "Оплата пока недоступна.",
+    "account": "Аккаунт"
   },
   "settings": {
     "title": "Настройки",

@@ -186,7 +186,8 @@
     "choose": "Choose",
     "paymentProcessing": "Payment received, activating your plan…",
     "paymentFailed": "Payment failed.",
-    "billingUnavailable": "Payments are not available yet."
+    "billingUnavailable": "Payments are not available yet.",
+    "account": "Account"
   },
   "settings": {
     "title": "Settings",

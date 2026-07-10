@@ -4,10 +4,17 @@ import { computed, ref } from 'vue'
 import { createCheckout, openCheckout } from '@entities/billing'
 import { useSessionStore } from '@entities/session'
 import { pushToast } from '@shared/notify'
-import { AppBadge, AppButton, AppModal, PasswordField } from '@shared/ui'
+import { AppBadge, AppButton, AppCard, AppModal, PasswordField } from '@shared/ui'
 
 const { t } = useI18n()
 const session = useSessionStore()
+
+const initials = computed(() =>
+  (session.user?.display_name || session.user?.email || '?')
+    .trim()
+    .charAt(0)
+    .toUpperCase(),
+)
 
 type Tier = 'free' | 'pro' | 'unlimited'
 
@@ -111,64 +118,75 @@ useHead({ title: computed(() => t('profile.title')) })
 </script>
 
 <template>
-  <div class="container-xxl" style="max-width: 760px">
-    <h1 class="h3 mb-4">{{ $t('profile.title') }}</h1>
+  <div class="container-xxl">
+    <header class="page-head">
+      <h1 class="page-head__title">{{ $t('profile.title') }}</h1>
+    </header>
 
-    <section class="mb-4">
-      <h2 class="h6 text-muted">{{ $t('profile.plans') }}</h2>
-      <div class="plan-grid">
-        <div
-          v-for="plan in plans"
-          :key="plan.tier"
-          class="plan-card"
-          :class="{ 'plan-card--active': session.user?.subscription_tier === plan.tier }"
-        >
-          <div class="plan-card__name text-uppercase">{{ plan.tier }}</div>
-          <div class="plan-card__price">{{ plan.price }}</div>
-          <div class="plan-card__meta text-muted small">
-            {{ $t('dashboards.title') }}: {{ plan.dashboards }}
+    <div class="page-stack">
+      <AppCard :title="$t('profile.account')">
+        <div class="profile-account">
+          <span class="pk-avatar">{{ initials }}</span>
+          <div class="profile-account__fields">
+            <input
+              id="profile-name"
+              v-model="displayName"
+              class="form-control form-control-sm"
+              :placeholder="$t('profile.displayName')"
+            >
+            <span class="profile-account__email">{{ session.user?.email }}</span>
           </div>
-          <AppBadge
-            v-if="session.user?.subscription_tier === plan.tier"
-            class="align-self-start"
+          <AppButton
+            size="sm"
+            variant="secondary"
+            :disabled="savingName || !canSaveName"
+            @click="onSaveName"
           >
-            {{ $t('profile.current') }}
-          </AppBadge>
-          <AppButton v-else size="sm" @click="onChooseTier(plan.tier)">
-            {{ $t('profile.choose') }}
+            {{ $t('profile.save') }}
           </AppButton>
         </div>
+      </AppCard>
+
+      <AppCard :title="$t('profile.plans')">
+        <div class="plan-grid">
+          <div
+            v-for="plan in plans"
+            :key="plan.tier"
+            class="plan-card"
+            :class="{ 'plan-card--active': session.user?.subscription_tier === plan.tier }"
+          >
+            <div class="plan-card__name text-uppercase">{{ plan.tier }}</div>
+            <div class="plan-card__price">{{ plan.price }}</div>
+            <div class="plan-card__meta text-muted small">
+              {{ $t('dashboards.title') }}: {{ plan.dashboards }}
+            </div>
+            <AppBadge
+              v-if="session.user?.subscription_tier === plan.tier"
+              class="align-self-start"
+            >
+              {{ $t('profile.current') }}
+            </AppBadge>
+            <AppButton v-else size="sm" @click="onChooseTier(plan.tier)">
+              {{ $t('profile.choose') }}
+            </AppButton>
+          </div>
+        </div>
+      </AppCard>
+
+      <AppCard :title="$t('profile.security')">
+        <div class="d-flex justify-content-between align-items-center gap-3">
+          <span class="text-muted small">{{ $t('profile.changePassword') }}</span>
+          <AppButton variant="secondary" size="sm" @click="openPasswordModal">
+            {{ $t('profile.changePassword') }}
+          </AppButton>
+        </div>
+      </AppCard>
+
+      <div class="d-flex justify-content-end">
+        <AppButton variant="secondary" icon="logout" @click="onLogout">
+          {{ $t('nav.logout') }}
+        </AppButton>
       </div>
-    </section>
-
-    <section class="mb-4" style="max-width: 420px">
-      <div class="form-floating mb-2">
-        <input
-          id="profile-name"
-          v-model="displayName"
-          class="form-control"
-          :placeholder="$t('profile.displayName')"
-        >
-        <label for="profile-name">{{ $t('profile.displayName') }}</label>
-      </div>
-      <AppButton :disabled="savingName || !canSaveName" @click="onSaveName">
-        {{ $t('profile.save') }}
-      </AppButton>
-    </section>
-
-    <section class="mb-4">
-      <h2 class="h6">{{ $t('profile.security') }}</h2>
-      <AppButton variant="secondary" @click="openPasswordModal">
-        {{ $t('profile.changePassword') }}
-      </AppButton>
-    </section>
-
-    <hr class="my-4">
-
-    <div class="d-flex justify-content-end">
-      <AppButton variant="secondary" icon="logout" @click="onLogout">
-        {{ $t('nav.logout') }}
-      </AppButton>
     </div>
 
     <AppModal v-model="pwModal" :title="$t('profile.changePassword')">

@@ -5,6 +5,7 @@ defineProps<{ name: string }>()
 <template>
   <svg
     class="app-icon"
+    :class="{ 'app-icon--spin': name === 'spinner' }"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -63,6 +64,13 @@ defineProps<{ name: string }>()
     <template v-else-if="name === 'edit'">
       <path d="M12 20h9" />
       <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+    </template>
+    <template v-else-if="name === 'check'">
+      <polyline points="20 6 9 17 4 12" />
+    </template>
+    <template v-else-if="name === 'spinner'">
+      <path d="M12 3a9 9 0 1 0 9 9" opacity="0.35" />
+      <path d="M21 12a9 9 0 0 0-9-9" />
     </template>
   </svg>
 </template>

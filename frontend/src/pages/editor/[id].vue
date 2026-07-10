@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RenderTheme } from '@panelka/renderer'
 import type { WidgetInstance } from '@entities/widget'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import type { Dashboard } from '@entities/dashboard'
 import { getDashboard, updateDashboard } from '@entities/dashboard'
@@ -21,9 +21,33 @@ const titleInput = ref('')
 
 const ready = ref(false)
 const saveState = ref<'idle' | 'saving' | 'saved'>('idle')
+const saveIcon = computed(() =>
+  saveState.value === 'saving'
+    ? 'spinner'
+    : saveState.value === 'saved'
+      ? 'check'
+      : 'save',
+)
+const SAVE_DEBOUNCE_MS = 900
+const SAVED_LINGER_MS = 900
 let saveTimer: ReturnType<typeof setTimeout> | null = null
+let savedTimer: ReturnType<typeof setTimeout> | null = null
+let changeSeq = 0
+
+function clearSavedTimer(): void {
+  if (savedTimer) {
+    clearTimeout(savedTimer)
+    savedTimer = null
+  }
+}
 
 async function save(): Promise<void> {
+  if (saveTimer) {
+    clearTimeout(saveTimer)
+    saveTimer = null
+  }
+  clearSavedTimer()
+  const seq = changeSeq
   saveState.value = 'saving'
   const patch = {
     title: titleInput.value.trim() || t('editor.title'),
@@ -36,7 +60,32 @@ async function save(): Promise<void> {
   if (result.code === 'quota_widgets') {
     canvasStore.removeLast()
   }
-  saveState.value = result.data ? 'saved' : 'idle'
+  if (!result.data) {
+    saveState.value = 'idle'
+    return
+  }
+  if (seq !== changeSeq) {
+    return
+  }
+  saveState.value = 'saved'
+  savedTimer = setTimeout(() => {
+    if (saveState.value === 'saved') {
+      saveState.value = 'idle'
+    }
+    savedTimer = null
+  }, SAVED_LINGER_MS)
+}
+
+function scheduleSave(): void {
+  changeSeq += 1
+  clearSavedTimer()
+  saveState.value = 'saving'
+  if (saveTimer) {
+    clearTimeout(saveTimer)
+  }
+  saveTimer = setTimeout(() => {
+    void save()
+  }, SAVE_DEBOUNCE_MS)
 }
 
 onMounted(async () => {
@@ -53,19 +102,27 @@ onMounted(async () => {
 })
 
 watch(
-  [() => canvasStore.widgets, () => canvasStore.themeKey, titleInput],
+  [
+    () => canvasStore.widgets,
+    () => canvasStore.themeKey,
+    () => canvasStore.customTheme,
+    titleInput,
+  ],
   () => {
     if (!ready.value) {
       return
     }
-    saveState.value = 'idle'
-    if (saveTimer) {
-      clearTimeout(saveTimer)
-    }
-    saveTimer = setTimeout(save, 900)
+    scheduleSave()
   },
   { deep: true },
 )
+
+onBeforeUnmount(() => {
+  if (saveTimer) {
+    clearTimeout(saveTimer)
+  }
+  clearSavedTimer()
+})
 
 useHead({ title: computed(() => titleInput.value || t('editor.title')) })
 </script>
@@ -119,16 +176,10 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
         <ClientOnly><ThemeSelector /></ClientOnly>
 
         <ClientOnly>
-          <span
-            class="editor-save small text-muted"
-            :class="{ invisible: saveState === 'idle' }"
-          >
-            {{ saveState === 'saving' ? $t('editor.saving') : $t('editor.saved') }}
-          </span>
           <AppButton
             v-tooltip:bottom="$t('editor.save')"
             size="sm"
-            icon="save"
+            :icon="saveIcon"
             icon-only
             :aria-label="$t('editor.save')"
             @click="save"

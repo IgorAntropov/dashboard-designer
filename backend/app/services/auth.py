@@ -89,11 +89,7 @@ class AuthService:
                 RefreshToken.token_hash == _hash_token(refresh_token)
             )
         )
-        if record is None:
-            raise InvalidRefreshTokenError
-        if record.revoked:
-            await self._revoke_family(record.user_id)
-            await self._session.flush()
+        if record is None or record.revoked:
             raise InvalidRefreshTokenError
 
         record.revoked = True
@@ -101,16 +97,6 @@ class AuthService:
         if user is None:
             raise InvalidRefreshTokenError
         return await self.issue_tokens(user)
-
-    async def _revoke_family(self, user_id: uuid.UUID) -> None:
-        tokens = await self._session.scalars(
-            select(RefreshToken).where(
-                RefreshToken.user_id == user_id,
-                RefreshToken.revoked.is_(False),
-            )
-        )
-        for token in tokens:
-            token.revoked = True
 
     async def upsert_oauth_user(self, identity: OAuthIdentity) -> User:
         account = await self._session.scalar(

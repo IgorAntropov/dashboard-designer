@@ -400,3 +400,19 @@ Security headers, embed frame-ancestors, CI scan (hardening):
   --audit-level high` (frontend) for dependency vulnerability scanning.
 Follow-up: tighten the app CSP toward nonce-based script-src (currently allows 'unsafe-inline' for
 Nuxt hydration + known CDNs: fonts, CloudPayments widget).
+
+SSRF connection pinning & nonce CSP (hardening):
+- The pull proxy now closes the DNS-rebinding (TOCTOU) window. `app/core/ssrf.py` resolves the host once
+  (`resolve_pin` → a single validated public IP; all resolved IPs must be public) and the actual fetch
+  goes through a `_PinnedTransport(httpx.AsyncHTTPTransport)` that rewrites the request URL host to the
+  pinned IP while preserving the original `Host` header and TLS SNI (`sni_hostname` extension), so the
+  connection can't be re-resolved to a private address between check and use. `is_safe_url` is now a thin
+  wrapper over `resolve_pin`; `_pin_request` is unit-tested.
+- The app CSP moved from a static `'unsafe-inline'` script policy to a per-request nonce. A Nitro plugin
+  (`server/plugins/csp.ts`, production only) runs on `render:html`: it generates a nonce, injects
+  `nonce="…"` into every SSR `<script>` tag, and sets `Content-Security-Policy` with
+  `script-src 'nonce-…' 'strict-dynamic'` (strict-dynamic lets the trusted bundle load chunks + the
+  CloudPayments widget without host allowlists). `/embed/*` is skipped (it sets its own frame-ancestors).
+  The security middleware keeps nosniff/referrer/HSTS + X-Frame-Options; dev stays permissive (plugin
+  is prod-only) so HMR is unaffected. Styles still use 'unsafe-inline' (Vue/Bootstrap) — a later step
+  could move to hashed/nonce styles.

@@ -32,13 +32,38 @@ export class UrlPuller {
   private async pull(): Promise<void> {
     try {
       const response = await fetch(this.url)
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         return
       }
-      const text = await response.text()
-      if (text.length > MAX_RESPONSE_BYTES) {
+      const declared = response.headers.get('content-length')
+      if (declared && Number(declared) > MAX_RESPONSE_BYTES) {
         return
       }
+
+      const reader = response.body.getReader()
+      const chunks: Uint8Array[] = []
+      let total = 0
+      let done = false
+      while (!done) {
+        const result = await reader.read()
+        done = result.done
+        if (result.value) {
+          total += result.value.byteLength
+          if (total > MAX_RESPONSE_BYTES) {
+            await reader.cancel()
+            return
+          }
+          chunks.push(result.value)
+        }
+      }
+
+      const merged = new Uint8Array(total)
+      let offset = 0
+      for (const chunk of chunks) {
+        merged.set(chunk, offset)
+        offset += chunk.byteLength
+      }
+      const text = new TextDecoder().decode(merged)
       this.onData(JSON.parse(text) as EmbedData)
     } catch (error) {
       void error

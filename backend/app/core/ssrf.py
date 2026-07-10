@@ -1,4 +1,5 @@
 import ipaddress
+import json
 import socket
 from typing import Any
 from urllib.parse import urlparse
@@ -79,11 +80,17 @@ async def safe_fetch(url: str, max_bytes: int, timeout: float) -> Any | None:
         async with httpx.AsyncClient(
             transport=transport, timeout=timeout, follow_redirects=False
         ) as client:
-            response = await client.get(url)
-            if response.status_code != 200:
-                return None
-            if len(response.content) > max_bytes:
-                return None
-            return response.json()
+            async with client.stream("GET", url) as response:
+                if response.status_code != 200:
+                    return None
+                declared = response.headers.get("content-length")
+                if declared and int(declared) > max_bytes:
+                    return None
+                buffer = bytearray()
+                async for chunk in response.aiter_bytes():
+                    buffer.extend(chunk)
+                    if len(buffer) > max_bytes:
+                        return None
+                return json.loads(bytes(buffer))
     except Exception:
         return None

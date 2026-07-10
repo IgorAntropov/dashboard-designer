@@ -52,3 +52,6 @@ async def test_register_login_me_and_refresh_flow(client: AsyncClient) -> None:
         "/api/v1/auth/refresh", json={"refresh_token": old_refresh}
     )
     assert reused.status_code == 401
+
+    family_revoked = await client.post("/api/v1/auth/refresh")
+    assert family_revoked.status_code == 401

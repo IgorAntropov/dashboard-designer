@@ -86,6 +86,7 @@ async def refresh(
     try:
         tokens = await service.rotate(supplied)
     except InvalidRefreshTokenError as exc:
+        await session.commit()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token"
         ) from exc

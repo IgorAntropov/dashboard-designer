@@ -2,8 +2,12 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+ENV PIP_DEFAULT_TIMEOUT=120 \
+    PIP_RETRIES=10
+
 COPY backend/pyproject.toml ./
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir .
 
 COPY backend/app ./app
 COPY backend/alembic.ini ./

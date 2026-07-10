@@ -384,3 +384,19 @@ private/loopback/link-local/reserved/multicast IP (incl. the 169.254.169.254 met
 `safe_fetch` adds a timeout, size cap and disables redirects. `is_safe_url` is unit-tested with literal
 IPs. Known follow-up: pin the connection to the validated IP to fully close the DNS-rebinding (TOCTOU)
 window. Errors plugin maps `rate_limited` → `errors.rateLimited` toast across 7 locales.
+
+Security headers, embed frame-ancestors, CI scan (hardening):
+- Backend adds a `security_headers` HTTP middleware (main.py) setting `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`, a locked
+  `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'` (API returns only JSON), and HSTS
+  in production. Unit-tested (`test_security_headers.py`).
+- Frontend adds a Nitro server middleware (`server/middleware/security.ts`) applying nosniff/referrer +
+  HSTS(prod) globally and an app CSP + `X-Frame-Options: DENY` on all routes EXCEPT `/embed/*`.
+- Embed framing is allowlist-driven: `PublishedConfig` now exposes `allowed_domains`, and the embed page
+  sets, during SSR, `Content-Security-Policy: frame-ancestors <domains>` from the token's allowlist
+  (empty allowlist → `*`, matching the "empty = any" publish semantics), so a published dashboard can
+  only be iframed by approved domains.
+- CI gains a `security` job (`continue-on-error`) running `pip-audit` (backend) and `pnpm audit
+  --audit-level high` (frontend) for dependency vulnerability scanning.
+Follow-up: tighten the app CSP toward nonce-based script-src (currently allows 'unsafe-inline' for
+Nuxt hydration + known CDNs: fonts, CloudPayments widget).

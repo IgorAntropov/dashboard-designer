@@ -20,6 +20,23 @@ interface PublishedConfig {
 const route = useRoute()
 const token = route.params.token as string
 
+if (import.meta.server) {
+  const event = useRequestEvent()
+  const meta = await $fetch<{ allowed_domains?: string[] }>(
+    `${appConfig.apiOrigin}/api/v1/public/embed/${token}`,
+  ).catch(() => null)
+  const domains = meta?.allowed_domains ?? []
+  const ancestors = domains.length
+    ? domains
+        .map((domain) => (domain.includes('://') ? domain : `https://${domain}`))
+        .join(' ')
+    : '*'
+  event?.node.res.setHeader(
+    'content-security-policy',
+    `frame-ancestors ${ancestors}`,
+  )
+}
+
 const loaded = ref(false)
 const notFound = ref(false)
 const attribution = ref(true)

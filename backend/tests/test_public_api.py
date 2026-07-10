@@ -36,6 +36,7 @@ async def test_public_config_after_publish(client: AsyncClient) -> None:
     body = response.json()
     assert body["dashboard_id"] == dashboard_id
     assert body["attribution"] is True
+    assert body["allowed_domains"] == []
 
 
 async def test_public_config_unknown_token_returns_404(client: AsyncClient) -> None:

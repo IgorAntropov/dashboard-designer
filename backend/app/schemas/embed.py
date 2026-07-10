@@ -24,4 +24,5 @@ class PublishedConfig(BaseModel):
     theme_tokens: dict[str, Any] | None = None
     layout: dict[str, Any]
     data_source: dict[str, Any]
+    allowed_domains: list[str] = []
     attribution: bool

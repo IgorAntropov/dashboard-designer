@@ -51,5 +51,6 @@ class EmbedService:
             theme_tokens=dashboard.theme_tokens,
             layout=dashboard.layout,
             data_source=dashboard.data_source,
+            allowed_domains=record.allowed_domains or [],
             attribution=attribution,
         )

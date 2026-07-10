@@ -447,6 +447,24 @@ body {
   max-width: 400px;
 }
 
+.auth-oauth {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.auth-oauth__label {
+  font-size: 0.8rem;
+  color: var(--pk-muted);
+}
+
+.auth-oauth__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .editor-title-input {
   font-size: 1.5rem;
   font-weight: 600;

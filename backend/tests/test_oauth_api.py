@@ -30,9 +30,13 @@ async def _login(client: AsyncClient) -> dict[str, str]:
     callback = await client.get(
         "/api/v1/auth/oauth/yandex/callback",
         params={"code": "auth-code", "state": state},
+        follow_redirects=False,
     )
-    assert callback.status_code == 200
-    return callback.json()
+    assert callback.status_code == 303
+    assert client.cookies.get("panelka_refresh") is not None
+    refreshed = await client.post("/api/v1/auth/refresh")
+    assert refreshed.status_code == 200
+    return refreshed.json()
 
 
 async def test_oauth_login_creates_then_reuses_user(

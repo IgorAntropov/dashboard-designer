@@ -69,6 +69,11 @@ class BillingService:
             select(Subscription).where(Subscription.user_id == user.id)
         )
 
+    async def status_for(self, user: User) -> tuple[SubscriptionTier, str]:
+        subscription = await self._subscription(user)
+        status = subscription.status if subscription is not None else "inactive"
+        return user.subscription_tier, status
+
     async def _activate(
         self,
         user: User,

@@ -149,8 +149,9 @@ async def get_embed_config(
 async def _record_load(session: AsyncSession, dashboard_id: str) -> None:
     try:
         await AnalyticsService(session).record_load(uuid.UUID(dashboard_id))
+        await session.commit()
     except Exception:
-        pass
+        await session.rollback()
 
 
 @router.get("/embed/{token}/data", dependencies=[_PUBLIC_RL])

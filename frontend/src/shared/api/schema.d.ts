@@ -242,7 +242,6 @@ export interface components {
       layout?: { [key: string]: unknown } | null
       data_bindings?: { [key: string]: unknown } | null
       data_source?: { [key: string]: unknown } | null
-      status?: 'draft' | 'published' | null
     }
     PublishRequest: {
       allowed_domains?: string[]

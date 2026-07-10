@@ -167,7 +167,8 @@
     "register": "Registrovat",
     "noAccount": "Nemáte účet?",
     "haveAccount": "Už máte účet?",
-    "failed": "Nezdařilo se. Zkontrolujte údaje."
+    "failed": "Nezdařilo se. Zkontrolujte údaje.",
+    "continueWith": "nebo pokračovat přes"
   },
   "profile": {
     "title": "Profil",
@@ -214,7 +215,12 @@
     "undo": "Zpět",
     "redo": "Znovu"
   },
-  "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý", "custom": "Vlastní" },
+  "theme": {
+    "system": "Systém",
+    "light": "Světlý",
+    "dark": "Tmavý",
+    "custom": "Vlastní"
+  },
   "themeEditor": {
     "title": "Vlastní motiv",
     "background": "Pozadí",
@@ -225,5 +231,7 @@
     "series": "Řady",
     "font": "Písmo"
   },
-  "language": { "label": "Jazyk" }
+  "language": {
+    "label": "Jazyk"
+  }
 }

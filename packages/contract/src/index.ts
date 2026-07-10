@@ -32,17 +32,21 @@ export type DataSourceMode = 'runtime' | 'pull' | 'live'
 export interface DataSource {
   mode: DataSourceMode
   url?: string
-  refreshSec?: number
+  refresh_sec?: number
 }
 
 export type SubscriptionTier = 'free' | 'pro' | 'unlimited'
 
+export type ThemeTokens = Record<string, unknown>
+
 export interface PublishedConfig {
-  dashboardId: string
-  themeKey: string
+  dashboard_id: string
+  theme_key: string
+  theme_tokens?: ThemeTokens | null
   layout: DashboardLayout
-  dataSource: DataSource
+  data_source?: DataSource
+  allowed_domains?: string[]
   attribution: boolean
 }
 
-export type PanelkaData = Record<string, unknown[]>
+export type PanelkaData = Record<string, Array<Record<string, unknown>>>

@@ -41,8 +41,11 @@ async def subscribe(
 
 
 @router.get("/status", response_model=SubscriptionStatus)
-async def billing_status(current_user: CurrentUserDep) -> SubscriptionStatus:
-    return SubscriptionStatus(tier=current_user.subscription_tier, status="active")
+async def billing_status(
+    current_user: CurrentUserDep, session: SessionDep
+) -> SubscriptionStatus:
+    tier, state = await BillingService(session).status_for(current_user)
+    return SubscriptionStatus(tier=tier, status=state)
 
 
 @router.post("/webhook/{provider}")

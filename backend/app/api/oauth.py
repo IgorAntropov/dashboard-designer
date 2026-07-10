@@ -1,13 +1,12 @@
 import secrets
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 
 from app.api.deps import SessionDep
 from app.core.config import Settings, get_settings
 from app.core.cookies import set_refresh_cookie
-from app.schemas.auth import TokenPair
 from app.services.auth import AuthService
 from app.services.oauth.base import OAuthProvider
 from app.services.oauth.registry import UnknownProviderError, build_provider
@@ -48,15 +47,15 @@ async def start(provider_impl: ProviderDep, settings: SettingsDep) -> RedirectRe
     return response
 
 
-@router.get("/{provider}/callback", response_model=TokenPair)
+@router.get("/{provider}/callback")
 async def callback(
     provider_impl: ProviderDep,
     session: SessionDep,
+    settings: SettingsDep,
     request: Request,
-    response: Response,
     code: str,
     state: str,
-) -> TokenPair:
+) -> RedirectResponse:
     expected_state = request.cookies.get(STATE_COOKIE)
     if expected_state is None or not secrets.compare_digest(expected_state, state):
         raise HTTPException(
@@ -69,6 +68,9 @@ async def callback(
     tokens = await service.issue_tokens(user)
     await session.commit()
 
-    response.delete_cookie(STATE_COOKIE)
-    set_refresh_cookie(response, tokens.refresh_token)
-    return TokenPair(access_token=tokens.access_token, refresh_token="")
+    redirect = RedirectResponse(
+        f"{settings.frontend_url}/dashboards", status_code=status.HTTP_303_SEE_OTHER
+    )
+    redirect.delete_cookie(STATE_COOKIE)
+    set_refresh_cookie(redirect, tokens.refresh_token)
+    return redirect

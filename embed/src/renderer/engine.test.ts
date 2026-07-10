@@ -10,12 +10,23 @@ class StubStyle {
   }
 }
 
+class StubClassList {
+  private readonly items = new Set<string>()
+  add(...names: string[]): void {
+    names.forEach((name) => this.items.add(name))
+  }
+  contains(name: string): boolean {
+    return this.items.has(name)
+  }
+}
+
 class StubElement {
   className = ''
   textContent = ''
   title = ''
   childNodes: StubElement[] = []
   style = new StubStyle()
+  classList = new StubClassList()
 
   constructor(public readonly tagName: string) {}
 
@@ -120,5 +131,42 @@ describe('DashboardEngine', () => {
     const engine = new DashboardEngine(container as unknown as HTMLElement)
     engine.mount(config)
     expect(() => engine.destroy()).not.toThrow()
+  })
+
+  it('dispatches every dom widget type without throwing', () => {
+    const types = ['stat-tile', 'section', 'ranking', 'table', 'text-block', 'progress']
+    const domConfig: EmbedConfig = {
+      dashboard_id: 'd2',
+      theme_key: 'dark-pro',
+      theme_tokens: null,
+      attribution: false,
+      layout: {
+        widgets: types.map((type, index) => ({
+          id: `w${index}`,
+          type,
+          x: 0,
+          y: index,
+          w: 12,
+          h: 1,
+          config: { title: type },
+          binding: { value: 'value', name: 'name' },
+        })),
+      },
+    }
+    const container = new StubElement('div')
+    const engine = new DashboardEngine(container as unknown as HTMLElement)
+
+    expect(() => {
+      engine.mount(domConfig)
+      engine.setData({
+        w2: [{ name: 'A', value: 3 }],
+        w3: [{ name: 'A', value: 3 }],
+      })
+    }).not.toThrow()
+
+    const grid = container.childNodes.find(
+      (node) => node.className === 'pk-embed-grid',
+    )
+    expect(grid?.childNodes).toHaveLength(types.length)
   })
 })

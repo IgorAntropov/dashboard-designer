@@ -167,7 +167,8 @@
     "register": "Registrati",
     "noAccount": "Non hai un account?",
     "haveAccount": "Hai già un account?",
-    "failed": "Operazione fallita. Controlla i dati."
+    "failed": "Operazione fallita. Controlla i dati.",
+    "continueWith": "oppure continua con"
   },
   "profile": {
     "title": "Profilo",
@@ -214,7 +215,12 @@
     "undo": "Annulla",
     "redo": "Ripeti"
   },
-  "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro", "custom": "Personale" },
+  "theme": {
+    "system": "Sistema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "custom": "Personale"
+  },
   "themeEditor": {
     "title": "Tema personalizzato",
     "background": "Sfondo",
@@ -225,5 +231,7 @@
     "series": "Serie",
     "font": "Carattere"
   },
-  "language": { "label": "Lingua" }
+  "language": {
+    "label": "Lingua"
+  }
 }

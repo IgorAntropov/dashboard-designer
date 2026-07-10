@@ -25,7 +25,7 @@ class AnalyticsService:
             self._session.add(
                 EmbedEvent(dashboard_id=dashboard_id, day=today, count=1)
             )
-        await self._session.commit()
+        await self._session.flush()
 
     async def get_analytics(
         self, dashboard_id: uuid.UUID, days: int = 30

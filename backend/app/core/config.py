@@ -41,6 +41,7 @@ class Settings(BaseSettings):
     pull_max_bytes: int = 1_000_000
     pull_timeout_sec: float = 5.0
 
+    frontend_url: str = "http://localhost:3000"
     oauth_redirect_base: str = "http://localhost:8000/api/v1/auth/oauth"
     oauth_yandex_client_id: str = ""
     oauth_yandex_client_secret: str = ""

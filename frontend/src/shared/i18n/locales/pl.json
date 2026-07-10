@@ -167,7 +167,8 @@
     "register": "Zarejestruj",
     "noAccount": "Nie masz konta?",
     "haveAccount": "Masz już konto?",
-    "failed": "Niepowodzenie. Sprawdź dane."
+    "failed": "Niepowodzenie. Sprawdź dane.",
+    "continueWith": "lub kontynuuj przez"
   },
   "profile": {
     "title": "Profil",
@@ -214,7 +215,12 @@
     "undo": "Cofnij",
     "redo": "Ponów"
   },
-  "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny", "custom": "Własny" },
+  "theme": {
+    "system": "Systemowy",
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "custom": "Własny"
+  },
   "themeEditor": {
     "title": "Własny motyw",
     "background": "Tło",
@@ -225,5 +231,7 @@
     "series": "Serie",
     "font": "Czcionka"
   },
-  "language": { "label": "Język" }
+  "language": {
+    "label": "Język"
+  }
 }

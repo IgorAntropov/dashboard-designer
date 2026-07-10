@@ -2,9 +2,14 @@
 import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
+import { config } from '@shared/config'
 import { AppButton, PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
+
+function oauthUrl(provider: 'yandex' | 'vk'): string {
+  return `${config.apiOrigin}/api/v1/auth/oauth/${provider}/start`
+}
 
 const { t } = useI18n()
 const session = useSessionStore()
@@ -62,6 +67,18 @@ useHead({ title: computed(() => t('auth.loginTitle')) })
           {{ $t('auth.login') }}
         </AppButton>
       </form>
+
+      <div class="auth-oauth">
+        <span class="auth-oauth__label">{{ $t('auth.continueWith') }}</span>
+        <div class="auth-oauth__row">
+          <a class="btn btn-outline-secondary btn-sm" :href="oauthUrl('yandex')">
+            Yandex
+          </a>
+          <a class="btn btn-outline-secondary btn-sm" :href="oauthUrl('vk')">
+            VK
+          </a>
+        </div>
+      </div>
 
       <p class="mt-3 mb-0 small text-center">
         {{ $t('auth.noAccount') }}

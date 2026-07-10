@@ -91,7 +91,7 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟡 Medium
+## 🟡 Medium — ✅ все исправлено (12–21)
 
 12. ✅ **ИСПРАВЛЕНО. postMessage в embed без проверки origin/source** (`pages/embed/[token].vue`):
     `onMessage` теперь принимает кадры только если `event.source === window.parent` и `event.origin`
@@ -110,32 +110,29 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
     теперь рендерится через `DashboardEngine`, который применяет `resolveTheme(theme_key, theme_tokens)`
     — кастомные темы работают в iframe так же, как в SDK.
 
-16. **`GET /billing/status` всегда `active`** (`app/api/billing.py`): хардкод независимо от реальной
-    подписки. **Фикс:** читать `Subscription` и возвращать её статус.
+16. ✅ **ИСПРАВЛЕНО. `GET /billing/status`** (`app/api/billing.py`): теперь читает `Subscription` через
+    `BillingService.status_for(user)` — возвращает реальный `status` (или `inactive`, если подписки нет).
 
-17. **`AnalyticsService.record_load` коммитит внутри запроса** (`app/services/analytics.py`): нарушает
-    конвенцию «flush в сервисе, commit в роутере», коммитит общую сессию на GET. **Фикс:** flush в
-    сервисе, commit в роутере (или отдельная сессия).
+17. ✅ **ИСПРАВЛЕНО. `AnalyticsService.record_load` коммитил в сервисе**: заменён на `flush`; commit
+    (и rollback при ошибке) вынесен в `public._record_load` — конвенция «flush в сервисе, commit в
+    роутере» соблюдена.
 
-18. **OAuth только на бэке, callback отдаёт JSON** (`app/api/oauth.py`): фронт нигде не использует
-    OAuth; редирект провайдера ведёт на callback, который отдаёт `TokenPair` JSON — браузер этот токен
-    не подхватит. **Фикс:** редиректить на фронт-роут (cookie-based) + добавить UI, либо снять
-    заявку «OAuth at launch».
+18. ✅ **ИСПРАВЛЕНО. OAuth callback отдавал JSON** (`app/api/oauth.py`): callback ставит httpOnly
+    refresh-cookie и делает 303-редирект на `frontend_url/dashboards`; фронт восстанавливает сессию через
+    `refresh`. На странице логина добавлены кнопки Yandex/VK (`/auth/oauth/{provider}/start`).
 
-19. **`contract` — не единый источник правды** (как заявляет ARCHITECTURE): `PublishedConfig`/
-    `PanelkaData` в `packages/contract` (camelCase, без `theme_tokens`/`allowed_domains`) не
-    используются; реальная форма (snake_case) переопределена трижды (backend schema, embed engine,
-    iframe page). **Фикс:** привести contract к wire-формату и импортировать, либо удалить стелые
-    типы и поправить доку.
+19. ✅ **ИСПРАВЛЕНО. `contract` — источник правды**: `packages/contract` приведён к реальному
+    wire-формату (snake_case + `theme_tokens`/`allowed_domains`); ARCHITECTURE уточнён: contract хранит
+    доменные shape'ы, `packages/renderer` — единый рантайм (`EmbedConfig`/`DashboardEngine`),
+    реэкспортируемый embed'ом.
 
-20. **Пробелы в тестах (риск-пути):** `renderWidget`-диспетч и все DOM-рендереры не покрыты;
-    вебхук-переходы `canceled→downgrade` и `failed→past_due` не тестируются. **Фикс:** jsdom-тесты
-    рендера + кейсы даунгрейда/past_due.
+20. ✅ **ИСПРАВЛЕНО. Пробелы в тестах**: добавлен dispatch-тест `renderWidget` по всем DOM-типам
+    (stat-tile/section/ranking/table/text/progress) в `engine.test.ts`; backend-тесты вебхуков
+    `Cancelled→downgrade→free` и `Declined→past_due`.
 
-21. **`DashboardUpdate.status` + безлимитные dict-инпуты** (`app/schemas/dashboard.py`): PATCH может
-    выставить `status=published` в обход publish-флоу; `layout/data_bindings/data_source/theme_tokens`
-    — `dict[str,Any]` без ограничения размера (против §17.10). **Фикс:** запретить смену status через
-    PATCH; ограничить размер payload.
+21. ✅ **ИСПРАВЛЕНО. `DashboardUpdate.status` + безлимитные dict'ы**: поле `status` убрано из
+    `DashboardUpdate` (сменить статус можно только через publish-флоу); на `layout/data_bindings/
+    data_source/theme_tokens` навешен валидатор размера (`MAX_JSON_BYTES = 256 KiB`).
 
 ---
 

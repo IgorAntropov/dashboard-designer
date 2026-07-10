@@ -167,7 +167,8 @@
     "register": "Registrieren",
     "noAccount": "Kein Konto?",
     "haveAccount": "Schon ein Konto?",
-    "failed": "Fehlgeschlagen. Prüfe deine Angaben."
+    "failed": "Fehlgeschlagen. Prüfe deine Angaben.",
+    "continueWith": "oder weiter mit"
   },
   "profile": {
     "title": "Profil",
@@ -214,7 +215,12 @@
     "undo": "Rückgängig",
     "redo": "Wiederholen"
   },
-  "theme": { "system": "System", "light": "Hell", "dark": "Dunkel", "custom": "Eigene" },
+  "theme": {
+    "system": "System",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "custom": "Eigene"
+  },
   "themeEditor": {
     "title": "Eigenes Theme",
     "background": "Hintergrund",
@@ -225,5 +231,7 @@
     "series": "Reihen",
     "font": "Schrift"
   },
-  "language": { "label": "Sprache" }
+  "language": {
+    "label": "Sprache"
+  }
 }

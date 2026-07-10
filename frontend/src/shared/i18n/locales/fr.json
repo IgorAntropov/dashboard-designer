@@ -167,7 +167,8 @@
     "register": "S'inscrire",
     "noAccount": "Pas de compte ?",
     "haveAccount": "Déjà un compte ?",
-    "failed": "Échec. Vérifiez vos informations."
+    "failed": "Échec. Vérifiez vos informations.",
+    "continueWith": "ou continuer avec"
   },
   "profile": {
     "title": "Profil",
@@ -214,7 +215,12 @@
     "undo": "Annuler",
     "redo": "Rétablir"
   },
-  "theme": { "system": "Système", "light": "Clair", "dark": "Sombre", "custom": "Perso." },
+  "theme": {
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre",
+    "custom": "Perso."
+  },
   "themeEditor": {
     "title": "Thème personnalisé",
     "background": "Fond",
@@ -225,5 +231,7 @@
     "series": "Séries",
     "font": "Police"
   },
-  "language": { "label": "Langue" }
+  "language": {
+    "label": "Langue"
+  }
 }

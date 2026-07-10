@@ -87,8 +87,13 @@ Quotas are server-side: dashboard count and a free-tier 5-widget cap (`services/
 The dashboard `layout` (widget instances + `schema` + `binding`) and `data_source` are authored in
 the editor, persisted by the backend as JSONB, and served read-only via the public embed endpoint as
 a `PublishedConfig`. The customer supplies `PanelkaData` at runtime (push / URL pull / WebSocket).
-`packages/contract` is the single source of truth for these shapes; backend Pydantic schemas must
-stay aligned with it.
+
+Type ownership: `packages/contract` holds the domain-level shapes (`WidgetSchema`, `WidgetBinding`,
+`WidgetInstance`, `PublishedConfig`, `PanelkaData`) in the actual **wire format** (snake_case,
+including `theme_tokens`/`allowed_domains`). The runtime rendering types consumed by both the embed
+SDK and the iframe page (`EmbedConfig`/`EmbedData`/`EmbedWidget` + `DashboardEngine`) live in
+`packages/renderer` — that package is the single shared runtime, re-exported by `embed`. Backend
+Pydantic schemas mirror the contract wire shape and must stay aligned with it.
 
 ## 4. Environments
 

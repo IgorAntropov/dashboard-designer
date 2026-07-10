@@ -167,7 +167,8 @@
     "register": "Sign up",
     "noAccount": "No account?",
     "haveAccount": "Already have an account?",
-    "failed": "Failed. Check your details."
+    "failed": "Failed. Check your details.",
+    "continueWith": "or continue with"
   },
   "profile": {
     "title": "Profile",
@@ -214,7 +215,12 @@
     "undo": "Undo",
     "redo": "Redo"
   },
-  "theme": { "system": "System", "light": "Light", "dark": "Dark", "custom": "Custom" },
+  "theme": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "custom": "Custom"
+  },
   "themeEditor": {
     "title": "Custom theme",
     "background": "Background",
@@ -225,5 +231,7 @@
     "series": "Series",
     "font": "Font"
   },
-  "language": { "label": "Language" }
+  "language": {
+    "label": "Language"
+  }
 }

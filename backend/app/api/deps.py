@@ -23,12 +23,13 @@ async def get_current_user(
         )
     try:
         payload = decode_token(credentials.credentials, "access")
-    except ValueError as exc:
+        user_id = uuid.UUID(str(payload["sub"]))
+    except (ValueError, KeyError) as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         ) from exc
 
-    user = await session.get(User, uuid.UUID(str(payload["sub"])))
+    user = await session.get(User, user_id)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"

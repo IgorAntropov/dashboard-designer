@@ -12,6 +12,7 @@ const props = defineProps<{ widget: WidgetInstance; theme: RenderTheme }>()
 const host = ref<HTMLElement | null>(null)
 let handle: WidgetHandle | null = null
 let observer: ResizeObserver | null = null
+let renderedType: string | null = null
 
 function buildInput(): RenderInput {
   return {
@@ -28,13 +29,26 @@ onMounted(() => {
     return
   }
   handle = renderWidget(host.value, buildInput())
+  renderedType = props.widget.type
   observer = new ResizeObserver(() => handle?.resize())
   observer.observe(host.value)
 })
 
 watch(
   [() => props.widget, () => props.theme],
-  () => handle?.update(buildInput()),
+  () => {
+    if (!host.value) {
+      return
+    }
+    if (props.widget.type !== renderedType) {
+      handle?.dispose()
+      handle = renderWidget(host.value, buildInput())
+      renderedType = props.widget.type
+      handle.resize()
+      return
+    }
+    handle?.update(buildInput())
+  },
   { deep: true },
 )
 

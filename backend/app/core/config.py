@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     jwt_refresh_ttl_sec: int = 1209600
 
     trust_proxy_headers: bool = False
+    rate_limit_fail_open: bool = True
     rate_limit_window_sec: int = 60
     rate_limit_auth_per_min: int = 20
     rate_limit_public_per_min: int = 120

@@ -17,14 +17,13 @@ def client_ip(request: Request) -> str:
 
 
 async def hit(redis: Any, key: str, limit: int, window: int) -> bool:
-    """Return True if the request is allowed. Fail-open on Redis errors."""
     try:
         count = await redis.incr(key)
         if count == 1:
             await redis.expire(key, window)
         return int(count) <= limit
     except Exception:
-        return True
+        return get_settings().rate_limit_fail_open
 
 
 def rate_limit(

@@ -67,9 +67,20 @@ function seedSampleData(widgets: WidgetInstance[]): EmbedData {
   return seed
 }
 
+function parentOrigin(): string {
+  if (!document.referrer) {
+    return '*'
+  }
+  try {
+    return new URL(document.referrer).origin
+  } catch {
+    return '*'
+  }
+}
+
 function reportHeight(): void {
   const height = rootEl.value?.scrollHeight ?? 0
-  window.parent.postMessage({ type: 'panelka:height', height }, '*')
+  window.parent.postMessage({ type: 'panelka:height', height }, parentOrigin())
 }
 
 function onMessage(event: MessageEvent): void {

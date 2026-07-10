@@ -4,6 +4,9 @@ import { mapUrlFor } from './maps/scopes'
 import { resolveRegions } from './series'
 import type { RenderInput } from './types'
 
+const MAX_GEOJSON_BYTES = 8 * 1024 * 1024
+const MAX_CACHE_ENTRIES = 8
+
 const geoCache = new Map<string, Promise<unknown>>()
 const registered = new Set<string>()
 
@@ -11,15 +14,55 @@ export function mapNameForUrl(url: string): string {
   return `pk-map:${url}`
 }
 
+async function fetchGeoJson(url: string): Promise<unknown> {
+  const response = await fetch(url)
+  if (!response.ok || !response.body) {
+    throw new Error(`map request failed: ${response.status}`)
+  }
+  const declared = response.headers.get('content-length')
+  if (declared && Number(declared) > MAX_GEOJSON_BYTES) {
+    throw new Error('map too large')
+  }
+
+  const reader = response.body.getReader()
+  const chunks: Uint8Array[] = []
+  let total = 0
+  let done = false
+  while (!done) {
+    const result = await reader.read()
+    done = result.done
+    if (result.value) {
+      total += result.value.byteLength
+      if (total > MAX_GEOJSON_BYTES) {
+        await reader.cancel()
+        throw new Error('map too large')
+      }
+      chunks.push(result.value)
+    }
+  }
+
+  const merged = new Uint8Array(total)
+  let offset = 0
+  for (const chunk of chunks) {
+    merged.set(chunk, offset)
+    offset += chunk.byteLength
+  }
+  return JSON.parse(new TextDecoder().decode(merged))
+}
+
 function loadGeoJson(url: string): Promise<unknown> {
   let pending = geoCache.get(url)
   if (!pending) {
-    pending = fetch(url).then((response) => {
-      if (!response.ok) {
-        throw new Error(`map request failed: ${response.status}`)
-      }
-      return response.json()
+    pending = fetchGeoJson(url).catch((error) => {
+      geoCache.delete(url)
+      throw error
     })
+    if (geoCache.size >= MAX_CACHE_ENTRIES) {
+      const oldest = geoCache.keys().next().value
+      if (oldest !== undefined) {
+        geoCache.delete(oldest)
+      }
+    }
     geoCache.set(url, pending)
   }
   return pending

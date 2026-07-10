@@ -7,11 +7,23 @@ from fastapi.responses import RedirectResponse
 from app.api.deps import SessionDep
 from app.core.config import Settings, get_settings
 from app.core.cookies import set_refresh_cookie
+from app.core.rate_limit import rate_limit_dep
 from app.services.auth import AuthService
 from app.services.oauth.base import OAuthProvider
 from app.services.oauth.registry import UnknownProviderError, build_provider
 
-router = APIRouter(prefix="/auth/oauth", tags=["oauth"])
+_settings = get_settings()
+router = APIRouter(
+    prefix="/auth/oauth",
+    tags=["oauth"],
+    dependencies=[
+        rate_limit_dep(
+            "oauth",
+            _settings.rate_limit_auth_per_min,
+            _settings.rate_limit_window_sec,
+        )
+    ],
+)
 
 STATE_COOKIE = "panelka_oauth_state"
 

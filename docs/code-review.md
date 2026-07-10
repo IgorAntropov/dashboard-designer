@@ -136,18 +136,18 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟢 Low
+## 🟢 Low — ✅ 22–29, 31 исправлено (30 — см. ниже)
 
-22. Rate-limiter fail-open — при падении Redis троттлинг отключается целиком (`rate_limit.py`).
-23. `uuid.UUID(sub)` кидает `ValueError` → 500 вместо 401 (`api/deps.py`, `api/ws.py`).
-24. Публичный конфиг кешируется 60с — revoke/unpublish виден с задержкой (`public.py`).
-25. `/auth/oauth/*` без rate-limit (лимит только на `/auth`).
-26. CSP `connect-src 'self' https: http: ws: wss:` слишком широкий (`server/plugins/csp.ts`) — сузить до API-origin, убрать `http:`.
-27. `reportHeight` шлёт `postMessage(..., '*')` — утечка высоты любому предку (`embed/[token].vue`).
-28. Безлимитный module-level кеш GeoJSON без вытеснения + фетч кастомной карты без лимита размера (`packages/renderer/src/map.ts`).
-29. `WidgetView.update()` не пересоздаёт рендерер при смене `type` виджета (edge-case).
-30. `ConfigPanel.vue` — god-компонент (~570 строк, вся per-type логика). Разбить на под-панели по категориям.
-31. Токен embed «signed» в CLAUDE.md — по факту opaque/random (это ок по безопасности, доку поправить).
+22. ✅ Rate-limiter fail-open теперь управляется настройкой `rate_limit_fail_open` (по умолчанию `True`).
+23. ✅ `uuid.UUID(sub)`/`payload["sub"]` обёрнуты — при кривом токене 401, не 500 (`api/deps.py`, `api/ws.py`).
+24. ✅ Публичный конфиг: кэш `embed:{token}` инвалидируется при publish/republish (`api/dashboards.py`).
+25. ✅ `/auth/oauth/*` получил rate-limit (тот же бакет-лимит, что и `/auth`).
+26. ✅ CSP `connect-src` сужен до `'self' <api-origin> <ws-origin>` (без `http:`/широких схем).
+27. ✅ `reportHeight` шлёт высоту в origin родителя (из `document.referrer`), не в `*`.
+28. ✅ Кэш GeoJSON ограничен (LRU-вытеснение, `MAX_CACHE_ENTRIES`); фетч карты стримится с байт-лимитом `MAX_GEOJSON_BYTES`.
+29. ✅ `WidgetView` пересоздаёт рендерер при смене `type` виджета (dispose + новый `renderWidget`).
+30. ⏳ `ConfigPanel.vue` — god-компонент (~570 строк). Разбивка на под-панели — отдельный слайс (см. ниже).
+31. ✅ Формулировка «signed» токена в CLAUDE.md заменена на «opaque, random, revocable».
 
 ---
 

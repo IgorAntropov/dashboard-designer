@@ -4,6 +4,7 @@ from fastapi import APIRouter, status
 
 from app.api.deps import CurrentUserDep, SessionDep
 from app.core.errors import AppError
+from app.core.redis import get_redis
 from app.models.dashboard import Dashboard
 from app.models.enums import SubscriptionTier
 from app.models.export_job import ExportJob
@@ -187,6 +188,10 @@ async def publish_dashboard(
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
     await session.commit()
+    try:
+        await get_redis().delete(f"embed:{token.token}")
+    except Exception:
+        pass
     return PublishResponse(
         token=token.token,
         ingest_key=token.ingest_key,

@@ -54,11 +54,10 @@ async def session_ws(websocket: WebSocket) -> None:
         return
     try:
         payload = decode_token(token, "access")
-    except ValueError:
+        user_id = str(payload["sub"])
+    except (ValueError, KeyError):
         await websocket.close(code=1008)
         return
-
-    user_id = str(payload["sub"])
     session_id = str(uuid.uuid4())
 
     await websocket.accept(subprotocol=WS_SUBPROTOCOL)

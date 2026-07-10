@@ -1,3 +1,10 @@
+function connectSources(): string {
+  const apiOrigin =
+    process.env.NUXT_PUBLIC_API_ORIGIN ?? 'http://localhost:8000'
+  const wsOrigin = apiOrigin.replace(/^http/, 'ws')
+  return `connect-src 'self' ${apiOrigin} ${wsOrigin}`
+}
+
 function cspFor(nonce: string): string {
   return [
     "default-src 'self'",
@@ -8,7 +15,7 @@ function cspFor(nonce: string): string {
     "font-src 'self' data: https://fonts.gstatic.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     `script-src 'nonce-${nonce}' 'strict-dynamic'`,
-    "connect-src 'self' https: http: ws: wss:",
+    connectSources(),
     'frame-src https://widget.cloudpayments.ru',
   ].join('; ')
 }

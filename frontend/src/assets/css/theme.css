@@ -910,17 +910,20 @@ body {
 
 .palette-group__panel {
   display: grid;
-  grid-template-rows: 0fr;
+  grid-template-rows: minmax(0, 0fr);
   transition: grid-template-rows 0.25s ease;
 }
 
 .palette-group--open .palette-group__panel {
-  grid-template-rows: 1fr;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.palette-group__clip {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .palette-group__items {
-  min-height: 0;
-  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.4rem;

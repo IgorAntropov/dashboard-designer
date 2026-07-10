@@ -6,6 +6,7 @@ from fastapi.responses import RedirectResponse
 
 from app.api.deps import SessionDep
 from app.core.config import Settings, get_settings
+from app.core.cookies import set_refresh_cookie
 from app.schemas.auth import TokenPair
 from app.services.auth import AuthService
 from app.services.oauth.base import OAuthProvider
@@ -69,4 +70,5 @@ async def callback(
     await session.commit()
 
     response.delete_cookie(STATE_COOKIE)
-    return tokens
+    set_refresh_cookie(response, tokens.refresh_token)
+    return TokenPair(access_token=tokens.access_token, refresh_token="")

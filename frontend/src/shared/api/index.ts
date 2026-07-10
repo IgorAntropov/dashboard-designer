@@ -48,7 +48,10 @@ function isAuthPath(url: string): boolean {
   return AUTH_PATHS.some((path) => url.includes(path))
 }
 
-export const api = createClient<paths>({ baseUrl: config.apiOrigin })
+export const api = createClient<paths>({
+  baseUrl: config.apiOrigin,
+  credentials: 'include',
+})
 
 api.use({
   onRequest({ request }) {

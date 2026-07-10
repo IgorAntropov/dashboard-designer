@@ -12,10 +12,6 @@ export const useSessionStore = defineStore('session', () => {
     maxAge: 60 * 60 * 24 * 30,
     sameSite: 'lax',
   })
-  const refreshCookie = useCookie<string | null>('panelka_refresh', {
-    maxAge: 60 * 60 * 24 * 30,
-    sameSite: 'lax',
-  })
 
   const user = ref<SessionUser | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
@@ -98,17 +94,11 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   async function refresh(): Promise<boolean> {
-    if (!refreshCookie.value) {
-      return false
-    }
-    const { data, error } = await api.POST('/api/v1/auth/refresh', {
-      body: { refresh_token: refreshCookie.value },
-    })
+    const { data, error } = await api.POST('/api/v1/auth/refresh')
     if (error || !data) {
       return false
     }
     applyAccess(data.access_token)
-    refreshCookie.value = data.refresh_token
     return true
   }
 
@@ -136,7 +126,6 @@ export const useSessionStore = defineStore('session', () => {
       return false
     }
     applyAccess(data.access_token)
-    refreshCookie.value = data.refresh_token
     const ok = await fetchMe()
     if (ok) {
       scheduleRefresh()
@@ -196,9 +185,9 @@ export const useSessionStore = defineStore('session', () => {
   function logout(): void {
     stopRefreshTimer()
     disconnectWs()
+    void api.POST('/api/v1/auth/logout')
     user.value = null
     applyAccess(null)
-    refreshCookie.value = null
   }
 
   return {

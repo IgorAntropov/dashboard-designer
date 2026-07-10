@@ -39,13 +39,16 @@ async def test_register_login_me_and_refresh_flow(client: AsyncClient) -> None:
     anonymous = await client.get("/api/v1/me")
     assert anonymous.status_code == 401
 
-    rotated = await client.post(
-        "/api/v1/auth/refresh", json={"refresh_token": tokens["refresh_token"]}
-    )
+    assert tokens["refresh_token"] == ""
+    old_refresh = client.cookies.get("panelka_refresh")
+    assert old_refresh
+
+    rotated = await client.post("/api/v1/auth/refresh")
     assert rotated.status_code == 200
     assert rotated.json()["access_token"] != access
+    assert rotated.json()["refresh_token"] == ""
 
     reused = await client.post(
-        "/api/v1/auth/refresh", json={"refresh_token": tokens["refresh_token"]}
+        "/api/v1/auth/refresh", json={"refresh_token": old_refresh}
     )
     assert reused.status_code == 401

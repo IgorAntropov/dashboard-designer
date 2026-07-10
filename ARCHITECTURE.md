@@ -332,3 +332,13 @@ token could push). Fan-out across workers: `LiveChannelManager.broadcast` publis
 `embed:live:{token}`; a lazily-started per-process subscriber (`psubscribe embed:live:*`) delivers to its
 local sockets — all fail-open, falling back to direct local delivery when Redis is down. The embed modal
 now shows the ingest key + a ready `curl` live-push example. NOTE: migration 0009 needs a backend restart.
+
+Refresh token in httpOnly cookie (hardening): the refresh token is no longer stored in JS-readable
+storage. `app/core/cookies.py` sets `panelka_refresh` as HttpOnly, SameSite=Lax, Secure in production,
+scoped to `path=/api/v1/auth`. Login, refresh-rotation and the OAuth callback set the cookie and blank
+the `refresh_token` field in the JSON body (schema unchanged); `POST /auth/refresh` reads the token from
+the cookie (body optional, kept for non-browser clients) and `POST /auth/logout` clears it. Frontend: the
+session store dropped its `panelka_refresh` JS cookie — `refresh()` posts with no body, `logout()` calls
+`/auth/logout`; the shared api client sends `credentials: 'include'` so the cookie flows on same-site
+cross-origin requests. The access token stays a short-lived bearer in a JS cookie + Authorization header.
+This resolves the earlier ARCHITECTURE FIXME about refresh-token XSS exposure.

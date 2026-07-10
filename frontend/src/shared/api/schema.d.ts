@@ -54,6 +54,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/auth/logout': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['logout_api_v1_auth_logout_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/me': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['me_api_v1_me_get']
@@ -170,7 +181,7 @@ export interface components {
       password: string
     }
     RefreshRequest: {
-      refresh_token: string
+      refresh_token?: string | null
     }
     UserUpdate: {
       display_name: string
@@ -282,7 +293,7 @@ export interface operations {
   }
   refresh_api_v1_auth_refresh_post: {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
-    requestBody: {
+    requestBody?: {
       content: { 'application/json': components['schemas']['RefreshRequest'] }
     }
     responses: {
@@ -290,6 +301,13 @@ export interface operations {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['TokenPair'] }
       }
+    }
+  }
+  logout_api_v1_auth_logout_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody?: never
+    responses: {
+      204: { headers: { [name: string]: unknown }; content?: never }
     }
   }
   me_api_v1_me_get: {

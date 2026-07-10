@@ -463,3 +463,14 @@ flushes; the router commits. (18) OAuth callback sets the refresh cookie and 303
 (publish-only) and bounds JSONB payload size. (24) publishing invalidates the `embed:{token}` cache. (30)
 `ConfigPanel` was decomposed into a `useWidgetConfig` composable + per-category subpanels. Full status in
 docs/code-review.md.
+
+User custom themes (6.3): `user_themes` table (per-user name + `RenderTheme` tokens) with CRUD at
+`/api/v1/me/themes` (`UserThemeService`, ownership-checked, 404 on foreign id). Migration
+`0011_user_themes`. Themes are created/edited/deleted on the **Settings** page
+(`widgets/theme-manager/ThemeManager` + shared `ThemeColorFields` v-model editor, `entities/user-theme`
+repository). The editor `ThemeSelector` lists built-in themes plus the user's saved themes; selecting a
+user theme calls `canvasStore.applyUserTheme(id, tokens)` which sets `themeKey` to the theme id and
+`customTheme` to its tokens. `effectiveTheme` resolves via `resolveTheme(themeKey, isBuiltin ? null :
+customTheme)`, so any non-built-in key renders from the token snapshot. The dashboard persists
+`theme_key` (= theme id) + `theme_tokens` (snapshot) so embed/reload render identically without fetching
+user themes. Themes are user-named (no i18n).

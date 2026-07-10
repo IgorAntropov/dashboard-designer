@@ -53,8 +53,7 @@ async function save(): Promise<void> {
     title: titleInput.value.trim() || t('editor.title'),
     layout: { widgets: canvasStore.widgets },
     theme_key: canvasStore.themeKey,
-    theme_tokens:
-      canvasStore.themeKey === 'custom' ? canvasStore.customTheme : null,
+    theme_tokens: canvasStore.customTheme,
   }
   const result = await updateDashboard(dashboardId, patch)
   if (result.code === 'quota_widgets') {

@@ -268,5 +268,18 @@
     "wed": "Śr",
     "thu": "Czw",
     "fri": "Pt"
+  },
+  "themes": {
+    "title": "Motywy niestandardowe",
+    "new": "Nowy motyw",
+    "empty": "Brak motywów niestandardowych.",
+    "name": "Nazwa",
+    "namePlaceholder": "Mój motyw",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "saved": "Motyw zapisany",
+    "deleteConfirm": "Usunąć motyw?"
   }
 }

@@ -9,6 +9,7 @@ from app.api.dashboards import router as dashboards_router
 from app.api.health import router as health_router
 from app.api.oauth import router as oauth_router
 from app.api.public import router as public_router
+from app.api.user_themes import router as user_themes_router
 from app.api.users import router as users_router
 from app.api.version import router as version_router
 from app.api.ws import router as ws_router
@@ -62,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(auth_router, prefix=prefix)
     app.include_router(oauth_router, prefix=prefix)
     app.include_router(users_router, prefix=prefix)
+    app.include_router(user_themes_router, prefix=prefix)
     app.include_router(dashboards_router, prefix=prefix)
     app.include_router(billing_router, prefix=prefix)
     app.include_router(public_router, prefix=prefix)

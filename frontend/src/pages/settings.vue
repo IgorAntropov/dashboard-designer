@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 
 import { api } from '@shared/api'
+import { ThemeManager } from '@widgets/theme-manager'
 
 const { t } = useI18n()
 const runtimeConfig = useRuntimeConfig()
@@ -19,6 +20,10 @@ useHead({ title: computed(() => t('settings.title')) })
 <template>
   <div class="container-xxl">
     <h1 class="h3 mb-4">{{ $t('settings.title') }}</h1>
+
+    <section class="mb-5">
+      <ClientOnly><ThemeManager /></ClientOnly>
+    </section>
 
     <section>
       <h2 class="h5">{{ $t('settings.about') }}</h2>

@@ -268,5 +268,18 @@
     "wed": "St",
     "thu": "Čt",
     "fri": "Pá"
+  },
+  "themes": {
+    "title": "Vlastní motivy",
+    "new": "Nový motiv",
+    "empty": "Zatím žádné vlastní motivy.",
+    "name": "Název",
+    "namePlaceholder": "Můj motiv",
+    "save": "Uložit",
+    "cancel": "Zrušit",
+    "delete": "Smazat",
+    "edit": "Upravit",
+    "saved": "Motiv uložen",
+    "deleteConfirm": "Smazat motiv?"
   }
 }

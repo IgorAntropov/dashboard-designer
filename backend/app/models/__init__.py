@@ -8,6 +8,7 @@ from app.models.processed_webhook import ProcessedWebhook
 from app.models.refresh_token import RefreshToken
 from app.models.subscription import Subscription
 from app.models.user import User
+from app.models.user_theme import UserTheme
 
 metadata = Base.metadata
 
@@ -22,5 +23,6 @@ __all__ = [
     "RefreshToken",
     "Subscription",
     "User",
+    "UserTheme",
     "metadata",
 ]

@@ -268,5 +268,18 @@
     "wed": "Wed",
     "thu": "Thu",
     "fri": "Fri"
+  },
+  "themes": {
+    "title": "Custom themes",
+    "new": "New theme",
+    "empty": "No custom themes yet.",
+    "name": "Name",
+    "namePlaceholder": "My theme",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "saved": "Theme saved",
+    "deleteConfirm": "Delete theme?"
   }
 }

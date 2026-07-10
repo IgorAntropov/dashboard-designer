@@ -1,5 +1,5 @@
 import type { RenderTheme } from '@panelka/renderer'
-import { resolveTheme } from '@panelka/renderer'
+import { DASHBOARD_THEMES, resolveTheme } from '@panelka/renderer'
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
 
@@ -32,18 +32,30 @@ export const useCanvasStore = defineStore('canvas', () => {
   const themeKey = ref('light-minimal')
   const customTheme = ref<RenderTheme | null>(null)
 
+  function isBuiltinTheme(key: string): boolean {
+    return key in DASHBOARD_THEMES
+  }
+
   function setTheme(key: string): void {
     themeKey.value = key
+    if (isBuiltinTheme(key)) {
+      customTheme.value = null
+    }
   }
 
   function setCustomTheme(theme: RenderTheme | null): void {
     customTheme.value = theme
   }
 
+  function applyUserTheme(id: string, tokens: RenderTheme): void {
+    themeKey.value = id
+    customTheme.value = tokens
+  }
+
   const effectiveTheme = computed(() =>
     resolveTheme(
       themeKey.value,
-      themeKey.value === 'custom' ? customTheme.value : null,
+      isBuiltinTheme(themeKey.value) ? null : customTheme.value,
     ),
   )
 
@@ -266,6 +278,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     canRedo,
     setTheme,
     setCustomTheme,
+    applyUserTheme,
     setWidgets,
     hydrate,
     add,

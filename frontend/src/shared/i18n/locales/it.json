@@ -268,5 +268,18 @@
     "wed": "Mer",
     "thu": "Gio",
     "fri": "Ven"
+  },
+  "themes": {
+    "title": "Temi personalizzati",
+    "new": "Nuovo tema",
+    "empty": "Nessun tema personalizzato.",
+    "name": "Nome",
+    "namePlaceholder": "Il mio tema",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "saved": "Tema salvato",
+    "deleteConfirm": "Eliminare il tema?"
   }
 }

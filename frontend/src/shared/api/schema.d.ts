@@ -175,6 +175,28 @@ export interface paths {
     patch: operations['update_dashboard_api_v1_dashboards__dashboard_id__patch']
     trace?: never
   }
+  '/api/v1/me/themes': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get: operations['list_themes_api_v1_me_themes_get']
+    put?: never
+    post: operations['create_theme_api_v1_me_themes_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/v1/me/themes/{theme_id}': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post?: never
+    delete: operations['delete_theme_api_v1_me_themes__theme_id__delete']
+    options?: never
+    head?: never
+    patch: operations['update_theme_api_v1_me_themes__theme_id__patch']
+    trace?: never
+  }
 }
 
 export type webhooks = Record<string, never>
@@ -272,6 +294,21 @@ export interface components {
       account_id: string
       invoice_id: string
       tier: components['schemas']['SubscriptionTier']
+    }
+    UserThemeOut: {
+      id: string
+      name: string
+      tokens: { [key: string]: unknown }
+      created_at: string
+      updated_at: string
+    }
+    UserThemeCreate: {
+      name: string
+      tokens?: { [key: string]: unknown }
+    }
+    UserThemeUpdate: {
+      name?: string | null
+      tokens?: { [key: string]: unknown } | null
     }
   }
   responses: never
@@ -532,6 +569,62 @@ export interface operations {
       query?: never
       header?: never
       path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      204: {
+        headers: { [name: string]: unknown }
+        content?: never
+      }
+    }
+  }
+  list_themes_api_v1_me_themes_get: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: {
+          'application/json': components['schemas']['UserThemeOut'][]
+        }
+      }
+    }
+  }
+  create_theme_api_v1_me_themes_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['UserThemeCreate'] }
+    }
+    responses: {
+      201: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserThemeOut'] }
+      }
+    }
+  }
+  update_theme_api_v1_me_themes__theme_id__patch: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { theme_id: string }
+      cookie?: never
+    }
+    requestBody: {
+      content: { 'application/json': components['schemas']['UserThemeUpdate'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['UserThemeOut'] }
+      }
+    }
+  }
+  delete_theme_api_v1_me_themes__theme_id__delete: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { theme_id: string }
       cookie?: never
     }
     requestBody?: never

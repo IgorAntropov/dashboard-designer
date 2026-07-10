@@ -18,18 +18,28 @@ html {
   --pk-accent-contrast: #1a1a1a;
   --pk-bg: #ffffff;
   --pk-surface: #f6f6f7;
+  --pk-surface-2: #ffffff;
   --pk-text: #1a1a1a;
   --pk-muted: #6b7280;
   --pk-border: #e5e7eb;
+  --pk-success: #16a34a;
+  --pk-danger: #dc2626;
+  --pk-radius: 0.6rem;
+  --pk-radius-lg: 14px;
+  --pk-shadow-card: 0 1px 2px rgba(15, 15, 16, 0.04);
   --pk-nav-width: 248px;
 }
 
 [data-bs-theme='dark'] {
   --pk-bg: #0f0f10;
   --pk-surface: #17181b;
+  --pk-surface-2: #1c1d21;
   --pk-text: #f3f4f6;
   --pk-muted: #9ca3af;
   --pk-border: #26272b;
+  --pk-success: #22c55e;
+  --pk-danger: #f87171;
+  --pk-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -229,6 +239,81 @@ body {
 .pk-badge--neutral {
   background-color: color-mix(in srgb, var(--pk-border) 45%, transparent);
   color: var(--pk-text);
+}
+
+.pk-badge--success {
+  background-color: color-mix(in srgb, var(--pk-success) 16%, transparent);
+  color: var(--pk-success);
+}
+
+.pk-card {
+  background-color: var(--pk-surface);
+  border: 1px solid var(--pk-border);
+  border-radius: var(--pk-radius-lg);
+  box-shadow: var(--pk-shadow-card);
+}
+
+.pk-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--pk-border);
+}
+
+.pk-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pk-card__body {
+  padding: 1.25rem;
+}
+
+.pk-card--flush .pk-card__body {
+  padding: 0;
+}
+
+.pk-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 2.5rem 1.5rem;
+  border: 1px dashed var(--pk-border);
+  border-radius: var(--pk-radius-lg);
+  color: var(--pk-muted);
+}
+
+.pk-empty__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background-color: var(--pk-surface);
+  color: var(--pk-accent);
+  font-size: 1.4rem;
+}
+
+.pk-empty__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--pk-text);
+  margin: 0.35rem 0 0;
+}
+
+.pk-empty__text {
+  font-size: 0.85rem;
+  margin: 0;
+  max-width: 24rem;
+}
+
+.pk-empty__action {
+  margin-top: 0.6rem;
 }
 
 .app-shell {

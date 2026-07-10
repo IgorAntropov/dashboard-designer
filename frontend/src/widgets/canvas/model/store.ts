@@ -59,7 +59,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     widgets.value = next
   }
 
-  const GRID_COLUMNS = 48
+  const GRID_COLUMNS = 12
 
   function overlaps(
     a: { x: number; y: number; w: number; h: number },

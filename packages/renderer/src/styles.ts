@@ -2,9 +2,9 @@ const SHELL_CSS = `
 :host { display: block; }
 .pk-embed-grid {
   display: grid;
-  grid-template-columns: repeat(48, 1fr);
-  grid-auto-rows: 20px;
-  gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 8px;
   padding: 12px;
   background-color: var(--pk-bg, #ffffff);
   color: var(--pk-text, #1a1a1a);

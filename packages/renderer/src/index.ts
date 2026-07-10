@@ -23,6 +23,9 @@ export { buildChartOption } from './option'
 export { buildGeoOption, ensureMap } from './map'
 export { MAP_SCOPES, DEFAULT_MAP_SCOPE, mapUrlFor, scopeKeyOf } from './maps/scopes'
 export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme, resolveTheme } from './themes'
+export { WIDGET_CSS, ENGINE_CSS } from './styles'
+export { DashboardEngine } from './engine'
+export type { EmbedConfig, EmbedData, EmbedWidget } from './engine'
 
 const CHART_TYPES = new Set([
   'bar-chart',

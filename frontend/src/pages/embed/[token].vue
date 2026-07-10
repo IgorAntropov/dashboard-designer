@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { RenderInput, WidgetHandle } from '@panelka/renderer'
-import { getTheme, renderWidget } from '@panelka/renderer'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import type { EmbedConfig, EmbedData } from '@panelka/renderer'
+import { DashboardEngine } from '@panelka/renderer'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 import type { WidgetInstance } from '@entities/widget'
 import { sampleDataFor } from '@entities/widget'
@@ -9,12 +9,9 @@ import { config as appConfig } from '@shared/config'
 
 definePageMeta({ layout: false })
 
-interface PublishedConfig {
-  dashboard_id: string
-  theme_key: string
-  layout: { widgets?: WidgetInstance[] }
+interface PublishedConfig extends EmbedConfig {
+  allowed_domains?: string[]
   data_source: Record<string, unknown>
-  attribution: boolean
 }
 
 const route = useRoute()
@@ -39,58 +36,35 @@ if (import.meta.server) {
 
 const loaded = ref(false)
 const notFound = ref(false)
-const attribution = ref(true)
-const themeKey = ref('light-minimal')
 const rootEl = ref<HTMLElement | null>(null)
 
-const widgets = ref<WidgetInstance[]>([])
-const handles = new Map<string, WidgetHandle>()
-let dataByWidget: Record<string, Array<Record<string, unknown>>> = {}
+let engine: DashboardEngine | null = null
+let allowedDomains: string[] = []
 let observer: ResizeObserver | null = null
 
-const themeVars = computed(() => {
-  const theme = getTheme(themeKey.value)
-  return {
-    '--pk-bg': theme.colorBg,
-    '--pk-surface': theme.colorSurface,
-    '--pk-text': theme.colorText,
-    '--pk-muted': theme.colorMuted,
-  }
-})
-
-function cellStyle(widget: WidgetInstance): Record<string, string> {
-  return {
-    gridColumn: `${widget.x + 1} / span ${widget.w}`,
-    gridRow: `${widget.y + 1} / span ${widget.h}`,
+function hostOf(value: string): string {
+  const raw = value.includes('://') ? value : `https://${value}`
+  try {
+    return new URL(raw).host.toLowerCase()
+  } catch {
+    return value.toLowerCase()
   }
 }
 
-function inputFor(widget: WidgetInstance): RenderInput {
-  return {
-    type: widget.type,
-    config: widget.config,
-    binding: widget.binding,
-    data: dataByWidget[widget.id] ?? sampleDataFor(widget.type),
-    theme: getTheme(themeKey.value),
+function originAllowed(origin: string): boolean {
+  if (allowedDomains.length === 0) {
+    return true
   }
+  const host = hostOf(origin)
+  return allowedDomains.some((domain) => hostOf(domain) === host)
 }
 
-function renderAll(): void {
-  for (const widget of widgets.value) {
-    const host = rootEl.value?.querySelector<HTMLElement>(
-      `[data-w="${widget.id}"] .embed-widget__body`,
-    )
-    if (!host) {
-      continue
-    }
-    const existing = handles.get(widget.id)
-    if (existing) {
-      existing.update(inputFor(widget))
-    } else {
-      handles.set(widget.id, renderWidget(host, inputFor(widget)))
-    }
+function seedSampleData(widgets: WidgetInstance[]): EmbedData {
+  const seed: EmbedData = {}
+  for (const widget of widgets) {
+    seed[widget.id] = sampleDataFor(widget.type)
   }
-  handles.forEach((handle) => handle.resize())
+  return seed
 }
 
 function reportHeight(): void {
@@ -99,13 +73,12 @@ function reportHeight(): void {
 }
 
 function onMessage(event: MessageEvent): void {
-  const message = event.data as {
-    type?: string
-    payload?: Record<string, Array<Record<string, unknown>>>
+  if (event.source !== window.parent || !originAllowed(event.origin)) {
+    return
   }
+  const message = event.data as { type?: string; payload?: EmbedData }
   if (message?.type === 'panelka:data' && message.payload) {
-    dataByWidget = { ...dataByWidget, ...message.payload }
-    renderAll()
+    engine?.setData(message.payload)
     reportHeight()
   }
 }
@@ -114,53 +87,37 @@ onMounted(async () => {
   const response = await fetch(
     `${appConfig.apiOrigin}/api/v1/public/embed/${token}`,
   )
-  if (!response.ok) {
+  if (!response.ok || !rootEl.value) {
     notFound.value = true
     loaded.value = true
     return
   }
   const cfg = (await response.json()) as PublishedConfig
-  themeKey.value = cfg.theme_key
-  attribution.value = cfg.attribution
-  widgets.value = Array.isArray(cfg.layout?.widgets) ? cfg.layout.widgets : []
+  allowedDomains = cfg.allowed_domains ?? []
+  const widgets = Array.isArray(cfg.layout?.widgets) ? cfg.layout.widgets : []
   loaded.value = true
 
-  await nextTick()
-  renderAll()
+  engine = new DashboardEngine(rootEl.value)
+  engine.setData(seedSampleData(widgets as WidgetInstance[]))
+  engine.mount(cfg)
   reportHeight()
 
   window.addEventListener('message', onMessage)
   observer = new ResizeObserver(reportHeight)
-  if (rootEl.value) {
-    observer.observe(rootEl.value)
-  }
+  observer.observe(rootEl.value)
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('message', onMessage)
   observer?.disconnect()
-  handles.forEach((handle) => handle.dispose())
+  engine?.destroy()
 })
 
 useHead({ title: 'Panelka' })
 </script>
 
 <template>
-  <div ref="rootEl" class="embed-root" :style="themeVars">
+  <div ref="rootEl" class="embed-root">
     <p v-if="notFound" class="embed-empty">Not found</p>
-
-    <div v-else class="embed-grid">
-      <div
-        v-for="widget in widgets"
-        :key="widget.id"
-        :data-w="widget.id"
-        class="embed-widget"
-        :style="cellStyle(widget)"
-      >
-        <div class="embed-widget__body" />
-      </div>
-    </div>
-
-    <div v-if="attribution && !notFound" class="embed-attr">Made with Panelka</div>
   </div>
 </template>

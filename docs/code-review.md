@@ -39,7 +39,7 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟠 High — ✅ 5, 6, 7, 8, 9 исправлено (осталось 10, 11)
+## 🟠 High — ✅ 5, 6, 7, 8, 9, 10 исправлено (осталось 11)
 
 5. **Доменный allowlist embed не проверяется на сервере.**
    `app/api/public.py`: `get_embed_config`, `embed_pull_data`, WS `embed_live` отдают всё любому с
@@ -76,13 +76,13 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
    **Фикс:** централизованно повторять и мутации (тело доступно — клонировать и повторить со свежим
    токеном).
 
-10. **Дублирование (DRY):**
-    - CSS DOM-виджетов (`pk-kpi/pk-rank/pk-table/pk-section/pk-progress/pk-text`) скопирован в
-      `embed/src/renderer/styles.ts` и `frontend/src/assets/css/theme.css` — менять структуру надо в
-      двух местах. **Фикс:** экспортировать строку CSS из `packages/renderer`, импортировать в обоих.
-    - iframe-страница `frontend/src/pages/embed/[token].vue` ~на 80% повторяет `DashboardEngine`
-      (`embed/src/renderer/engine.ts`): сетка, тема, атрибуция, merge-данных, resize. **Фикс:** гонять
-      iframe-страницу через `DashboardEngine`/общий рантайм.
+10. ✅ **ИСПРАВЛЕНО. Дублирование (DRY):**
+    - CSS DOM-виджетов вынесен в `packages/renderer/src/styles.ts` (`WIDGET_CSS`); embed-шелл собирает
+      `ENGINE_CSS = SHELL + WIDGET_CSS`, фронт инжектит `WIDGET_CSS` клиентским плагином
+      `widget-css.client.ts` (удалён дубликат из `theme.css`). Один источник.
+    - `DashboardEngine` перенесён в `packages/renderer/src/engine.ts` (общий рантайм); embed
+      реэкспортит его, iframe-страница `pages/embed/[token].vue` теперь гоняется через тот же движок
+      (сетка/тема/атрибуция/merge/resize больше не дублируются).
 
 11. **embed без тестов (нарушение §17.5).** `embed/` не имеет ни одного `*.test.ts`
     (`--passWithNoTests`). Три метода встраивания (iframe/WC/render) не покрыты. **Фикс:** smoke-тесты
@@ -92,9 +92,9 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ## 🟡 Medium
 
-12. **postMessage в embed без проверки origin/source** (`pages/embed/[token].vue`): `onMessage`
-    принимает `panelka:data` от любого окна. XSS нет (textContent), но данные можно подменить.
-    **Фикс:** проверять `event.source === window.parent` и origin против allowlist.
+12. ✅ **ИСПРАВЛЕНО. postMessage в embed без проверки origin/source** (`pages/embed/[token].vue`):
+    `onMessage` теперь принимает кадры только если `event.source === window.parent` и `event.origin`
+    входит в `allowed_domains` (пустой allowlist → любой, как и `frame-ancestors *`).
 
 13. **Access-токен в JS-cookie без `secure`** (`entities/session/model/store.ts`): не httpOnly, без
     `secure` → читается XSS-ом и уходит по http. **Фикс:** минимум `secure:true`; лучше держать в
@@ -103,10 +103,9 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 14. **WS-токен в query-строке** (`store.ts`, `app/api/ws.py`): JWT в URL логируется прокси/историей.
     **Фикс:** авторизовать сокет по cookie/одноразовому тикету.
 
-15. **iframe-страница игнорирует кастомные темы** (`pages/embed/[token].vue`): использует
-    `getTheme(themeKey)` вместо `resolveTheme(theme_key, theme_tokens)` — в iframe кастомная тема не
-    применяется (в SDK-движке — применяется). **Фикс:** перейти на `resolveTheme` + включить
-    `theme_tokens` в тип конфига.
+15. ✅ **ИСПРАВЛЕНО. iframe-страница игнорирует кастомные темы** (`pages/embed/[token].vue`): страница
+    теперь рендерится через `DashboardEngine`, который применяет `resolveTheme(theme_key, theme_tokens)`
+    — кастомные темы работают в iframe так же, как в SDK.
 
 16. **`GET /billing/status` всегда `active`** (`app/api/billing.py`): хардкод независимо от реальной
     подписки. **Фикс:** читать `Subscription` и возвращать её статус.

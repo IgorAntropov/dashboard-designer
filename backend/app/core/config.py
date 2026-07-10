@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     jwt_secret: str = "change-me"
     jwt_access_ttl_sec: int = 900
-    jwt_refresh_ttl_sec: int = 1209600
+    jwt_refresh_ttl_sec: int = 864000
 
     trust_proxy_headers: bool = False
     rate_limit_fail_open: bool = True

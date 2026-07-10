@@ -5,9 +5,8 @@ export default defineNuxtPlugin(async () => {
   const session = useSessionStore()
 
   setUnauthorizedHandler(() => session.refresh())
-  setAuthFailedHandler(async () => {
-    session.logout()
-    await navigateTo('/login')
+  setAuthFailedHandler(() => {
+    session.expireSession()
   })
 
   await session.ensureInit()

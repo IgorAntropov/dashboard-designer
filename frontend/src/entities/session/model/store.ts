@@ -54,7 +54,8 @@ export const useSessionStore = defineStore('session', () => {
     kicked.value = false
   }
 
-  const ACCESS_REFRESH_MS = 12 * 60 * 1000
+  const REFRESH_LEAD_MS = 60 * 1000
+  const FALLBACK_REFRESH_MS = 10 * 60 * 1000
   let refreshTimer: ReturnType<typeof setTimeout> | null = null
 
   function stopRefreshTimer(): void {
@@ -64,21 +65,50 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
+  function decodeExpiry(token: string): number | null {
+    const part = token.split('.')[1]
+    if (!part) {
+      return null
+    }
+    try {
+      const json = atob(part.replace(/-/g, '+').replace(/_/g, '/'))
+      const payload = JSON.parse(json) as { exp?: number }
+      return typeof payload.exp === 'number' ? payload.exp : null
+    } catch {
+      return null
+    }
+  }
+
   function scheduleRefresh(): void {
     if (!import.meta.client) {
       return
     }
     stopRefreshTimer()
+    const token = getAccessToken()
+    const exp = token ? decodeExpiry(token) : null
+    let delay = exp ? exp * 1000 - Date.now() - REFRESH_LEAD_MS : FALLBACK_REFRESH_MS
+    if (!Number.isFinite(delay)) {
+      delay = FALLBACK_REFRESH_MS
+    }
+    delay = Math.max(delay, 5000)
     refreshTimer = setTimeout(() => {
       void tick()
-    }, ACCESS_REFRESH_MS)
+    }, delay)
+  }
+
+  function expireSession(): void {
+    stopRefreshTimer()
+    logout()
+    if (import.meta.client && window.location.pathname !== '/login') {
+      window.location.href = '/login'
+    }
   }
 
   async function tick(): Promise<void> {
     if (await refresh()) {
       scheduleRefresh()
     } else {
-      stopRefreshTimer()
+      expireSession()
     }
   }
 
@@ -229,5 +259,6 @@ export const useSessionStore = defineStore('session', () => {
     setTier,
     resetKicked,
     logout,
+    expireSession,
   }
 })

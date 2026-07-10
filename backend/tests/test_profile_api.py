@@ -27,15 +27,20 @@ async def test_update_display_name(client: AsyncClient) -> None:
     assert response.json()["display_name"] == "New Name"
 
 
-async def test_update_subscription_tier(client: AsyncClient) -> None:
+async def test_subscription_upgrade_requires_payment(client: AsyncClient) -> None:
     headers = await _auth_headers(client)
 
-    response = await client.patch(
+    blocked = await client.patch(
         "/api/v1/me/subscription", json={"tier": "pro"}, headers=headers
     )
+    assert blocked.status_code == 403
+    assert blocked.json()["code"] == "tier_upgrade_paid"
 
-    assert response.status_code == 200
-    assert response.json()["subscription_tier"] == "pro"
+    allowed = await client.patch(
+        "/api/v1/me/subscription", json={"tier": "free"}, headers=headers
+    )
+    assert allowed.status_code == 200
+    assert allowed.json()["subscription_tier"] == "free"
 
 
 async def test_change_password_flow(client: AsyncClient) -> None:

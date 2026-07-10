@@ -9,8 +9,13 @@ from app.models.processed_webhook import ProcessedWebhook
 from app.models.subscription import Subscription
 from app.models.user import User
 from app.services.billing.base import WebhookEvent
+from app.services.billing.plans import PLAN_PRICES
 
 PERIOD_DAYS = 30
+
+_PRICE_TO_TIER = {
+    price: tier for tier, price in PLAN_PRICES.items() if price > 0
+}
 
 
 class BillingService:
@@ -36,14 +41,21 @@ class BillingService:
             await self._session.flush()
             return
 
-        if event.status == "success" and event.tier is not None:
-            await self._activate(user, provider, event)
+        if event.status == "success":
+            tier = self._tier_for_amount(event.amount)
+            if tier is not None:
+                await self._activate(user, provider, event, tier)
         elif event.status == "canceled":
             await self._downgrade(user)
         elif event.status == "failed":
             await self._mark_past_due(user)
 
         await self._session.flush()
+
+    def _tier_for_amount(self, amount: float | None) -> SubscriptionTier | None:
+        if amount is None:
+            return None
+        return _PRICE_TO_TIER.get(int(amount))
 
     async def _load_user(self, account_id: str) -> User | None:
         try:
@@ -58,10 +70,12 @@ class BillingService:
         )
 
     async def _activate(
-        self, user: User, provider: str, event: WebhookEvent
+        self,
+        user: User,
+        provider: str,
+        event: WebhookEvent,
+        tier: SubscriptionTier,
     ) -> None:
-        tier = event.tier
-        assert tier is not None
         user.subscription_tier = tier
         period_end = datetime.now(tz=UTC) + timedelta(days=PERIOD_DAYS)
 

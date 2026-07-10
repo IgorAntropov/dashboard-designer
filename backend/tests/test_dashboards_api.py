@@ -67,7 +67,9 @@ async def test_requires_authentication(client: AsyncClient) -> None:
     assert response.status_code == 401
 
 
-async def test_custom_theme_requires_paid_plan(client: AsyncClient) -> None:
+async def test_custom_theme_requires_paid_plan(
+    client: AsyncClient, activate_tier
+) -> None:
     owner = await _auth_headers(client, "theme@example.com")
     created = await client.post(
         "/api/v1/dashboards", json={"title": "Themed"}, headers=owner
@@ -83,9 +85,7 @@ async def test_custom_theme_requires_paid_plan(client: AsyncClient) -> None:
     assert blocked.status_code == 403
     assert blocked.json()["code"] == "custom_theme_paid"
 
-    await client.patch(
-        "/api/v1/me/subscription", json={"tier": "pro"}, headers=owner
-    )
+    await activate_tier(owner, 490)
     allowed = await client.patch(
         f"/api/v1/dashboards/{dashboard_id}",
         json={"theme_key": "custom", "theme_tokens": tokens},

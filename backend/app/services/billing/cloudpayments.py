@@ -53,10 +53,16 @@ class CloudPaymentsProvider:
             SubscriptionTier(tier_raw) if tier_raw in _TIER_VALUES else None
         )
 
+        try:
+            amount: float | None = float(data.get("Amount"))
+        except (TypeError, ValueError):
+            amount = None
+
         return WebhookEvent(
             event_id=str(data.get("TransactionId") or data.get("Id") or ""),
             account_id=str(data.get("AccountId") or ""),
             tier=tier,
+            amount=amount,
             status=self._map_status(str(data.get("Status") or "Completed")),
         )
 

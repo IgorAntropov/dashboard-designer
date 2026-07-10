@@ -182,7 +182,8 @@
     "current": "Attuale",
     "choose": "Scegli",
     "paymentProcessing": "Pagamento ricevuto, attivazione del piano…",
-    "paymentFailed": "Pagamento non riuscito."
+    "paymentFailed": "Pagamento non riuscito.",
+    "billingUnavailable": "I pagamenti non sono ancora disponibili."
   },
   "settings": {
     "title": "Impostazioni",

@@ -416,3 +416,15 @@ SSRF connection pinning & nonce CSP (hardening):
   The security middleware keeps nosniff/referrer/HSTS + X-Frame-Options; dev stays permissive (plugin
   is prod-only) so HMR is unaffected. Styles still use 'unsafe-inline' (Vue/Bootstrap) — a later step
   could move to hashed/nonce styles.
+
+Billing hardening (code-review Critical 1–4): self-serve tier escalation is closed. `PATCH
+/me/subscription` (`UserService.update_tier`) now only accepts `free` (self-downgrade/cancel); any paid
+tier → `AppError(403, tier_upgrade_paid)`. Paid tiers are activated ONLY by the verified webhook, and the
+activated tier is now derived from the paid `Amount` (`BillingService._tier_for_amount` inverse of
+`PLAN_PRICES`), NOT from client-controlled `Data/Metadata` — so tampered metadata (pay pro, claim
+unlimited) can't over-grant. `Settings` gained a production validator that refuses to boot when
+`jwt_secret` is weak/default, `cloudpayments_api_secret` is empty, or `cors_origins` contains `*` — so a
+default JWT secret (forgeable tokens) or empty PSP secret (forgeable webhooks) can't reach production.
+Frontend: the profile page dropped the dev tier-mock; unpaid tiers with no configured Public ID now show
+a "billing unavailable" toast instead of self-granting. Tests activate paid tiers through a signed
+webhook fixture (`activate_tier`). Full review + remaining findings in docs/code-review.md.

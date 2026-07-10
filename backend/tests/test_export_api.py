@@ -17,7 +17,7 @@ async def _auth_headers(client: AsyncClient) -> dict[str, str]:
     return {"Authorization": f"Bearer {login.json()['access_token']}"}
 
 
-async def test_export_requires_paid_tier(client: AsyncClient) -> None:
+async def test_export_requires_paid_tier(client: AsyncClient, activate_tier) -> None:
     headers = await _auth_headers(client)
     created = await client.post(
         "/api/v1/dashboards", json={"title": "Exportable"}, headers=headers
@@ -30,9 +30,7 @@ async def test_export_requires_paid_tier(client: AsyncClient) -> None:
     assert forbidden.status_code == 403
     assert forbidden.json()["code"] == "export_paid"
 
-    await client.patch(
-        "/api/v1/me/subscription", json={"tier": "pro"}, headers=headers
-    )
+    await activate_tier(headers, 490)
 
     exported = await client.post(
         f"/api/v1/dashboards/{dashboard_id}/export", headers=headers

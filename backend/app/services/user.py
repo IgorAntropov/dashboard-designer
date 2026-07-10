@@ -4,6 +4,10 @@ from app.models.enums import SubscriptionTier
 from app.models.user import User
 
 
+class TierUpgradeNotAllowedError(Exception):
+    pass
+
+
 class UserService:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
@@ -14,6 +18,8 @@ class UserService:
         return user
 
     async def update_tier(self, user: User, tier: SubscriptionTier) -> User:
+        if tier != SubscriptionTier.free:
+            raise TierUpgradeNotAllowedError
         user.subscription_tier = tier
         await self._session.flush()
         return user

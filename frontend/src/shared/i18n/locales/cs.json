@@ -182,7 +182,8 @@
     "current": "Aktuální",
     "choose": "Vybrat",
     "paymentProcessing": "Platba přijata, aktivujeme tarif…",
-    "paymentFailed": "Platba se nezdařila."
+    "paymentFailed": "Platba se nezdařila.",
+    "billingUnavailable": "Platby zatím nejsou dostupné."
   },
   "settings": {
     "title": "Nastavení",

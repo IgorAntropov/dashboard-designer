@@ -20,6 +20,7 @@ class WebhookEvent:
     event_id: str
     account_id: str
     tier: SubscriptionTier | None
+    amount: float | None
     status: str
 
 

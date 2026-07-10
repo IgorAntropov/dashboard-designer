@@ -1,8 +1,10 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_WEAK_JWT_SECRETS = {"", "change-me"}
 
 
 def read_version() -> str:
@@ -53,6 +55,18 @@ class Settings(BaseSettings):
         if isinstance(value, str):
             return [part.strip() for part in value.split(",") if part.strip()]
         return value
+
+    @model_validator(mode="after")
+    def _require_production_secrets(self) -> "Settings":
+        if self.environment != "production":
+            return self
+        if self.jwt_secret in _WEAK_JWT_SECRETS:
+            raise ValueError("jwt_secret must be set to a strong value in production")
+        if not self.cloudpayments_api_secret:
+            raise ValueError("cloudpayments_api_secret must be set in production")
+        if "*" in self.cors_origins:
+            raise ValueError("cors_origins must not be '*' in production")
+        return self
 
     @property
     def docs_enabled(self) -> bool:

@@ -32,7 +32,8 @@ async def test_webhook_activates_tier_and_is_idempotent(client: AsyncClient) -> 
             "TransactionId": "tx-1",
             "AccountId": user_id,
             "Status": "Completed",
-            "Data": {"tier": "pro"},
+            "Amount": 490,
+            "Data": {"tier": "unlimited"},
         }
     ).encode()
     signature = _sign(body)

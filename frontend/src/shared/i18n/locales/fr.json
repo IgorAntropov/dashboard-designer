@@ -182,7 +182,8 @@
     "current": "Actuel",
     "choose": "Choisir",
     "paymentProcessing": "Paiement reçu, activation de l'offre…",
-    "paymentFailed": "Le paiement a échoué."
+    "paymentFailed": "Le paiement a échoué.",
+    "billingUnavailable": "Les paiements ne sont pas encore disponibles."
   },
   "settings": {
     "title": "Paramètres",

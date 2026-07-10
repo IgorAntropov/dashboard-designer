@@ -61,3 +61,37 @@ async def client(app_with_db: FastAPI) -> AsyncGenerator[AsyncClient, None]:
     transport = ASGITransport(app=app_with_db)
     async with AsyncClient(transport=transport, base_url="http://test") as http_client:
         yield http_client
+
+
+@pytest_asyncio.fixture
+def activate_tier(client: AsyncClient):
+    import base64
+    import hashlib
+    import hmac
+    import json
+
+    async def _activate(headers: dict[str, str], amount: int) -> None:
+        me = await client.get("/api/v1/me", headers=headers)
+        user_id = me.json()["id"]
+        body = json.dumps(
+            {
+                "TransactionId": f"tx-{amount}-{user_id}",
+                "AccountId": user_id,
+                "Status": "Completed",
+                "Amount": amount,
+            }
+        ).encode()
+        signature = base64.b64encode(
+            hmac.new(b"", body, hashlib.sha256).digest()
+        ).decode()
+        response = await client.post(
+            "/api/v1/billing/webhook/cloudpayments",
+            content=body,
+            headers={
+                "Content-HMAC": signature,
+                "Content-Type": "application/json",
+            },
+        )
+        assert response.status_code == 200
+
+    return _activate

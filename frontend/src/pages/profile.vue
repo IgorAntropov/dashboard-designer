@@ -56,7 +56,7 @@ async function onChooseTier(tier: Tier): Promise<void> {
     return
   }
   if (!checkout.public_id) {
-    await session.setTier(tier)
+    pushToast(t('profile.billingUnavailable'), 'error')
     return
   }
 

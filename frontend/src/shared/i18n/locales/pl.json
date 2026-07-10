@@ -182,7 +182,8 @@
     "current": "Bieżący",
     "choose": "Wybierz",
     "paymentProcessing": "Płatność przyjęta, aktywujemy plan…",
-    "paymentFailed": "Płatność nieudana."
+    "paymentFailed": "Płatność nieudana.",
+    "billingUnavailable": "Płatności są jeszcze niedostępne."
   },
   "settings": {
     "title": "Ustawienia",

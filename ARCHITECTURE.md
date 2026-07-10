@@ -342,3 +342,13 @@ session store dropped its `panelka_refresh` JS cookie — `refresh()` posts with
 `/auth/logout`; the shared api client sends `credentials: 'include'` so the cookie flows on same-site
 cross-origin requests. The access token stays a short-lived bearer in a JS cookie + Authorization header.
 This resolves the earlier ARCHITECTURE FIXME about refresh-token XSS exposure.
+
+Async export queue (hardening): dashboard export is now job-based instead of a synchronous file
+response. `export_jobs` (id, dashboard_id, user_id, status pending|done|failed, result jsonb; model +
+migration 0010 + registered). `POST /dashboards/{id}/export` (still paid-gated) creates a job and runs
+`ExportService.process` to fill the result, returning `ExportJobOut {id, status, result}`; owners poll
+`GET /dashboards/exports/{job_id}` (ownership-checked). The frontend `exportDashboard` creates the job,
+polls until `done`, then downloads the JSON blob — same UX, queue-ready API. Processing is currently
+inline (export is just serializing the dashboard); the `ExportService.create`/`process` split is the
+executor boundary, so swapping in an arq/Celery worker (calling `process` off-request) is a drop-in with
+no API change. NOTE: migration 0010 needs a backend restart.

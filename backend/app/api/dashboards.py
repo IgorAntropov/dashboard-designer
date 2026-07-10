@@ -1,19 +1,19 @@
 import uuid
-from datetime import datetime, timezone
 
 from fastapi import APIRouter, status
-from fastapi.responses import JSONResponse
 
 from app.api.deps import CurrentUserDep, SessionDep
 from app.core.errors import AppError
 from app.models.dashboard import Dashboard
 from app.models.enums import SubscriptionTier
+from app.models.export_job import ExportJob
 from app.schemas.dashboard import (
     DashboardAnalytics,
     DashboardCreate,
     DashboardOut,
     DashboardUpdate,
     DayCount,
+    ExportJobOut,
 )
 from app.schemas.embed import PublishRequest, PublishResponse
 from app.services.analytics import AnalyticsService
@@ -23,6 +23,7 @@ from app.services.dashboard import (
     DashboardQuotaExceededError,
     DashboardService,
 )
+from app.services.export import ExportJobNotFoundError, ExportService
 
 router = APIRouter(prefix="/dashboards", tags=["dashboards"])
 
@@ -120,10 +121,10 @@ async def duplicate_dashboard(
     return dashboard
 
 
-@router.post("/{dashboard_id}/export")
+@router.post("/{dashboard_id}/export", response_model=ExportJobOut)
 async def export_dashboard(
     dashboard_id: uuid.UUID, current_user: CurrentUserDep, session: SessionDep
-) -> JSONResponse:
+) -> ExportJob:
     if current_user.subscription_tier == SubscriptionTier.free:
         raise AppError(
             status.HTTP_403_FORBIDDEN,
@@ -137,19 +138,21 @@ async def export_dashboard(
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
 
-    payload = {
-        "title": dashboard.title,
-        "slug": dashboard.slug,
-        "theme_key": dashboard.theme_key,
-        "layout": dashboard.layout,
-        "exported_at": datetime.now(tz=timezone.utc).isoformat(),
-    }
-    return JSONResponse(
-        payload,
-        headers={
-            "Content-Disposition": f'attachment; filename="{dashboard.slug}.json"'
-        },
-    )
+    export = ExportService(session)
+    job = await export.create(current_user, dashboard)
+    await export.process(job, dashboard)
+    await session.commit()
+    return job
+
+
+@router.get("/exports/{job_id}", response_model=ExportJobOut)
+async def export_status(
+    job_id: uuid.UUID, current_user: CurrentUserDep, session: SessionDep
+) -> ExportJob:
+    try:
+        return await ExportService(session).get_owned(current_user, job_id)
+    except ExportJobNotFoundError as exc:
+        raise _NOT_FOUND from exc
 
 
 @router.get("/{dashboard_id}/analytics", response_model=DashboardAnalytics)

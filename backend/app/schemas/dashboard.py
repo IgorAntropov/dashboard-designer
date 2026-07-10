@@ -35,6 +35,14 @@ class DashboardAnalytics(BaseModel):
     days: list[DayCount]
 
 
+class ExportJobOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: uuid.UUID
+    status: str
+    result: dict[str, Any] | None = None
+
+
 class DashboardOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

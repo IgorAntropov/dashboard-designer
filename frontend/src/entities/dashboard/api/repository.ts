@@ -66,13 +66,34 @@ export async function getAnalytics(
   return data ?? null
 }
 
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 export async function exportDashboard(
   id: string,
 ): Promise<Record<string, unknown> | null> {
   const { data } = await api.POST('/api/v1/dashboards/{dashboard_id}/export', {
     params: { path: { dashboard_id: id } },
   })
-  return (data as Record<string, unknown>) ?? null
+  if (!data) {
+    return null
+  }
+
+  let job = data
+  for (let attempt = 0; attempt < 20 && job.status === 'pending'; attempt += 1) {
+    await delay(300)
+    const { data: polled } = await api.GET(
+      '/api/v1/dashboards/exports/{job_id}',
+      { params: { path: { job_id: job.id } } },
+    )
+    if (!polled) {
+      return null
+    }
+    job = polled
+  }
+
+  return job.status === 'done' && job.result ? job.result : null
 }
 
 export async function deleteDashboard(id: string): Promise<void> {

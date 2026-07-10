@@ -120,6 +120,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/dashboards/exports/{job_id}': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get: operations['export_status_api_v1_dashboards_exports__job_id__get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/dashboards/{dashboard_id}/analytics': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['dashboard_analytics_api_v1_dashboards__dashboard_id__analytics_get']
@@ -235,6 +246,11 @@ export interface components {
     DashboardAnalytics: {
       total: number
       days: components['schemas']['DayCount'][]
+    }
+    ExportJobOut: {
+      id: string
+      status: string
+      result?: { [key: string]: unknown } | null
     }
   }
   responses: never
@@ -408,7 +424,22 @@ export interface operations {
     responses: {
       200: {
         headers: { [name: string]: unknown }
-        content: { 'application/json': { [key: string]: unknown } }
+        content: { 'application/json': components['schemas']['ExportJobOut'] }
+      }
+    }
+  }
+  export_status_api_v1_dashboards_exports__job_id__get: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { job_id: string }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['ExportJobOut'] }
       }
     }
   }

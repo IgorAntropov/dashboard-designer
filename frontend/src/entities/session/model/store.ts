@@ -2,17 +2,14 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import type { components } from '@shared/api'
-import { api, setAccessToken } from '@shared/api'
+import { api, getAccessToken, setAccessToken } from '@shared/api'
 import { config } from '@shared/config'
 
 export type SessionUser = components['schemas']['UserOut']
 
-export const useSessionStore = defineStore('session', () => {
-  const accessCookie = useCookie<string | null>('panelka_access', {
-    maxAge: 60 * 60 * 24 * 30,
-    sameSite: 'lax',
-  })
+const WS_SUBPROTOCOL = 'panelka-ws'
 
+export const useSessionStore = defineStore('session', () => {
   const user = ref<SessionUser | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
   const kicked = ref(false)
@@ -29,14 +26,16 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function connectWs(): void {
-    if (!import.meta.client || !accessCookie.value) {
+    const token = getAccessToken()
+    if (!import.meta.client || !token) {
       return
     }
     disconnectWs()
     const wsOrigin = config.apiOrigin.replace(/^http/, 'ws')
-    const ws = new WebSocket(
-      `${wsOrigin}/api/v1/ws/session?token=${accessCookie.value}`,
-    )
+    const ws = new WebSocket(`${wsOrigin}/api/v1/ws/session`, [
+      WS_SUBPROTOCOL,
+      token,
+    ])
     ws.onmessage = (event) => {
       if (String(event.data).includes('"kicked"')) {
         kicked.value = true
@@ -80,7 +79,6 @@ export const useSessionStore = defineStore('session', () => {
 
   function applyAccess(token: string | null): void {
     setAccessToken(token)
-    accessCookie.value = token
   }
 
   async function fetchMe(): Promise<boolean> {
@@ -103,14 +101,6 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   async function init(): Promise<void> {
-    if (accessCookie.value) {
-      setAccessToken(accessCookie.value)
-      if (await fetchMe()) {
-        scheduleRefresh()
-        connectWs()
-        return
-      }
-    }
     if (await refresh()) {
       await fetchMe()
       scheduleRefresh()

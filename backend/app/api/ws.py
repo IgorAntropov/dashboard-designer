@@ -32,9 +32,26 @@ class SessionConnectionManager:
 
 manager = SessionConnectionManager()
 
+WS_SUBPROTOCOL = "panelka-ws"
+
+
+def _token_from_subprotocols(websocket: WebSocket) -> str | None:
+    header = websocket.headers.get("sec-websocket-protocol")
+    if not header:
+        return None
+    offered = [item.strip() for item in header.split(",") if item.strip()]
+    for item in offered:
+        if item != WS_SUBPROTOCOL:
+            return item
+    return None
+
 
 @router.websocket("/ws/session")
-async def session_ws(websocket: WebSocket, token: str) -> None:
+async def session_ws(websocket: WebSocket) -> None:
+    token = _token_from_subprotocols(websocket)
+    if token is None:
+        await websocket.close(code=1008)
+        return
     try:
         payload = decode_token(token, "access")
     except ValueError:
@@ -44,7 +61,7 @@ async def session_ws(websocket: WebSocket, token: str) -> None:
     user_id = str(payload["sub"])
     session_id = str(uuid.uuid4())
 
-    await websocket.accept()
+    await websocket.accept(subprotocol=WS_SUBPROTOCOL)
     await manager.connect(user_id, session_id, websocket)
 
     try:

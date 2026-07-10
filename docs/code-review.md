@@ -97,12 +97,14 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
     `onMessage` теперь принимает кадры только если `event.source === window.parent` и `event.origin`
     входит в `allowed_domains` (пустой allowlist → любой, как и `frame-ancestors *`).
 
-13. **Access-токен в JS-cookie без `secure`** (`entities/session/model/store.ts`): не httpOnly, без
-    `secure` → читается XSS-ом и уходит по http. **Фикс:** минимум `secure:true`; лучше держать в
-    памяти.
+13. ✅ **ИСПРАВЛЕНО. Access-токен в JS-cookie** (`entities/session/model/store.ts`): cookie
+    `panelka_access` удалён — access-токен живёт только в памяти api-клиента, при перезагрузке
+    восстанавливается из httpOnly refresh-cookie (`init()` → `refresh()`). XSS-читаемого токена больше
+    нет.
 
-14. **WS-токен в query-строке** (`store.ts`, `app/api/ws.py`): JWT в URL логируется прокси/историей.
-    **Фикс:** авторизовать сокет по cookie/одноразовому тикету.
+14. ✅ **ИСПРАВЛЕНО. WS-токен в query-строке** (`store.ts`, `app/api/ws.py`): session-сокет больше не
+    передаёт JWT в URL — токен уходит в `Sec-WebSocket-Protocol` (второй аргумент `WebSocket`), сервер
+    достаёт его из заголовка и подтверждает подпротокол `panelka-ws`. В URL/логах токена нет.
 
 15. ✅ **ИСПРАВЛЕНО. iframe-страница игнорирует кастомные темы** (`pages/embed/[token].vue`): страница
     теперь рендерится через `DashboardEngine`, который применяет `resolveTheme(theme_key, theme_tokens)`

@@ -131,7 +131,7 @@ function onRemove(id: string): void {
           icon="trash"
           icon-only
           aria-label="delete"
-          @click="onRemove(widget.id)"
+          @click.stop.prevent="onRemove(widget.id)"
         />
         <WidgetView :widget="widget" :theme="theme" class="pk-widget__body" />
       </div>

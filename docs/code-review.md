@@ -39,7 +39,7 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟠 High
+## 🟠 High — ✅ 5, 8, 9 исправлено (осталось 6, 7, 10, 11)
 
 5. **Доменный allowlist embed не проверяется на сервере.**
    `app/api/public.py`: `get_embed_config`, `embed_pull_data`, WS `embed_live` отдают всё любому с

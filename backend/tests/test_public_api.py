@@ -44,6 +44,48 @@ async def test_public_config_unknown_token_returns_404(client: AsyncClient) -> N
     assert response.status_code == 404
 
 
+async def test_public_config_enforces_domain_allowlist(client: AsyncClient) -> None:
+    await client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": "domain@example.com",
+            "password": "password123",
+            "display_name": "Domain",
+        },
+    )
+    login = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "domain@example.com", "password": "password123"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['access_token']}"}
+    created = await client.post(
+        "/api/v1/dashboards", json={"title": "Gated"}, headers=headers
+    )
+    dashboard_id = created.json()["id"]
+    published = await client.post(
+        f"/api/v1/dashboards/{dashboard_id}/publish",
+        json={"allowed_domains": ["customer.com"]},
+        headers=headers,
+    )
+    token = published.json()["token"]
+
+    blocked = await client.get(
+        f"/api/v1/public/embed/{token}",
+        headers={"Origin": "https://evil.com"},
+    )
+    assert blocked.status_code == 403
+    assert blocked.json()["code"] == "origin_not_allowed"
+
+    allowed = await client.get(
+        f"/api/v1/public/embed/{token}",
+        headers={"Origin": "https://customer.com"},
+    )
+    assert allowed.status_code == 200
+
+    no_origin = await client.get(f"/api/v1/public/embed/{token}")
+    assert no_origin.status_code == 200
+
+
 async def test_live_ingest_requires_matching_key(client: AsyncClient) -> None:
     await client.post(
         "/api/v1/auth/register",

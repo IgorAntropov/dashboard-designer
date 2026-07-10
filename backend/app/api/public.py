@@ -7,6 +7,7 @@ from fastapi import (
     APIRouter,
     Header,
     HTTPException,
+    Request,
     WebSocket,
     WebSocketDisconnect,
     status,
@@ -16,6 +17,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.deps import SessionDep
 from app.core.config import get_settings
 from app.core.errors import AppError
+from app.core.origins import origin_allowed
 from app.core.rate_limit import rate_limit_dep
 from app.core.redis import get_redis
 from app.core.ssrf import safe_fetch
@@ -35,6 +37,18 @@ _PUBLIC_RL = rate_limit_dep(
 _INGEST_RL = rate_limit_dep(
     "ingest", _settings.rate_limit_ingest_per_min, _settings.rate_limit_window_sec
 )
+
+
+def _require_origin(request: Request, config: PublishedConfig) -> None:
+    if not origin_allowed(
+        request.headers.get("origin"),
+        request.headers.get("referer"),
+        config.allowed_domains,
+        _settings.cors_origins,
+    ):
+        raise AppError(
+            status.HTTP_403_FORBIDDEN, "origin_not_allowed", "Origin not allowed"
+        )
 
 
 class LiveChannelManager:
@@ -100,7 +114,9 @@ live_manager = LiveChannelManager()
     response_model=PublishedConfig,
     dependencies=[_PUBLIC_RL],
 )
-async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
+async def get_embed_config(
+    token: str, request: Request, session: SessionDep
+) -> PublishedConfig:
     redis = get_redis()
     cache_key = f"embed:{token}"
 
@@ -110,6 +126,7 @@ async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
         cached = None
     if cached:
         config = PublishedConfig.model_validate_json(cached)
+        _require_origin(request, config)
         await _record_load(session, config.dashboard_id)
         return config
 
@@ -118,6 +135,7 @@ async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found"
         )
+    _require_origin(request, config)
 
     try:
         await redis.set(cache_key, config.model_dump_json(), ex=CACHE_TTL_SECONDS)
@@ -136,12 +154,15 @@ async def _record_load(session: AsyncSession, dashboard_id: str) -> None:
 
 
 @router.get("/embed/{token}/data", dependencies=[_PUBLIC_RL])
-async def embed_pull_data(token: str, session: SessionDep) -> Any:
+async def embed_pull_data(
+    token: str, request: Request, session: SessionDep
+) -> Any:
     config = await EmbedService(session).get_config(token)
     if config is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found"
         )
+    _require_origin(request, config)
     source = config.data_source or {}
     if source.get("mode") != "pull" or not isinstance(source.get("url"), str):
         raise AppError(
@@ -164,6 +185,14 @@ async def embed_live(
 ) -> None:
     config = await EmbedService(session).get_config(token)
     if config is None:
+        await websocket.close(code=1008)
+        return
+    if not origin_allowed(
+        websocket.headers.get("origin"),
+        websocket.headers.get("referer"),
+        config.allowed_domains,
+        _settings.cors_origins,
+    ):
         await websocket.close(code=1008)
         return
 

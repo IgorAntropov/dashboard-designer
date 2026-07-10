@@ -53,10 +53,26 @@ export const api = createClient<paths>({
   credentials: 'include',
 })
 
+const retryClones = new WeakMap<Request, Request>()
+
+function buildRetry(request: Request): Request | null {
+  if (request.method === 'GET' || request.method === 'DELETE') {
+    return new Request(request.url, {
+      method: request.method,
+      headers: new Headers(request.headers),
+      credentials: request.credentials,
+    })
+  }
+  return retryClones.get(request) ?? null
+}
+
 api.use({
   onRequest({ request }) {
     if (accessToken) {
       request.headers.set('Authorization', `Bearer ${accessToken}`)
+    }
+    if (request.method !== 'GET' && request.method !== 'HEAD') {
+      retryClones.set(request, request.clone())
     }
     return request
   },
@@ -81,17 +97,12 @@ api.use({
       return response
     }
 
-    if (request.method === 'GET' || request.method === 'DELETE') {
-      const retry = new Request(request.url, {
-        method: request.method,
-        headers: new Headers(request.headers),
-        credentials: request.credentials,
-      })
-      retry.headers.set('Authorization', `Bearer ${accessToken}`)
-      retry.headers.set('x-pk-retry', '1')
-      return fetch(retry)
+    const retry = buildRetry(request)
+    if (!retry) {
+      return response
     }
-
-    return response
+    retry.headers.set('Authorization', `Bearer ${accessToken}`)
+    retry.headers.set('x-pk-retry', '1')
+    return fetch(retry)
   },
 })

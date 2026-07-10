@@ -428,3 +428,15 @@ default JWT secret (forgeable tokens) or empty PSP secret (forgeable webhooks) c
 Frontend: the profile page dropped the dev tier-mock; unpaid tiers with no configured Public ID now show
 a "billing unavailable" toast instead of self-granting. Tests activate paid tiers through a signed
 webhook fixture (`activate_tier`). Full review + remaining findings in docs/code-review.md.
+
+Review High 5/8/9: (5) embed domain allowlist is now enforced server-side. `PublishedConfig` exposes
+`allowed_domains`; `app/core/origins.py::origin_allowed` checks the request Origin/Referer against the
+allowlist ∪ our own `cors_origins` (empty allowlist or no-Origin/non-browser → allowed). Applied to
+`GET /public/embed/{token}` (both cache paths), the pull proxy, and the live WS (403 /
+close(1008) → `origin_not_allowed`). Unit-tested (`test_origins.py`) + integration (`test_public_api`).
+(8) Rate-limit keys on the real client IP: `rate_limit.client_ip` reads the first `X-Forwarded-For` hop
+only when `trust_proxy_headers` is enabled (prod behind a trusted proxy), else `request.client.host`
+(unspoofable). (9) The shared api client now retries POST/PATCH after a 401+refresh: `onRequest` stashes
+a `request.clone()` in a WeakMap so the interceptor can replay the body-carrying mutation with the new
+token (guarded by `x-pk-retry`), so mutations no longer silently fail on token expiry; the editor's
+manual re-PATCH workaround was removed.

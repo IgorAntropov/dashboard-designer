@@ -32,10 +32,7 @@ async function save(): Promise<void> {
     theme_tokens:
       canvasStore.themeKey === 'custom' ? canvasStore.customTheme : null,
   }
-  let result = await updateDashboard(dashboardId, patch)
-  if (!result.data && result.status === 401) {
-    result = await updateDashboard(dashboardId, patch)
-  }
+  const result = await updateDashboard(dashboardId, patch)
   saveState.value = result.data ? 'saved' : 'idle'
 }
 

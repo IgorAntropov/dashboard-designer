@@ -76,7 +76,6 @@ export const useCanvasStore = defineStore('canvas', () => {
       binding: definition ? clone(definition.defaultBinding) : {},
     }
     widgets.value.push(widget)
-    selectedId.value = widget.id
     return widget
   }
 

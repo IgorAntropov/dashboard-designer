@@ -255,5 +255,12 @@
     "table": "Tabela",
     "section": "Sekcja",
     "text-block": "Tekst"
+  },
+  "sample": {
+    "mon": "Pon",
+    "tue": "Wt",
+    "wed": "Śr",
+    "thu": "Czw",
+    "fri": "Pt"
   }
 }

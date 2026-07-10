@@ -255,5 +255,12 @@
     "table": "Tabella",
     "section": "Sezione",
     "text-block": "Testo"
+  },
+  "sample": {
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mer",
+    "thu": "Gio",
+    "fri": "Ven"
   }
 }

@@ -5,6 +5,7 @@ import type { WidgetTypeDef } from '@entities/widget'
 import { WIDGET_CATEGORIES, WIDGET_TYPES, WidgetGlyph } from '@entities/widget'
 import { useCanvasStore } from '@widgets/canvas'
 
+const { t } = useI18n()
 const store = useCanvasStore()
 
 const groups = computed(() =>
@@ -28,7 +29,10 @@ onMounted(async () => {
 })
 
 function onAdd(definition: WidgetTypeDef): void {
-  store.add(definition.key, definition.defaultSize)
+  const widget = store.add(definition.key, definition.defaultSize)
+  if (typeof definition.defaultConfig.title === 'string') {
+    store.updateConfig(widget.id, 'title', t(`widget.${definition.key}`))
+  }
 }
 </script>
 
@@ -74,7 +78,7 @@ function onAdd(definition: WidgetTypeDef): void {
           :gs-w="definition.defaultSize.w"
           :gs-h="definition.defaultSize.h"
           :data-widget-type="definition.key"
-          :title="$t(`widget.${definition.key}`)"
+          v-tooltip:left="$t(`widget.${definition.key}`)"
           :aria-label="$t(`widget.${definition.key}`)"
           @click="onAdd(definition)"
         >

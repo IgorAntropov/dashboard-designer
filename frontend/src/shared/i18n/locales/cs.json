@@ -255,5 +255,12 @@
     "table": "Tabulka",
     "section": "Sekce",
     "text-block": "Text"
+  },
+  "sample": {
+    "mon": "Po",
+    "tue": "Út",
+    "wed": "St",
+    "thu": "Čt",
+    "fri": "Pá"
   }
 }

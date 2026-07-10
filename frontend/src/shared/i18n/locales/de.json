@@ -255,5 +255,12 @@
     "table": "Tabelle",
     "section": "Abschnitt",
     "text-block": "Text"
+  },
+  "sample": {
+    "mon": "Mo",
+    "tue": "Di",
+    "wed": "Mi",
+    "thu": "Do",
+    "fri": "Fr"
   }
 }

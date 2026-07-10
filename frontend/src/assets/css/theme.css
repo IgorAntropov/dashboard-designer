@@ -826,6 +826,32 @@ body {
   height: 100%;
 }
 
+.pk-tip {
+  position: fixed;
+  z-index: 3000;
+  max-width: 240px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  color: var(--pk-text);
+  background-color: var(--pk-surface);
+  border: 1px solid var(--pk-border);
+  border-radius: 0.45rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(2px);
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.pk-tip--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .palette {
   display: flex;
   flex-direction: column;

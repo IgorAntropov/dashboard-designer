@@ -1,4 +1,18 @@
-export function sampleDataFor(type: string): Array<Record<string, unknown>> {
+type Translator = (key: string) => string
+
+const WEEKDAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri'] as const
+const WEEKDAY_FALLBACK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+
+function weekdays(t?: Translator): string[] {
+  return WEEKDAY_KEYS.map((key, index) =>
+    t ? t(`sample.${key}`) : WEEKDAY_FALLBACK[index],
+  )
+}
+
+export function sampleDataFor(
+  type: string,
+  t?: Translator,
+): Array<Record<string, unknown>> {
   if (type === 'stat-tile') {
     return [{ value: 1280, delta: 11.4 }]
   }
@@ -49,11 +63,11 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
   if (type === 'text-block' || type === 'section') {
     return []
   }
-  return [
-    { label: 'Mon', value: 12, value2: 8 },
-    { label: 'Tue', value: 19, value2: 14 },
-    { label: 'Wed', value: 7, value2: 11 },
-    { label: 'Thu', value: 15, value2: 9 },
-    { label: 'Fri', value: 22, value2: 17 },
-  ]
+  const values = [12, 19, 7, 15, 22]
+  const values2 = [8, 14, 11, 9, 17]
+  return weekdays(t).map((label, index) => ({
+    label,
+    value: values[index],
+    value2: values2[index],
+  }))
 }

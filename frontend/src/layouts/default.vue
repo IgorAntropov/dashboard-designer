@@ -28,7 +28,7 @@ function toggle(): void {
         <NuxtLink
           to="/dashboards"
           class="app-nav__link"
-          :title="$t('nav.dashboards')"
+          v-tooltip:right="compact ? $t('nav.dashboards') : ''"
         >
           <svg
             class="app-nav__icon"
@@ -47,7 +47,11 @@ function toggle(): void {
           <span class="app-nav__label">{{ $t('nav.dashboards') }}</span>
         </NuxtLink>
 
-        <NuxtLink to="/profile" class="app-nav__link" :title="$t('nav.profile')">
+        <NuxtLink
+          to="/profile"
+          class="app-nav__link"
+          v-tooltip:right="compact ? $t('nav.profile') : ''"
+        >
           <svg
             class="app-nav__icon"
             viewBox="0 0 24 24"
@@ -63,7 +67,11 @@ function toggle(): void {
           <span class="app-nav__label">{{ $t('nav.profile') }}</span>
         </NuxtLink>
 
-        <NuxtLink to="/settings" class="app-nav__link" :title="$t('nav.settings')">
+        <NuxtLink
+          to="/settings"
+          class="app-nav__link"
+          v-tooltip:right="compact ? $t('nav.settings') : ''"
+        >
           <svg
             class="app-nav__icon"
             viewBox="0 0 24 24"

@@ -2,12 +2,20 @@
 import type { GridStack, GridStackNode } from 'gridstack'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-import { WidgetView } from '@entities/widget'
+import { WidgetView, widgetTypeByKey } from '@entities/widget'
 import { AppButton } from '@shared/ui'
 
 import { useCanvasStore } from '../model/store'
 
+const { t } = useI18n()
 const store = useCanvasStore()
+
+function applyLocalizedTitle(id: string, type: string): void {
+  const definition = widgetTypeByKey(type)
+  if (definition && typeof definition.defaultConfig.title === 'string') {
+    store.updateConfig(id, 'title', t(`widget.${type}`))
+  }
+}
 const theme = computed(() => store.effectiveTheme)
 const themeVars = computed(() => ({
   '--pk-bg': theme.value.colorBg,
@@ -46,7 +54,14 @@ onMounted(async () => {
   }
   const { GridStack } = await import('gridstack')
   grid = GridStack.init(
-    { column: 12, cellHeight: 80, margin: 8, float: true, acceptWidgets: true },
+    {
+      column: 12,
+      cellHeight: 80,
+      margin: 8,
+      float: true,
+      acceptWidgets: true,
+      resizable: { handles: 'n, ne, e, se, s, sw, w, nw' },
+    },
     gridElement.value,
   )
 
@@ -72,7 +87,8 @@ onMounted(async () => {
     const box = { x: node.x ?? 0, y: node.y ?? 0, w: node.w ?? 4, h: node.h ?? 3 }
     grid.removeWidget(node.el, true)
     if (type) {
-      store.addAt(type, box)
+      const widget = store.addAt(type, box)
+      applyLocalizedTitle(widget.id, type)
       void nextTick().then(syncWidgets)
     }
   })

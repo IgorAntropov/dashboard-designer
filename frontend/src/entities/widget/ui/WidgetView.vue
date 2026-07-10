@@ -9,6 +9,7 @@ import { sampleDataFor } from '../model/sample'
 
 const props = defineProps<{ widget: WidgetInstance; theme: RenderTheme }>()
 
+const { t } = useI18n()
 const host = ref<HTMLElement | null>(null)
 let handle: WidgetHandle | null = null
 let observer: ResizeObserver | null = null
@@ -19,7 +20,7 @@ function buildInput(): RenderInput {
     type: props.widget.type,
     config: props.widget.config,
     binding: props.widget.binding,
-    data: sampleDataFor(props.widget.type),
+    data: sampleDataFor(props.widget.type, t),
     theme: props.theme,
   }
 }

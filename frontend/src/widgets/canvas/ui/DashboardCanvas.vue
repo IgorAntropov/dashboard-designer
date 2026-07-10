@@ -78,6 +78,29 @@ onMounted(async () => {
     }
   })
 
+  function lockOthers(activeId: string | null, locked: boolean): void {
+    if (!grid) {
+      return
+    }
+    for (const widget of store.widgets) {
+      if (widget.id === activeId) {
+        continue
+      }
+      const element = elementFor(widget.id)
+      if (element) {
+        grid.update(element, { locked, noMove: locked })
+      }
+    }
+  }
+
+  grid.on('dragstart', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), true)
+  })
+
+  grid.on('dragstop', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), false)
+  })
+
   grid.on('dropped', (_event: Event, _previous: GridStackNode, node: GridStackNode) => {
     if (!grid || !node.el) {
       return

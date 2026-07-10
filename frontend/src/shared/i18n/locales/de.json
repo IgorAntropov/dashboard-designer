@@ -218,7 +218,8 @@
     "redo": "Wiederholen",
     "toDashboards": "Zu Dashboards",
     "widgetSettings": "Widget-Einstellungen",
-    "closeConfirm": "Einstellungen schließen? Änderungen sind bereits übernommen."
+    "closeConfirm": "Einstellungen schließen? Änderungen sind bereits übernommen.",
+    "arrange": "Anordnen"
   },
   "theme": {
     "system": "System",

@@ -218,7 +218,8 @@
     "redo": "Redo",
     "toDashboards": "To dashboards",
     "widgetSettings": "Widget settings",
-    "closeConfirm": "Close settings? Changes are already applied."
+    "closeConfirm": "Close settings? Changes are already applied.",
+    "arrange": "Arrange"
   },
   "theme": {
     "system": "System",

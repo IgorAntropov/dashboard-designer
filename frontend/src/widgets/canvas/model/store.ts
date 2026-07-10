@@ -111,6 +111,12 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
+  const compactSignal = ref(0)
+
+  function requestCompact(): void {
+    compactSignal.value += 1
+  }
+
   function select(id: string | null): void {
     selectedId.value = id
   }
@@ -274,5 +280,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     remove,
     removeLast,
     lastAddedId,
+    compactSignal,
+    requestCompact,
   }
 })

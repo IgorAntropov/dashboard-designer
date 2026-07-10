@@ -37,7 +37,6 @@ function syncWidgets(): void {
     return
   }
   syncing = true
-  grid.batchUpdate()
   for (const widget of store.widgets) {
     if (registered.has(widget.id)) {
       continue
@@ -48,7 +47,6 @@ function syncWidgets(): void {
       registered.add(widget.id)
     }
   }
-  grid.commit()
   syncing = false
 }
 
@@ -133,6 +131,13 @@ onMounted(async () => {
 
   syncWidgets()
 })
+
+watch(
+  () => store.compactSignal,
+  () => {
+    grid?.compact()
+  },
+)
 
 watch(
   () => store.widgets.map((item) => item.id).join(','),

@@ -103,6 +103,14 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
               @click="canvasStore.redo()"
             />
           </div>
+
+          <AppButton
+            variant="secondary"
+            size="sm"
+            @click="canvasStore.requestCompact()"
+          >
+            {{ $t('editor.arrange') }}
+          </AppButton>
         </ClientOnly>
       </div>
 

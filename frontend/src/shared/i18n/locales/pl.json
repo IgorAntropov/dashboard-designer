@@ -218,7 +218,8 @@
     "redo": "Ponów",
     "toDashboards": "Do dashboardów",
     "widgetSettings": "Ustawienia widżetu",
-    "closeConfirm": "Zamknąć ustawienia? Zmiany zostały już zastosowane."
+    "closeConfirm": "Zamknąć ustawienia? Zmiany zostały już zastosowane.",
+    "arrange": "Uporządkuj"
   },
   "theme": {
     "system": "Systemowy",

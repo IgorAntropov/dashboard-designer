@@ -218,7 +218,8 @@
     "redo": "Znovu",
     "toDashboards": "Na dashboardy",
     "widgetSettings": "Nastavení widgetu",
-    "closeConfirm": "Zavřít nastavení? Změny už byly použity."
+    "closeConfirm": "Zavřít nastavení? Změny už byly použity.",
+    "arrange": "Uspořádat"
   },
   "theme": {
     "system": "Systém",

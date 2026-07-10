@@ -218,7 +218,8 @@
     "redo": "Rétablir",
     "toDashboards": "Aux tableaux de bord",
     "widgetSettings": "Réglages du widget",
-    "closeConfirm": "Fermer les réglages ? Les modifications sont déjà appliquées."
+    "closeConfirm": "Fermer les réglages ? Les modifications sont déjà appliquées.",
+    "arrange": "Réorganiser"
   },
   "theme": {
     "system": "Système",

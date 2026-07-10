@@ -218,7 +218,8 @@
     "redo": "Ripeti",
     "toDashboards": "Ai dashboard",
     "widgetSettings": "Impostazioni widget",
-    "closeConfirm": "Chiudere le impostazioni? Le modifiche sono già applicate."
+    "closeConfirm": "Chiudere le impostazioni? Le modifiche sono già applicate.",
+    "arrange": "Riordina"
   },
   "theme": {
     "system": "Sistema",

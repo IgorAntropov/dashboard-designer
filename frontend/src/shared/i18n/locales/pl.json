@@ -224,7 +224,12 @@
     "system": "Systemowy",
     "light": "Jasny",
     "dark": "Ciemny",
-    "custom": "Własny"
+    "custom": "Własny",
+    "light-minimal": "Jasny minimal",
+    "dark-pro": "Ciemny pro",
+    "neon": "Neon",
+    "pastel": "Pastel",
+    "corporate-blue": "Korporacyjny niebieski"
   },
   "themeEditor": {
     "title": "Własny motyw",

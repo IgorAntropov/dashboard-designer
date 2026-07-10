@@ -224,7 +224,12 @@
     "system": "Sistema",
     "light": "Chiaro",
     "dark": "Scuro",
-    "custom": "Personale"
+    "custom": "Personale",
+    "light-minimal": "Chiaro minimal",
+    "dark-pro": "Scuro pro",
+    "neon": "Neon",
+    "pastel": "Pastello",
+    "corporate-blue": "Blu aziendale"
   },
   "themeEditor": {
     "title": "Tema personalizzato",

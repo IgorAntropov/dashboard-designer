@@ -224,7 +224,12 @@
     "system": "System",
     "light": "Hell",
     "dark": "Dunkel",
-    "custom": "Eigene"
+    "custom": "Eigene",
+    "light-minimal": "Hell minimal",
+    "dark-pro": "Dunkel pro",
+    "neon": "Neon",
+    "pastel": "Pastell",
+    "corporate-blue": "Corporate blau"
   },
   "themeEditor": {
     "title": "Eigenes Theme",

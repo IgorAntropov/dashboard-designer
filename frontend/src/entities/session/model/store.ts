@@ -91,13 +91,24 @@ export const useSessionStore = defineStore('session', () => {
     return true
   }
 
-  async function refresh(): Promise<boolean> {
+  let refreshInFlight: Promise<boolean> | null = null
+
+  async function runRefresh(): Promise<boolean> {
     const { data, error } = await api.POST('/api/v1/auth/refresh')
     if (error || !data) {
       return false
     }
     applyAccess(data.access_token)
     return true
+  }
+
+  async function refresh(): Promise<boolean> {
+    if (!refreshInFlight) {
+      refreshInFlight = runRefresh().finally(() => {
+        refreshInFlight = null
+      })
+    }
+    return refreshInFlight
   }
 
   async function init(): Promise<void> {

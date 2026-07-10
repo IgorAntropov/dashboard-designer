@@ -786,6 +786,16 @@ body {
     color 0.2s ease;
 }
 
+.pk-canvas .ui-resizable-handle {
+  background-image: none;
+  background-color: transparent;
+}
+
+.pk-canvas .ui-resizable-handle::before,
+.pk-canvas .ui-resizable-handle::after {
+  display: none;
+}
+
 .pk-widget {
   position: relative;
   height: 100%;

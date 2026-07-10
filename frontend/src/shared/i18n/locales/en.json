@@ -224,7 +224,12 @@
     "system": "System",
     "light": "Light",
     "dark": "Dark",
-    "custom": "Custom"
+    "custom": "Custom",
+    "light-minimal": "Light minimal",
+    "dark-pro": "Dark pro",
+    "neon": "Neon",
+    "pastel": "Pastel",
+    "corporate-blue": "Corporate blue"
   },
   "themeEditor": {
     "title": "Custom theme",

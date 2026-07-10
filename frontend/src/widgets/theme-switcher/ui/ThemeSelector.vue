@@ -20,10 +20,6 @@ const showCustomOption = computed(
 )
 const editorOpen = ref(false)
 
-function pretty(key: string): string {
-  return key.replace(/-/g, ' ')
-}
-
 function onChange(event: Event): void {
   const value = (event.target as HTMLSelectElement).value
   if (value === 'custom' && !store.customTheme) {
@@ -48,7 +44,9 @@ function onChange(event: Event): void {
       :aria-label="$t('editor.theme')"
       @change="onChange"
     >
-      <option v-for="key in keys" :key="key" :value="key">{{ pretty(key) }}</option>
+      <option v-for="key in keys" :key="key" :value="key">
+        {{ $t(`theme.${key}`) }}
+      </option>
       <option v-if="showCustomOption" value="custom">
         {{ $t('theme.custom') }}
       </option>

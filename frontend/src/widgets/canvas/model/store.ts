@@ -58,8 +58,32 @@ export const useCanvasStore = defineStore('canvas', () => {
     widgets.value = next
   }
 
+  const GRID_COLUMNS = 12
+
+  function overlaps(
+    a: { x: number; y: number; w: number; h: number },
+    b: WidgetInstance,
+  ): boolean {
+    return (
+      a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
+    )
+  }
+
+  function nextPosition(w: number, h: number): { x: number; y: number } {
+    const width = Math.min(w, GRID_COLUMNS)
+    for (let y = 0; ; y += 1) {
+      for (let x = 0; x + width <= GRID_COLUMNS; x += 1) {
+        const candidate = { x, y, w: width, h }
+        if (!widgets.value.some((item) => overlaps(candidate, item))) {
+          return { x, y }
+        }
+      }
+    }
+  }
+
   function add(type: string, size: { w: number; h: number }): WidgetInstance {
-    return addAt(type, { x: 0, y: 0, w: size.w, h: size.h })
+    const position = nextPosition(size.w, size.h)
+    return addAt(type, { x: position.x, y: position.y, w: size.w, h: size.h })
   }
 
   function addAt(type: string, box: WidgetPosition): WidgetInstance {

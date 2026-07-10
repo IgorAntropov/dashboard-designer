@@ -80,22 +80,22 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
         <ClientOnly>
           <div class="editor-toolbar__history">
             <AppButton
+              v-tooltip:bottom="$t('editor.undo')"
               variant="ghost"
               size="sm"
               icon="undo"
               icon-only
               :aria-label="$t('editor.undo')"
-              :title="$t('editor.undo')"
               :disabled="!canvasStore.canUndo"
               @click="canvasStore.undo()"
             />
             <AppButton
+              v-tooltip:bottom="$t('editor.redo')"
               variant="ghost"
               size="sm"
               icon="redo"
               icon-only
               :aria-label="$t('editor.redo')"
-              :title="$t('editor.redo')"
               :disabled="!canvasStore.canRedo"
               @click="canvasStore.redo()"
             />
@@ -115,11 +115,11 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
             {{ saveState === 'saving' ? $t('editor.saving') : $t('editor.saved') }}
           </span>
           <AppButton
+            v-tooltip:bottom="$t('editor.save')"
             size="sm"
             icon="save"
             icon-only
             :aria-label="$t('editor.save')"
-            :title="$t('editor.save')"
             @click="save"
           />
         </ClientOnly>

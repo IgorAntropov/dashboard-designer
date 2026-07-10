@@ -2,7 +2,12 @@
 import { computed, onMounted, reactive } from 'vue'
 
 import type { WidgetTypeDef } from '@entities/widget'
-import { WIDGET_CATEGORIES, WIDGET_TYPES, WidgetGlyph } from '@entities/widget'
+import {
+  WIDGET_CATEGORIES,
+  WIDGET_TYPES,
+  WidgetGlyph,
+  localizedConfigPatch,
+} from '@entities/widget'
 import { useCanvasStore } from '@widgets/canvas'
 
 const { t } = useI18n()
@@ -30,8 +35,10 @@ onMounted(async () => {
 
 function onAdd(definition: WidgetTypeDef): void {
   const widget = store.add(definition.key, definition.defaultSize)
-  if (typeof definition.defaultConfig.title === 'string') {
-    store.updateConfig(widget.id, 'title', t(`widget.${definition.key}`))
+  for (const [key, value] of Object.entries(
+    localizedConfigPatch(definition.key, t),
+  )) {
+    store.updateConfig(widget.id, key, value)
   }
 }
 </script>

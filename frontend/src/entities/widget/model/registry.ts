@@ -199,3 +199,22 @@ export const WIDGET_CATEGORIES = ['charts', 'kpi', 'geo', 'data', 'text'] as con
 export function widgetTypeByKey(key: string): WidgetTypeDef | undefined {
   return WIDGET_TYPES.find((definition) => definition.key === key)
 }
+
+export function localizedConfigPatch(
+  type: string,
+  t: (key: string) => string,
+): Record<string, string> {
+  const definition = widgetTypeByKey(type)
+  if (!definition) {
+    return {}
+  }
+  const label = t(`widget.${type}`)
+  const patch: Record<string, string> = {}
+  if (typeof definition.defaultConfig.title === 'string') {
+    patch.title = label
+  }
+  if (typeof definition.defaultConfig.text === 'string') {
+    patch.text = label
+  }
+  return patch
+}

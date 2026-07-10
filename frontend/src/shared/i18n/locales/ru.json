@@ -224,7 +224,12 @@
     "system": "Системная",
     "light": "Светлая",
     "dark": "Тёмная",
-    "custom": "Своя"
+    "custom": "Своя",
+    "light-minimal": "Светлая",
+    "dark-pro": "Тёмная",
+    "neon": "Неон",
+    "pastel": "Пастель",
+    "corporate-blue": "Корпоративная"
   },
   "themeEditor": {
     "title": "Своя тема",

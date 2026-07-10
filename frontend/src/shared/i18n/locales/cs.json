@@ -224,7 +224,12 @@
     "system": "Systém",
     "light": "Světlý",
     "dark": "Tmavý",
-    "custom": "Vlastní"
+    "custom": "Vlastní",
+    "light-minimal": "Světlý minimal",
+    "dark-pro": "Tmavý pro",
+    "neon": "Neon",
+    "pastel": "Pastel",
+    "corporate-blue": "Firemní modrá"
   },
   "themeEditor": {
     "title": "Vlastní motiv",

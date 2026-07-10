@@ -4,7 +4,8 @@
     "settings": "Impostazioni",
     "profile": "Profilo",
     "logout": "Esci",
-    "collapse": "Comprimi"
+    "collapse": "Comprimi",
+    "logoutConfirm": "Uscire dall’account?"
   },
   "embed": {
     "title": "Incorpora",
@@ -211,7 +212,8 @@
     "draft": "Bozza",
     "widgetsCount": "widget",
     "countLabel": "dashboard",
-    "newFull": "Nuovo dashboard"
+    "newFull": "Nuovo dashboard",
+    "widgetsLabel": "Widget"
   },
   "editor": {
     "title": "Editor",

@@ -4,7 +4,8 @@
     "settings": "Ustawienia",
     "profile": "Profil",
     "logout": "Wyloguj",
-    "collapse": "Zwiń"
+    "collapse": "Zwiń",
+    "logoutConfirm": "Wylogować się z konta?"
   },
   "embed": {
     "title": "Osadzanie",
@@ -211,7 +212,8 @@
     "draft": "Szkic",
     "widgetsCount": "widżetów",
     "countLabel": "dashboardów",
-    "newFull": "Nowy dashboard"
+    "newFull": "Nowy dashboard",
+    "widgetsLabel": "Widżety"
   },
   "editor": {
     "title": "Edytor",

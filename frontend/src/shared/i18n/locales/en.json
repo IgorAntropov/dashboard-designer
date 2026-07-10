@@ -4,7 +4,8 @@
     "settings": "Settings",
     "profile": "Profile",
     "logout": "Log out",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "logoutConfirm": "Log out of your account?"
   },
   "embed": {
     "title": "Embed",
@@ -211,7 +212,8 @@
     "draft": "Draft",
     "widgetsCount": "widgets",
     "countLabel": "dashboards",
-    "newFull": "New dashboard"
+    "newFull": "New dashboard",
+    "widgetsLabel": "Widgets"
   },
   "editor": {
     "title": "Editor",

@@ -109,11 +109,6 @@ async function onChangePassword(): Promise<void> {
   }
 }
 
-async function onLogout(): Promise<void> {
-  session.logout()
-  await navigateTo('/')
-}
-
 useHead({ title: computed(() => t('profile.title')) })
 </script>
 
@@ -127,15 +122,12 @@ useHead({ title: computed(() => t('profile.title')) })
       <AppCard :title="$t('profile.account')">
         <div class="profile-account">
           <span class="pk-avatar">{{ initials }}</span>
-          <div class="profile-account__fields">
-            <input
-              id="profile-name"
-              v-model="displayName"
-              class="form-control form-control-sm"
-              :placeholder="$t('profile.displayName')"
-            >
-            <span class="profile-account__email">{{ session.user?.email }}</span>
-          </div>
+          <input
+            id="profile-name"
+            v-model="displayName"
+            class="form-control form-control-sm"
+            :placeholder="$t('profile.displayName')"
+          >
           <AppButton
             size="sm"
             variant="secondary"
@@ -145,6 +137,7 @@ useHead({ title: computed(() => t('profile.title')) })
             {{ $t('profile.save') }}
           </AppButton>
         </div>
+        <p class="profile-account__email">{{ session.user?.email }}</p>
       </AppCard>
 
       <AppCard :title="$t('profile.plans')">
@@ -181,12 +174,6 @@ useHead({ title: computed(() => t('profile.title')) })
           </AppButton>
         </div>
       </AppCard>
-
-      <div class="d-flex justify-content-end">
-        <AppButton variant="secondary" icon="logout" @click="onLogout">
-          {{ $t('nav.logout') }}
-        </AppButton>
-      </div>
     </div>
 
     <AppModal v-model="pwModal" :title="$t('profile.changePassword')">

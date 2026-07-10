@@ -4,7 +4,8 @@
     "settings": "Nastavení",
     "profile": "Profil",
     "logout": "Odhlásit",
-    "collapse": "Sbalit"
+    "collapse": "Sbalit",
+    "logoutConfirm": "Odhlásit se z účtu?"
   },
   "embed": {
     "title": "Vložení",
@@ -211,7 +212,8 @@
     "draft": "Koncept",
     "widgetsCount": "widgetů",
     "countLabel": "dashboardů",
-    "newFull": "Nový dashboard"
+    "newFull": "Nový dashboard",
+    "widgetsLabel": "Widgety"
   },
   "editor": {
     "title": "Editor",

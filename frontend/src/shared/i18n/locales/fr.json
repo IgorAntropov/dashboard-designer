@@ -4,7 +4,8 @@
     "settings": "Paramètres",
     "profile": "Profil",
     "logout": "Déconnexion",
-    "collapse": "Réduire"
+    "collapse": "Réduire",
+    "logoutConfirm": "Se déconnecter du compte ?"
   },
   "embed": {
     "title": "Intégration",
@@ -211,7 +212,8 @@
     "draft": "Brouillon",
     "widgetsCount": "widgets",
     "countLabel": "tableaux de bord",
-    "newFull": "Nouveau tableau de bord"
+    "newFull": "Nouveau tableau de bord",
+    "widgetsLabel": "Widgets"
   },
   "editor": {
     "title": "Éditeur",

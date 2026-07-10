@@ -111,7 +111,7 @@ async function remove(theme: UserTheme): Promise<void> {
           />
           <AppButton
             size="sm"
-            variant="danger"
+            variant="ghost"
             icon="trash"
             icon-only
             :aria-label="$t('themes.delete')"

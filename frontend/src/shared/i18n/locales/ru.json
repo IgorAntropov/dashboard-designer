@@ -4,7 +4,8 @@
     "settings": "Настройки",
     "profile": "Профиль",
     "logout": "Выйти",
-    "collapse": "Свернуть"
+    "collapse": "Свернуть",
+    "logoutConfirm": "Выйти из аккаунта?"
   },
   "embed": {
     "title": "Встраивание",
@@ -211,7 +212,8 @@
     "draft": "Черновик",
     "widgetsCount": "виджетов",
     "countLabel": "дашбордов",
-    "newFull": "Новый дашборд"
+    "newFull": "Новый дашборд",
+    "widgetsLabel": "Виджетов"
   },
   "editor": {
     "title": "Редактор",

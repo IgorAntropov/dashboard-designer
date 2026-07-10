@@ -1,26 +1,33 @@
 <script setup lang="ts">
-import { LanguageSwitcher, Logo, ThemeToggle } from '@shared/ui'
+import { ref } from 'vue'
 
-const compact = useCookie<boolean>('panelka_nav_compact', {
-  default: () => false,
-  maxAge: 60 * 60 * 24 * 365,
-})
+import { useSessionStore } from '@entities/session'
+import { AppButton, AppModal, LanguageSwitcher, Logo, ThemeToggle } from '@shared/ui'
 
-function toggle(): void {
-  compact.value = !compact.value
+const session = useSessionStore()
+const logoutOpen = ref(false)
+
+async function confirmLogout(): Promise<void> {
+  logoutOpen.value = false
+  session.logout()
+  await navigateTo('/login')
 }
 </script>
 
 <template>
-  <div class="app-shell" :class="{ 'app-shell--compact': compact }">
+  <div class="app-shell">
     <main class="app-content">
       <slot />
     </main>
 
-    <aside class="app-nav" :class="{ 'app-nav--compact': compact }">
+    <aside class="app-nav">
       <div class="app-nav__head">
-        <NuxtLink to="/dashboards" class="text-reset text-decoration-none">
-          <Logo :show-word="!compact" />
+        <NuxtLink
+          to="/dashboards"
+          class="text-reset text-decoration-none"
+          v-tooltip:right="'Panelka'"
+        >
+          <Logo :show-word="false" />
         </NuxtLink>
       </div>
 
@@ -28,7 +35,8 @@ function toggle(): void {
         <NuxtLink
           to="/dashboards"
           class="app-nav__link"
-          v-tooltip:right="compact ? $t('nav.dashboards') : ''"
+          v-tooltip:right="$t('nav.dashboards')"
+          :aria-label="$t('nav.dashboards')"
         >
           <svg
             class="app-nav__icon"
@@ -44,13 +52,13 @@ function toggle(): void {
             <rect x="14" y="14" width="7" height="7" rx="1.5" />
             <rect x="3" y="14" width="7" height="7" rx="1.5" />
           </svg>
-          <span class="app-nav__label">{{ $t('nav.dashboards') }}</span>
         </NuxtLink>
 
         <NuxtLink
           to="/profile"
           class="app-nav__link"
-          v-tooltip:right="compact ? $t('nav.profile') : ''"
+          v-tooltip:right="$t('nav.profile')"
+          :aria-label="$t('nav.profile')"
         >
           <svg
             class="app-nav__icon"
@@ -64,13 +72,13 @@ function toggle(): void {
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
             <circle cx="12" cy="7" r="4" />
           </svg>
-          <span class="app-nav__label">{{ $t('nav.profile') }}</span>
         </NuxtLink>
 
         <NuxtLink
           to="/settings"
           class="app-nav__link"
-          v-tooltip:right="compact ? $t('nav.settings') : ''"
+          v-tooltip:right="$t('nav.settings')"
+          :aria-label="$t('nav.settings')"
         >
           <svg
             class="app-nav__icon"
@@ -91,27 +99,21 @@ function toggle(): void {
             <line x1="9" y1="8" x2="15" y2="8" />
             <line x1="17" y1="16" x2="23" y2="16" />
           </svg>
-          <span class="app-nav__label">{{ $t('nav.settings') }}</span>
         </NuxtLink>
       </nav>
 
       <div class="app-nav__tools">
-        <div class="app-nav__switchers">
-          <LanguageSwitcher />
-          <ThemeToggle />
-        </div>
-
+        <LanguageSwitcher />
+        <ThemeToggle />
         <button
-          class="app-nav__collapse"
+          class="app-nav__logout"
           type="button"
-          :title="$t('nav.collapse')"
-          :aria-label="$t('nav.collapse')"
-          @click="toggle"
+          v-tooltip:right="$t('nav.logout')"
+          :aria-label="$t('nav.logout')"
+          @click="logoutOpen = true"
         >
           <svg
-            class="app-nav__chevron"
-            width="18"
-            height="18"
+            class="app-nav__icon"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -119,10 +121,24 @@ function toggle(): void {
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <polyline points="15 18 9 12 15 6" />
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
           </svg>
         </button>
       </div>
     </aside>
+
+    <AppModal v-model="logoutOpen" :title="$t('nav.logout')">
+      <p class="mb-0">{{ $t('nav.logoutConfirm') }}</p>
+      <template #footer>
+        <AppButton variant="secondary" @click="logoutOpen = false">
+          {{ $t('dashboards.cancel') }}
+        </AppButton>
+        <AppButton variant="danger" icon="logout" @click="confirmLogout">
+          {{ $t('nav.logout') }}
+        </AppButton>
+      </template>
+    </AppModal>
   </div>
 </template>

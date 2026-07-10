@@ -68,7 +68,7 @@ function styleFor(tile: PreviewTile): Record<string, string> {
 
       <div class="dash-card__row">
         <span class="dash-card__meta">
-          {{ tiles.length }} {{ $t('dashboards.widgetsCount') }}
+          {{ $t('dashboards.widgetsLabel') }}: {{ tiles.length }}
         </span>
         <div class="dash-card__actions">
           <AppButton

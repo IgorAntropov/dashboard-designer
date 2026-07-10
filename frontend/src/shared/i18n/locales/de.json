@@ -4,7 +4,8 @@
     "settings": "Einstellungen",
     "profile": "Profil",
     "logout": "Abmelden",
-    "collapse": "Einklappen"
+    "collapse": "Einklappen",
+    "logoutConfirm": "Vom Konto abmelden?"
   },
   "embed": {
     "title": "Einbetten",
@@ -211,7 +212,8 @@
     "draft": "Entwurf",
     "widgetsCount": "Widgets",
     "countLabel": "Dashboards",
-    "newFull": "Neues Dashboard"
+    "newFull": "Neues Dashboard",
+    "widgetsLabel": "Widgets"
   },
   "editor": {
     "title": "Editor",

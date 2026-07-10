@@ -1400,15 +1400,24 @@ body {
 
 .pk-modal__panel {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   max-height: calc(100dvh - 2.5rem);
   display: flex;
   flex-direction: column;
-  border-radius: 0.9rem;
-  background-color: var(--pk-bg);
+  border-radius: var(--pk-radius-lg);
+  background-color: var(--pk-surface);
   border: 1px solid var(--pk-border);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.modal-enter-from .pk-modal__panel,
+.modal-leave-to .pk-modal__panel {
+  transform: translateY(10px) scale(0.98);
+  opacity: 0;
 }
 
 .pk-modal__head {
@@ -1426,12 +1435,25 @@ body {
 }
 
 .pk-modal__close {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
   border: none;
+  border-radius: 8px;
   background: transparent;
   color: var(--pk-muted);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.pk-modal__close:hover {
+  background-color: var(--pk-bg);
+  color: var(--pk-text);
 }
 
 .pk-modal__body {

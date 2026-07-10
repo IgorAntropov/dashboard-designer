@@ -10,5 +10,5 @@ export default defineNuxtPlugin(async () => {
     await navigateTo('/login')
   })
 
-  await session.init()
+  await session.ensureInit()
 })

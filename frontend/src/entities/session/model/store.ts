@@ -119,6 +119,15 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
+  let initPromise: Promise<void> | null = null
+
+  function ensureInit(): Promise<void> {
+    if (!initPromise) {
+      initPromise = init()
+    }
+    return initPromise
+  }
+
   async function login(email: string, password: string): Promise<boolean> {
     const { data, error } = await api.POST('/api/v1/auth/login', {
       body: { email, password },
@@ -196,6 +205,7 @@ export const useSessionStore = defineStore('session', () => {
     isAuthenticated,
     kicked,
     init,
+    ensureInit,
     login,
     register,
     refresh,

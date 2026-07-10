@@ -54,7 +54,7 @@ onMounted(async () => {
   const { GridStack } = await import('gridstack')
   grid = GridStack.init(
     {
-      column: 12,
+      column: 48,
       cellHeight: 20,
       margin: 5,
       float: true,

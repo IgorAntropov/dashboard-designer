@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import {
   LandingCta,
   LandingFeatures,
@@ -10,6 +12,13 @@ import {
 } from '@widgets/landing'
 
 definePageMeta({ layout: false })
+
+const { t } = useI18n()
+
+useHead({
+  title: computed(() => `Panelka — ${t('auth.tagline')}`),
+  titleTemplate: null,
+})
 </script>
 
 <template>

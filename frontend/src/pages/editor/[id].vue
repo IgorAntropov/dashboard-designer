@@ -129,14 +129,25 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
 <template>
   <div class="editor">
     <header class="editor-toolbar">
-      <div class="editor-toolbar__group">
+      <div class="editor-toolbar__zone">
+        <AppButton
+          to="/dashboards"
+          variant="ghost"
+          size="sm"
+          icon="back"
+        >
+          {{ $t('editor.toDashboards') }}
+        </AppButton>
+        <span class="editor-toolbar__divider" />
         <input
           v-model="titleInput"
           class="editor-title-input"
           :placeholder="$t('editor.title')"
         >
+      </div>
 
-        <ClientOnly>
+      <ClientOnly>
+        <div class="editor-toolbar__zone">
           <div class="editor-toolbar__history">
             <AppButton
               v-tooltip:bottom="$t('editor.undo')"
@@ -159,7 +170,6 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
               @click="canvasStore.redo()"
             />
           </div>
-
           <AppButton
             variant="secondary"
             size="sm"
@@ -167,27 +177,22 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
           >
             {{ $t('editor.arrange') }}
           </AppButton>
-        </ClientOnly>
-      </div>
+        </div>
+      </ClientOnly>
 
-      <div class="editor-toolbar__group">
+      <div class="editor-toolbar__zone">
         <span class="small text-muted d-none d-lg-inline">{{ $t('editor.theme') }}</span>
         <ClientOnly><ThemeSelector /></ClientOnly>
-
+        <span class="editor-toolbar__divider" />
         <ClientOnly>
           <AppButton
             v-tooltip:bottom="$t('editor.save')"
-            size="sm"
             :icon="saveIcon"
             icon-only
             :aria-label="$t('editor.save')"
             @click="save"
           />
         </ClientOnly>
-
-        <AppButton to="/dashboards" variant="secondary" size="sm" icon="back">
-          {{ $t('editor.toDashboards') }}
-        </AppButton>
       </div>
     </header>
 

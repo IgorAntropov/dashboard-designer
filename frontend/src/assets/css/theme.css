@@ -714,22 +714,31 @@ body {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--pk-border);
+  border-radius: var(--pk-radius-lg);
+  background-color: var(--pk-surface);
+  box-shadow: var(--pk-shadow-card);
 }
 
-.editor-toolbar__group {
+.editor-toolbar__zone {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   min-width: 0;
 }
 
+.editor-toolbar__divider {
+  width: 1px;
+  height: 22px;
+  flex: 0 0 auto;
+  background-color: var(--pk-border);
+}
+
 .editor-toolbar__history {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  padding-left: 0.5rem;
-  margin-left: 0.25rem;
-  border-left: 1px solid var(--pk-border);
+  gap: 0.15rem;
 }
 
 .editor-save {

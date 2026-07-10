@@ -39,7 +39,7 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟠 High — ✅ 5, 6, 7, 8, 9, 10 исправлено (осталось 11)
+## 🟠 High — ✅ все исправлено (5, 6, 7, 8, 9, 10, 11)
 
 5. **Доменный allowlist embed не проверяется на сервере.**
    `app/api/public.py`: `get_embed_config`, `embed_pull_data`, WS `embed_live` отдают всё любому с
@@ -84,9 +84,10 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
       реэкспортит его, iframe-страница `pages/embed/[token].vue` теперь гоняется через тот же движок
       (сетка/тема/атрибуция/merge/resize больше не дублируются).
 
-11. **embed без тестов (нарушение §17.5).** `embed/` не имеет ни одного `*.test.ts`
-    (`--passWithNoTests`). Три метода встраивания (iframe/WC/render) не покрыты. **Фикс:** smoke-тесты
-    в jsdom на `DashboardEngine`/`<panelka-dashboard>` (render + `setData`).
+11. ✅ **ИСПРАВЛЕНО. embed без тестов (§17.5).** Добавлены smoke-тесты (9 шт.): `DashboardEngine`
+    (mount → сетка/атрибуция/секция, `setData` → рендер данных, `destroy`) через компактный DOM-стаб;
+    `UrlPuller` (парсинг + оба лимита размера — content-length и стриминговый обрыв); `LiveConnection`
+    (панелка-фреймы/мусор/close). Идут в node-окружении без jsdom (в песочнице недоступен).
 
 ---
 

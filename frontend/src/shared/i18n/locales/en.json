@@ -40,7 +40,8 @@
     "direction": "Direction",
     "columns": "Columns",
     "columnName": "Column name",
-    "addColumn": "Add column"
+    "addColumn": "Add column",
+    "subtitle": "Subtitle"
   },
   "mapScope": {
     "world": "World",

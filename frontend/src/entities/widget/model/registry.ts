@@ -175,6 +175,15 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: {},
   },
   {
+    key: 'section',
+    label: 'Section',
+    category: 'text',
+    defaultSize: { w: 12, h: 1 },
+    defaultConfig: { title: 'Section', subtitle: '' },
+    defaultSchema: {},
+    defaultBinding: {},
+  },
+  {
     key: 'text-block',
     label: 'Text',
     category: 'text',

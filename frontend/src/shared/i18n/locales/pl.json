@@ -40,7 +40,8 @@
     "direction": "Kierunek",
     "columns": "Kolumny",
     "columnName": "Nazwa kolumny",
-    "addColumn": "Dodaj kolumnę"
+    "addColumn": "Dodaj kolumnę",
+    "subtitle": "Podtytuł"
   },
   "mapScope": {
     "world": "Świat",

@@ -40,7 +40,8 @@
     "direction": "Richtung",
     "columns": "Spalten",
     "columnName": "Spaltenname",
-    "addColumn": "Spalte hinzufügen"
+    "addColumn": "Spalte hinzufügen",
+    "subtitle": "Untertitel"
   },
   "mapScope": {
     "world": "Welt",

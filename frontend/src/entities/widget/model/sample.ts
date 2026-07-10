@@ -46,7 +46,7 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
       { region: 'Татарстан', trips: 1.7, delta: -3.7 },
     ]
   }
-  if (type === 'text-block') {
+  if (type === 'text-block' || type === 'section') {
     return []
   }
   return [

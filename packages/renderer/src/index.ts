@@ -264,6 +264,30 @@ function renderRanking(el: HTMLElement, input: RenderInput): void {
   el.append(wrap)
 }
 
+function renderSection(el: HTMLElement, input: RenderInput): void {
+  el.replaceChildren()
+  const wrap = document.createElement('div')
+  wrap.className = 'pk-section'
+  wrap.style.borderColor = input.theme.colorAccent
+
+  const title = document.createElement('div')
+  title.className = 'pk-section__title'
+  title.style.color = input.theme.colorText
+  title.textContent = textConfig(input, 'title')
+  wrap.append(title)
+
+  const subtitle = textConfig(input, 'subtitle')
+  if (subtitle) {
+    const sub = document.createElement('div')
+    sub.className = 'pk-section__subtitle'
+    sub.style.color = input.theme.colorMuted
+    sub.textContent = subtitle
+    wrap.append(sub)
+  }
+
+  el.append(wrap)
+}
+
 const DOM_RENDERERS: Record<
   string,
   (el: HTMLElement, input: RenderInput) => void
@@ -271,6 +295,7 @@ const DOM_RENDERERS: Record<
   'stat-tile': renderKpi,
   progress: renderProgress,
   ranking: renderRanking,
+  section: renderSection,
   'text-block': renderText,
 }
 

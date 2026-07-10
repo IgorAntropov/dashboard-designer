@@ -288,3 +288,11 @@ clickable header (toggles asc/desc, shows ▲/▼), right-aligns and formats num
 in both `assets/css/theme.css` and the embed `renderer/styles.ts`. The registry adds the `table` type
 (empty schema — columns drive it) with a `columns` config; `sampleDataFor` returns region rows; the
 config panel has a columns editor (add/remove; key/name/type text|number) plus decimals.
+
+Sections (5.8): a `section` widget (text category, full-width default 12×1) provides on-canvas grouping
+headers (e.g. Транспорт → Авиа/ЖД). `renderSection` (DOM, in `DOM_RENDERERS`) draws a bold title +
+optional subtitle with an accent left border, theme colors inline. Registry adds the type with
+`{title, subtitle}` config; `sampleDataFor` returns `[]` (no data); the config panel shows a subtitle
+field alongside the shared title. Styled by `.pk-section*` in `assets/css/theme.css` + embed
+`renderer/styles.ts`. Multi-page dashboards and drill-down were dropped from the roadmap by the
+maintainer; remaining polish is custom themes and embed-load analytics.

@@ -266,6 +266,15 @@ function onDataKey(key: string, event: Event): void {
         >
       </div>
 
+      <div v-if="widget.type === 'section'" class="mb-3">
+        <label class="form-label small">{{ $t('config.subtitle') }}</label>
+        <input
+          class="form-control form-control-sm"
+          :value="asString(widget.config.subtitle)"
+          @input="(event) => onConfigText('subtitle', event)"
+        >
+      </div>
+
       <template v-if="widget.type === 'stat-tile'">
         <div class="mb-3">
           <label class="form-label small">{{ $t('config.unit') }}</label>

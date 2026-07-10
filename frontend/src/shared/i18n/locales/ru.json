@@ -40,7 +40,8 @@
     "direction": "Направление",
     "columns": "Столбцы",
     "columnName": "Название столбца",
-    "addColumn": "Добавить столбец"
+    "addColumn": "Добавить столбец",
+    "subtitle": "Подзаголовок"
   },
   "mapScope": {
     "world": "Мир",

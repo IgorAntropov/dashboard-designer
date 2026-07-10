@@ -51,6 +51,9 @@ export const ENGINE_CSS = `
 .pk-table__td { padding: 4px 8px; border-bottom: 1px solid rgba(128,128,128,0.18); white-space: nowrap; }
 .pk-table__num { text-align: right; font-variant-numeric: tabular-nums; }
 .pk-text { height: 100%; display: flex; align-items: center; padding: 4px 8px; }
+.pk-section { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 4px 2px 6px 10px; border-left: 3px solid var(--pk-accent, #ffd400); }
+.pk-section__title { font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
+.pk-section__subtitle { font-size: 0.82rem; }
 .pk-progress { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; padding: 4px 8px; }
 .pk-progress__label { font-size: 0.85rem; }
 .pk-progress__value { font-size: 1.4rem; font-weight: 700; line-height: 1.1; }

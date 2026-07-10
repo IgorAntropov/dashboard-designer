@@ -40,7 +40,8 @@
     "direction": "Směr",
     "columns": "Sloupce",
     "columnName": "Název sloupce",
-    "addColumn": "Přidat sloupec"
+    "addColumn": "Přidat sloupec",
+    "subtitle": "Podnadpis"
   },
   "mapScope": {
     "world": "Svět",

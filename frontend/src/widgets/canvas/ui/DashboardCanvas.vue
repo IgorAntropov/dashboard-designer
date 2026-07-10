@@ -25,6 +25,7 @@ const themeVars = computed(() => ({
 }))
 const gridElement = ref<HTMLDivElement | null>(null)
 let grid: GridStack | null = null
+let syncing = false
 const registered = new Set<string>()
 
 function elementFor(id: string): HTMLElement | null {
@@ -35,6 +36,8 @@ function syncWidgets(): void {
   if (!grid) {
     return
   }
+  syncing = true
+  grid.batchUpdate()
   for (const widget of store.widgets) {
     if (registered.has(widget.id)) {
       continue
@@ -45,6 +48,8 @@ function syncWidgets(): void {
       registered.add(widget.id)
     }
   }
+  grid.commit()
+  syncing = false
 }
 
 onMounted(async () => {
@@ -65,6 +70,9 @@ onMounted(async () => {
   )
 
   grid.on('change', (_event: Event, items: GridStackNode[]) => {
+    if (syncing) {
+      return
+    }
     for (const item of items ?? []) {
       const id = item.el?.getAttribute('gs-id')
       if (id) {
@@ -76,6 +84,37 @@ onMounted(async () => {
         })
       }
     }
+  })
+
+  function lockOthers(activeId: string | null, locked: boolean): void {
+    if (!grid) {
+      return
+    }
+    for (const widget of store.widgets) {
+      if (widget.id === activeId) {
+        continue
+      }
+      const element = elementFor(widget.id)
+      if (element) {
+        grid.update(element, { locked })
+      }
+    }
+  }
+
+  grid.on('dragstart', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), true)
+  })
+
+  grid.on('dragstop', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), false)
+  })
+
+  grid.on('resizestart', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), true)
+  })
+
+  grid.on('resizestop', (_event: Event, element: HTMLElement) => {
+    lockOthers(element.getAttribute('gs-id'), false)
   })
 
   grid.on('dropped', (_event: Event, _previous: GridStackNode, node: GridStackNode) => {

@@ -31,17 +31,25 @@ export async function getDashboard(id: string): Promise<Dashboard | null> {
 export interface UpdateDashboardResult {
   data: Dashboard | null
   status: number
+  code: string | null
 }
 
 export async function updateDashboard(
   id: string,
   patch: DashboardUpdate,
 ): Promise<UpdateDashboardResult> {
-  const { data, response } = await api.PATCH('/api/v1/dashboards/{dashboard_id}', {
-    params: { path: { dashboard_id: id } },
-    body: patch,
-  })
-  return { data: data ?? null, status: response.status }
+  const { data, error, response } = await api.PATCH(
+    '/api/v1/dashboards/{dashboard_id}',
+    {
+      params: { path: { dashboard_id: id } },
+      body: patch,
+    },
+  )
+  const code =
+    error && typeof error === 'object' && 'code' in error
+      ? String((error as { code: unknown }).code)
+      : null
+  return { data: data ?? null, status: response.status, code }
 }
 
 export async function publishDashboard(

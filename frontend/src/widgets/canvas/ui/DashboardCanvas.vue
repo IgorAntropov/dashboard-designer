@@ -55,7 +55,7 @@ onMounted(async () => {
   grid = GridStack.init(
     {
       column: 12,
-      cellHeight: 80,
+      cellHeight: 20,
       margin: 5,
       float: true,
       acceptWidgets: true,
@@ -96,11 +96,22 @@ onMounted(async () => {
 })
 
 watch(
-  () => store.widgets.length,
-  async () => {
+  () => store.widgets.map((item) => item.id).join(','),
+  async (value) => {
+    const ids = value ? value.split(',') : []
+    for (const id of [...registered]) {
+      if (!ids.includes(id)) {
+        const element = elementFor(id)
+        if (element && grid) {
+          grid.removeWidget(element, false)
+        }
+        registered.delete(id)
+      }
+    }
     await nextTick()
     syncWidgets()
   },
+  { flush: 'pre' },
 )
 
 onBeforeUnmount(() => {
@@ -109,11 +120,6 @@ onBeforeUnmount(() => {
 })
 
 function onRemove(id: string): void {
-  const element = elementFor(id)
-  if (element && grid) {
-    grid.removeWidget(element)
-  }
-  registered.delete(id)
   store.remove(id)
 }
 </script>

@@ -3,8 +3,8 @@ const SHELL_CSS = `
 .pk-embed-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 80px;
-  gap: 8px;
+  grid-auto-rows: 20px;
+  gap: 10px;
   padding: 12px;
   background-color: var(--pk-bg, #ffffff);
   color: var(--pk-text, #1a1a1a);

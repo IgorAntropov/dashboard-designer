@@ -33,6 +33,9 @@ async function save(): Promise<void> {
       canvasStore.themeKey === 'custom' ? canvasStore.customTheme : null,
   }
   const result = await updateDashboard(dashboardId, patch)
+  if (result.code === 'quota_widgets') {
+    canvasStore.removeLast()
+  }
   saveState.value = result.data ? 'saved' : 'idle'
 }
 

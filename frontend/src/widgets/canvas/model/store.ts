@@ -28,6 +28,7 @@ function clone<T>(value: T): T {
 export const useCanvasStore = defineStore('canvas', () => {
   const widgets = ref<WidgetInstance[]>([])
   const selectedId = ref<string | null>(null)
+  const lastAddedId = ref<string | null>(null)
   const themeKey = ref('light-minimal')
   const customTheme = ref<RenderTheme | null>(null)
 
@@ -100,7 +101,14 @@ export const useCanvasStore = defineStore('canvas', () => {
       binding: definition ? clone(definition.defaultBinding) : {},
     }
     widgets.value.push(widget)
+    lastAddedId.value = widget.id
     return widget
+  }
+
+  function removeLast(): void {
+    if (lastAddedId.value) {
+      remove(lastAddedId.value)
+    }
   }
 
   function select(id: string | null): void {
@@ -150,6 +158,9 @@ export const useCanvasStore = defineStore('canvas', () => {
     widgets.value = widgets.value.filter((item) => item.id !== id)
     if (selectedId.value === id) {
       selectedId.value = null
+    }
+    if (lastAddedId.value === id) {
+      lastAddedId.value = null
     }
   }
 
@@ -261,5 +272,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     undo,
     redo,
     remove,
+    removeLast,
+    lastAddedId,
   }
 })

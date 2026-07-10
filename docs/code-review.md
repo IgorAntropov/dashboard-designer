@@ -136,7 +136,7 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 
 ---
 
-## 🟢 Low — ✅ 22–29, 31 исправлено (30 — см. ниже)
+## 🟢 Low — ✅ все исправлено (22–31)
 
 22. ✅ Rate-limiter fail-open теперь управляется настройкой `rate_limit_fail_open` (по умолчанию `True`).
 23. ✅ `uuid.UUID(sub)`/`payload["sub"]` обёрнуты — при кривом токене 401, не 500 (`api/deps.py`, `api/ws.py`).
@@ -146,8 +146,21 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
 27. ✅ `reportHeight` шлёт высоту в origin родителя (из `document.referrer`), не в `*`.
 28. ✅ Кэш GeoJSON ограничен (LRU-вытеснение, `MAX_CACHE_ENTRIES`); фетч карты стримится с байт-лимитом `MAX_GEOJSON_BYTES`.
 29. ✅ `WidgetView` пересоздаёт рендерер при смене `type` виджета (dispose + новый `renderWidget`).
-30. ⏳ `ConfigPanel.vue` — god-компонент (~570 строк). Разбивка на под-панели — отдельный слайс (см. ниже).
+30. ✅ `ConfigPanel.vue` (~570 строк) разбит: вся логика вынесена в composable
+    `model/useWidgetConfig.ts`, per-type секции — в под-компоненты (`GeneralFields`, `KpiFields`,
+    `CartesianFields`, `RankingFields`, `TableFields`, `MapFields`, `SchemaFields`); сам `ConfigPanel`
+    стал тонким диспетчером (~30 строк). Проверено `vue-tsc` (чисто).
 31. ✅ Формулировка «signed» токена в CLAUDE.md заменена на «opaque, random, revocable».
+
+---
+
+## 🔵 Найдено в ходе фикса
+
+32. **Фронт-vitest не парсит `.vue`** (`frontend/vitest.config.ts`): нет vue-плагина и FSD-alias'ов, поэтому
+    `canvas/store.test.ts` (тянет barrel `@entities/widget` c `.vue`) падает на старте. Не связано с
+    правками ревью. Полноценный фикс требует добавить `@vitejs/plugin-vue` в devDeps фронта + alias'ы в
+    конфиг (в песочнице заблокировано `--frozen-lockfile`/отсутствием сети). Alias'ы можно добавить
+    сразу; vue-плагин — отдельным PR с обновлением lockfile.
 
 ---
 

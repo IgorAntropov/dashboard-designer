@@ -179,7 +179,9 @@
     "newPassword": "New password",
     "plans": "Plans",
     "current": "Current",
-    "choose": "Choose"
+    "choose": "Choose",
+    "paymentProcessing": "Payment received, activating your plan…",
+    "paymentFailed": "Payment failed."
   },
   "settings": {
     "title": "Settings",

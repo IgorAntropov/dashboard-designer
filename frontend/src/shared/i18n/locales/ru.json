@@ -179,7 +179,9 @@
     "newPassword": "Новый пароль",
     "plans": "Тарифы",
     "current": "Текущий",
-    "choose": "Выбрать"
+    "choose": "Выбрать",
+    "paymentProcessing": "Платёж принят, активируем тариф…",
+    "paymentFailed": "Платёж не прошёл."
   },
   "settings": {
     "title": "Настройки",

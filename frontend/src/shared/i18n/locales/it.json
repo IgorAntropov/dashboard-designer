@@ -179,7 +179,9 @@
     "newPassword": "Nuova password",
     "plans": "Piani",
     "current": "Attuale",
-    "choose": "Scegli"
+    "choose": "Scegli",
+    "paymentProcessing": "Pagamento ricevuto, attivazione del piano…",
+    "paymentFailed": "Pagamento non riuscito."
   },
   "settings": {
     "title": "Impostazioni",

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+import { createCheckout, openCheckout } from '@entities/billing'
 import { useSessionStore } from '@entities/session'
+import { pushToast } from '@shared/notify'
 import { AppBadge, AppButton, AppModal, PasswordField } from '@shared/ui'
 
 const { t } = useI18n()
@@ -30,11 +32,45 @@ async function onSaveName(): Promise<void> {
   savingName.value = false
 }
 
+async function pollActivation(tier: Tier): Promise<void> {
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await session.fetchMe()
+    if (session.user?.subscription_tier === tier) {
+      return
+    }
+  }
+}
+
 async function onChooseTier(tier: Tier): Promise<void> {
   if (session.user?.subscription_tier === tier) {
     return
   }
-  await session.setTier(tier)
+  if (tier === 'free') {
+    await session.setTier('free')
+    return
+  }
+
+  const checkout = await createCheckout(tier)
+  if (!checkout) {
+    return
+  }
+  if (!checkout.public_id) {
+    await session.setTier(tier)
+    return
+  }
+
+  try {
+    await openCheckout(checkout, {
+      onSuccess: () => {
+        pushToast(t('profile.paymentProcessing'), 'success')
+        void pollActivation(tier)
+      },
+      onFail: () => pushToast(t('profile.paymentFailed'), 'error'),
+    })
+  } catch {
+    pushToast(t('errors.generic'), 'error')
+  }
 }
 
 const pwModal = ref(false)

@@ -198,6 +198,7 @@ export const useSessionStore = defineStore('session', () => {
     login,
     register,
     refresh,
+    fetchMe,
     updateName,
     changePassword,
     setTier,

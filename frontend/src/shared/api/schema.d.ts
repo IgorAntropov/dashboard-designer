@@ -65,6 +65,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/billing/subscribe': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get?: never
+    put?: never
+    post: operations['subscribe_api_v1_billing_subscribe_post']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/me': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get: operations['me_api_v1_me_get']
@@ -252,6 +263,17 @@ export interface components {
       status: string
       result?: { [key: string]: unknown } | null
     }
+    SubscribeRequest: { tier: components['schemas']['SubscriptionTier'] }
+    CheckoutResponse: {
+      provider: string
+      public_id: string
+      amount: number
+      currency: string
+      description: string
+      account_id: string
+      invoice_id: string
+      tier: components['schemas']['SubscriptionTier']
+    }
   }
   responses: never
   parameters: never
@@ -425,6 +447,18 @@ export interface operations {
       200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': components['schemas']['ExportJobOut'] }
+      }
+    }
+  }
+  subscribe_api_v1_billing_subscribe_post: {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    requestBody: {
+      content: { 'application/json': components['schemas']['SubscribeRequest'] }
+    }
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: { 'application/json': components['schemas']['CheckoutResponse'] }
       }
     }
   }

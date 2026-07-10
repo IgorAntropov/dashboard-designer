@@ -179,7 +179,9 @@
     "newPassword": "Neues Passwort",
     "plans": "Tarife",
     "current": "Aktuell",
-    "choose": "Wählen"
+    "choose": "Wählen",
+    "paymentProcessing": "Zahlung erhalten, Tarif wird aktiviert…",
+    "paymentFailed": "Zahlung fehlgeschlagen."
   },
   "settings": {
     "title": "Einstellungen",

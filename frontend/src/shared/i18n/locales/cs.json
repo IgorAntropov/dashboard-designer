@@ -179,7 +179,9 @@
     "newPassword": "Nové heslo",
     "plans": "Tarify",
     "current": "Aktuální",
-    "choose": "Vybrat"
+    "choose": "Vybrat",
+    "paymentProcessing": "Platba přijata, aktivujeme tarif…",
+    "paymentFailed": "Platba se nezdařila."
   },
   "settings": {
     "title": "Nastavení",

@@ -179,7 +179,9 @@
     "newPassword": "Nowe hasło",
     "plans": "Plany",
     "current": "Bieżący",
-    "choose": "Wybierz"
+    "choose": "Wybierz",
+    "paymentProcessing": "Płatność przyjęta, aktywujemy plan…",
+    "paymentFailed": "Płatność nieudana."
   },
   "settings": {
     "title": "Ustawienia",

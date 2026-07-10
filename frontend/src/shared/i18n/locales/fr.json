@@ -179,7 +179,9 @@
     "newPassword": "Nouveau mot de passe",
     "plans": "Offres",
     "current": "Actuel",
-    "choose": "Choisir"
+    "choose": "Choisir",
+    "paymentProcessing": "Paiement reçu, activation de l'offre…",
+    "paymentFailed": "Le paiement a échoué."
   },
   "settings": {
     "title": "Paramètres",

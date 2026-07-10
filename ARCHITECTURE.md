@@ -352,3 +352,13 @@ polls until `done`, then downloads the JSON blob — same UX, queue-ready API. P
 inline (export is just serializing the dashboard); the `ExportService.create`/`process` split is the
 executor boundary, so swapping in an arq/Celery worker (calling `process` off-request) is a drop-in with
 no API change. NOTE: migration 0010 needs a backend restart.
+
+CloudPayments widget (frontend, feature-flagged): the profile page now drives real checkout. Choosing a
+paid tier calls `POST /billing/subscribe` (`entities/billing.createCheckout`) which returns the
+`public_id` (from backend config) + amount/currency/description/accountId/invoiceId/tier. If `public_id`
+is empty (no CloudPayments account configured), it falls back to the dev mock (`session.setTier`). If
+set, `entities/billing.openCheckout` lazily loads the CloudPayments widget script and calls
+`cp.pay('charge', …, {data:{tier}})` so the tier is echoed back to the webhook; on `onSuccess` a toast is
+shown and the client polls `/me` (webhook is the authoritative activation path). Downgrade to free stays
+a direct mock. So the integration is code-complete and activates purely by setting
+`PANELKA_CLOUDPAYMENTS_PUBLIC_ID` (+ api secret for webhooks) in env — no code change needed to go live.

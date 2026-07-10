@@ -68,7 +68,8 @@
     "exportPaid": "Export je dostupný v placených tarifech.",
     "notFound": "Nenalezeno.",
     "server": "Chyba serveru. Zkuste to prosím později.",
-    "generic": "Něco se pokazilo. Zkuste to znovu."
+    "generic": "Něco se pokazilo. Zkuste to znovu.",
+    "customThemePaid": "Vlastní motivy jsou dostupné v placených tarifech."
   },
   "toast": {
     "close": "Zavřít"
@@ -204,6 +205,16 @@
     "undo": "Zpět",
     "redo": "Znovu"
   },
-  "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý" },
+  "theme": { "system": "Systém", "light": "Světlý", "dark": "Tmavý", "custom": "Vlastní" },
+  "themeEditor": {
+    "title": "Vlastní motiv",
+    "background": "Pozadí",
+    "surface": "Povrch",
+    "text": "Text",
+    "muted": "Tlumená",
+    "accent": "Akcent",
+    "series": "Řady",
+    "font": "Písmo"
+  },
   "language": { "label": "Jazyk" }
 }

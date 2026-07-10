@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { GridStack, GridStackNode } from 'gridstack'
-import { getTheme } from '@panelka/renderer'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { WidgetView } from '@entities/widget'
@@ -9,7 +8,7 @@ import { AppButton } from '@shared/ui'
 import { useCanvasStore } from '../model/store'
 
 const store = useCanvasStore()
-const theme = computed(() => getTheme(store.themeKey))
+const theme = computed(() => store.effectiveTheme)
 const themeVars = computed(() => ({
   '--pk-bg': theme.value.colorBg,
   '--pk-surface': theme.value.colorSurface,

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { RenderTheme } from '@panelka/renderer'
 import type { WidgetInstance } from '@entities/widget'
 import { computed, onMounted, ref, watch } from 'vue'
 
@@ -28,6 +29,8 @@ async function save(): Promise<void> {
     title: titleInput.value.trim() || t('editor.title'),
     layout: { widgets: canvasStore.widgets },
     theme_key: canvasStore.themeKey,
+    theme_tokens:
+      canvasStore.themeKey === 'custom' ? canvasStore.customTheme : null,
   }
   let result = await updateDashboard(dashboardId, patch)
   if (!result.data && result.status === 401) {
@@ -44,6 +47,7 @@ onMounted(async () => {
   canvasStore.hydrate(
     Array.isArray(layout.widgets) ? layout.widgets : [],
     loaded?.theme_key ?? 'light-minimal',
+    (loaded?.theme_tokens as RenderTheme | null) ?? null,
   )
   ready.value = true
 })

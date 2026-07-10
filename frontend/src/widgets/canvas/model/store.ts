@@ -1,3 +1,5 @@
+import type { RenderTheme } from '@panelka/renderer'
+import { resolveTheme } from '@panelka/renderer'
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
 
@@ -27,10 +29,22 @@ export const useCanvasStore = defineStore('canvas', () => {
   const widgets = ref<WidgetInstance[]>([])
   const selectedId = ref<string | null>(null)
   const themeKey = ref('light-minimal')
+  const customTheme = ref<RenderTheme | null>(null)
 
   function setTheme(key: string): void {
     themeKey.value = key
   }
+
+  function setCustomTheme(theme: RenderTheme | null): void {
+    customTheme.value = theme
+  }
+
+  const effectiveTheme = computed(() =>
+    resolveTheme(
+      themeKey.value,
+      themeKey.value === 'custom' ? customTheme.value : null,
+    ),
+  )
 
   const selectedWidget = computed(
     () => widgets.value.find((item) => item.id === selectedId.value) ?? null,
@@ -127,17 +141,23 @@ export const useCanvasStore = defineStore('canvas', () => {
   )
 
   function snapshot(): string {
-    return JSON.stringify({ widgets: widgets.value, themeKey: themeKey.value })
+    return JSON.stringify({
+      widgets: widgets.value,
+      themeKey: themeKey.value,
+      customTheme: customTheme.value,
+    })
   }
 
   function applySnapshot(snap: string): void {
     const parsed = JSON.parse(snap) as {
       widgets: WidgetInstance[]
       themeKey: string
+      customTheme?: RenderTheme | null
     }
     applying = true
     widgets.value = parsed.widgets
     themeKey.value = parsed.themeKey
+    customTheme.value = parsed.customTheme ?? null
     selectedId.value = null
     applying = false
   }
@@ -166,10 +186,15 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
-  function hydrate(nextWidgets: WidgetInstance[], key: string): void {
+  function hydrate(
+    nextWidgets: WidgetInstance[],
+    key: string,
+    custom: RenderTheme | null = null,
+  ): void {
     applying = true
     widgets.value = nextWidgets
     themeKey.value = key
+    customTheme.value = custom
     selectedId.value = null
     applying = false
     history.value = [snapshot()]
@@ -195,9 +220,12 @@ export const useCanvasStore = defineStore('canvas', () => {
     selectedId,
     selectedWidget,
     themeKey,
+    customTheme,
+    effectiveTheme,
     canUndo,
     canRedo,
     setTheme,
+    setCustomTheme,
     setWidgets,
     hydrate,
     add,

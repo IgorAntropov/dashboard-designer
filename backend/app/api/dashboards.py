@@ -11,6 +11,7 @@ from app.models.enums import SubscriptionTier
 from app.schemas.dashboard import DashboardCreate, DashboardOut, DashboardUpdate
 from app.schemas.embed import PublishRequest, PublishResponse
 from app.services.dashboard import (
+    DashboardCustomThemeError,
     DashboardNotFoundError,
     DashboardQuotaExceededError,
     DashboardService,
@@ -70,6 +71,12 @@ async def update_dashboard(
         )
     except DashboardNotFoundError as exc:
         raise _NOT_FOUND from exc
+    except DashboardCustomThemeError as exc:
+        raise AppError(
+            status.HTTP_403_FORBIDDEN,
+            "custom_theme_paid",
+            "Custom themes require a paid plan",
+        ) from exc
     except DashboardQuotaExceededError as exc:
         raise _quota_error(exc) from exc
     await session.commit()

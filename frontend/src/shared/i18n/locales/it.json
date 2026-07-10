@@ -68,7 +68,8 @@
     "exportPaid": "L'export è disponibile nei piani a pagamento.",
     "notFound": "Non trovato.",
     "server": "Errore del server. Riprova più tardi.",
-    "generic": "Qualcosa è andato storto. Riprova."
+    "generic": "Qualcosa è andato storto. Riprova.",
+    "customThemePaid": "I temi personalizzati sono disponibili nei piani a pagamento."
   },
   "toast": {
     "close": "Chiudi"
@@ -204,6 +205,16 @@
     "undo": "Annulla",
     "redo": "Ripeti"
   },
-  "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro" },
+  "theme": { "system": "Sistema", "light": "Chiaro", "dark": "Scuro", "custom": "Personale" },
+  "themeEditor": {
+    "title": "Tema personalizzato",
+    "background": "Sfondo",
+    "surface": "Superficie",
+    "text": "Testo",
+    "muted": "Attenuato",
+    "accent": "Accento",
+    "series": "Serie",
+    "font": "Carattere"
+  },
   "language": { "label": "Lingua" }
 }

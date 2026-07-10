@@ -1,5 +1,5 @@
 import type { RenderInput, RenderTheme, WidgetHandle } from '@panelka/renderer'
-import { getTheme, renderWidget } from '@panelka/renderer'
+import { renderWidget, resolveTheme } from '@panelka/renderer'
 
 import { ENGINE_CSS } from './styles'
 
@@ -17,6 +17,7 @@ export interface EmbedWidget {
 export interface EmbedConfig {
   dashboard_id: string
   theme_key: string
+  theme_tokens?: Partial<RenderTheme> | null
   layout: { widgets?: EmbedWidget[] }
   attribution: boolean
 }
@@ -55,7 +56,7 @@ export class DashboardEngine {
 
   mount(config: EmbedConfig): void {
     this.config = config
-    const theme = getTheme(config.theme_key)
+    const theme = resolveTheme(config.theme_key, config.theme_tokens)
 
     this.grid.style.setProperty('--pk-bg', theme.colorBg)
     this.grid.style.setProperty('--pk-surface', theme.colorSurface)
@@ -92,7 +93,7 @@ export class DashboardEngine {
     if (!this.config) {
       return
     }
-    const theme = getTheme(this.config.theme_key)
+    const theme = resolveTheme(this.config.theme_key, this.config.theme_tokens)
     for (const widget of this.widgets()) {
       this.handles.get(widget.id)?.update(this.inputFor(widget, theme))
     }

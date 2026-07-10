@@ -21,6 +21,9 @@ class Dashboard(UuidPkMixin, TimestampMixin, Base):
     title: Mapped[str] = mapped_column(String(200))
     slug: Mapped[str] = mapped_column(String(220), index=True)
     theme_key: Mapped[str] = mapped_column(String(64), default="light-minimal")
+    theme_tokens: Mapped[dict[str, Any] | None] = mapped_column(
+        JsonType, nullable=True, default=None
+    )
     layout: Mapped[dict[str, Any]] = mapped_column(JsonType, default=dict)
     data_bindings: Mapped[dict[str, Any]] = mapped_column(JsonType, default=dict)
     data_source: Mapped[dict[str, Any]] = mapped_column(JsonType, default=dict)

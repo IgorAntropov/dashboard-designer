@@ -296,3 +296,18 @@ optional subtitle with an accent left border, theme colors inline. Registry adds
 field alongside the shared title. Styled by `.pk-section*` in `assets/css/theme.css` + embed
 `renderer/styles.ts`. Multi-page dashboards and drill-down were dropped from the roadmap by the
 maintainer; remaining polish is custom themes and embed-load analytics.
+
+Custom themes (5.9): a dashboard can carry custom theme tokens instead of only a built-in key.
+Backend: `dashboards.theme_tokens` (JSONB nullable, migration 0007) on the model + DashboardUpdate/Out +
+PublishedConfig; `DashboardService.update` gates it — setting non-null `theme_tokens` on the free tier
+raises `DashboardCustomThemeError` → `AppError(403, custom_theme_paid)`; the embed public config now
+includes `theme_tokens`. Renderer: `resolveTheme(key, tokens)` merges partial custom tokens over the
+base theme (keeps base series/font when absent), unit-tested (`themes.test.ts`). Frontend: the canvas
+store holds `customTheme` + an `effectiveTheme` computed (`resolveTheme(themeKey, themeKey==='custom' ?
+customTheme : null)`), persisted in undo snapshots and hydrate; `DashboardCanvas` renders with
+`effectiveTheme`. `ThemeSelector` gains a paid-gated "custom" option and an edit button opening a
+`ThemeEditor` modal (color pickers for bg/surface/text/muted/accent + 5 series colors + font), which
+writes tokens to the store; the editor page saves `theme_tokens` in autosave and hydrates it on load.
+Embed engine resolves the theme the same way from `config.theme_tokens`. Errors plugin maps
+`custom_theme_paid` → `errors.customThemePaid` toast; all labels are i18n (`theme.custom`,
+`themeEditor.*`) across 7 locales. NOTE: migration 0007 requires a backend container restart to apply.

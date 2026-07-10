@@ -20,6 +20,7 @@ class PublishedConfig(BaseModel):
 
     dashboard_id: str
     theme_key: str
+    theme_tokens: dict[str, Any] | None = None
     layout: dict[str, Any]
     data_source: dict[str, Any]
     attribution: bool

@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.dashboard import Dashboard
 from app.models.embed_token import EmbedToken
-from app.models.enums import DashboardStatus
+from app.models.enums import DashboardStatus, SubscriptionTier
 from app.models.user import User
 from app.schemas.dashboard import DashboardCreate, DashboardUpdate
 from app.services.quota import dashboard_limit, widget_limit
@@ -18,6 +18,10 @@ class DashboardError(Exception):
 
 
 class DashboardNotFoundError(DashboardError):
+    pass
+
+
+class DashboardCustomThemeError(DashboardError):
     pass
 
 
@@ -84,10 +88,17 @@ class DashboardService:
         dashboard = await self.get_owned(user, dashboard_id)
         data = payload.model_dump(exclude_unset=True)
         self._ensure_widget_limit(user, data.get("layout"))
+        self._ensure_custom_theme(user, data)
         for field, value in data.items():
             setattr(dashboard, field, value)
         await self._session.flush()
         return dashboard
+
+    def _ensure_custom_theme(self, user: User, data: dict[str, object]) -> None:
+        if data.get("theme_tokens") is None:
+            return
+        if user.subscription_tier == SubscriptionTier.free:
+            raise DashboardCustomThemeError
 
     def _ensure_widget_limit(self, user: User, layout: object) -> None:
         limit = widget_limit(user.subscription_tier)

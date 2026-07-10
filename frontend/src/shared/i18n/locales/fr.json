@@ -68,7 +68,8 @@
     "exportPaid": "L'export est disponible sur les offres payantes.",
     "notFound": "Introuvable.",
     "server": "Erreur serveur. Veuillez réessayer plus tard.",
-    "generic": "Une erreur s'est produite. Veuillez réessayer."
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "customThemePaid": "Les thèmes personnalisés sont disponibles sur les offres payantes."
   },
   "toast": {
     "close": "Fermer"
@@ -204,6 +205,16 @@
     "undo": "Annuler",
     "redo": "Rétablir"
   },
-  "theme": { "system": "Système", "light": "Clair", "dark": "Sombre" },
+  "theme": { "system": "Système", "light": "Clair", "dark": "Sombre", "custom": "Perso." },
+  "themeEditor": {
+    "title": "Thème personnalisé",
+    "background": "Fond",
+    "surface": "Surface",
+    "text": "Texte",
+    "muted": "Atténué",
+    "accent": "Accent",
+    "series": "Séries",
+    "font": "Police"
+  },
   "language": { "label": "Langue" }
 }

@@ -55,3 +55,18 @@ export const DEFAULT_THEME_KEY = 'light-minimal'
 export function getTheme(key: string): RenderTheme {
   return DASHBOARD_THEMES[key] ?? DASHBOARD_THEMES[DEFAULT_THEME_KEY]
 }
+
+export function resolveTheme(
+  key: string,
+  tokens?: Partial<RenderTheme> | null,
+): RenderTheme {
+  const base = getTheme(key)
+  if (!tokens || typeof tokens !== 'object') {
+    return base
+  }
+  const series =
+    Array.isArray(tokens.colorSeries) && tokens.colorSeries.length > 0
+      ? tokens.colorSeries
+      : base.colorSeries
+  return { ...base, ...tokens, colorSeries: series }
+}

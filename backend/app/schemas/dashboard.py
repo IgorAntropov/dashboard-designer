@@ -18,6 +18,7 @@ class DashboardCreate(BaseModel):
 class DashboardUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     theme_key: str | None = Field(default=None, max_length=64)
+    theme_tokens: dict[str, Any] | None = None
     layout: dict[str, Any] | None = None
     data_bindings: dict[str, Any] | None = None
     data_source: dict[str, Any] | None = None
@@ -31,6 +32,7 @@ class DashboardOut(BaseModel):
     title: str
     slug: str
     theme_key: str
+    theme_tokens: dict[str, Any] | None
     layout: dict[str, Any]
     data_bindings: dict[str, Any]
     data_source: dict[str, Any]

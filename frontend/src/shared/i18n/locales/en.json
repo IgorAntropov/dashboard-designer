@@ -68,7 +68,8 @@
     "exportPaid": "Export is available on paid plans.",
     "notFound": "Not found.",
     "server": "Server error. Please try again later.",
-    "generic": "Something went wrong. Please try again."
+    "generic": "Something went wrong. Please try again.",
+    "customThemePaid": "Custom themes are available on paid plans."
   },
   "toast": {
     "close": "Close"
@@ -204,6 +205,16 @@
     "undo": "Undo",
     "redo": "Redo"
   },
-  "theme": { "system": "System", "light": "Light", "dark": "Dark" },
+  "theme": { "system": "System", "light": "Light", "dark": "Dark", "custom": "Custom" },
+  "themeEditor": {
+    "title": "Custom theme",
+    "background": "Background",
+    "surface": "Surface",
+    "text": "Text",
+    "muted": "Muted",
+    "accent": "Accent",
+    "series": "Series",
+    "font": "Font"
+  },
   "language": { "label": "Language" }
 }

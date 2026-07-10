@@ -22,7 +22,7 @@ export {
 export { buildChartOption } from './option'
 export { buildGeoOption, ensureMap } from './map'
 export { MAP_SCOPES, DEFAULT_MAP_SCOPE, mapUrlFor, scopeKeyOf } from './maps/scopes'
-export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme } from './themes'
+export { DASHBOARD_THEMES, DEFAULT_THEME_KEY, getTheme, resolveTheme } from './themes'
 
 const CHART_TYPES = new Set([
   'bar-chart',

@@ -176,6 +176,7 @@ export interface components {
       title: string
       slug: string
       theme_key: string
+      theme_tokens?: { [key: string]: unknown } | null
       layout: { [key: string]: unknown }
       data_bindings: { [key: string]: unknown }
       data_source: { [key: string]: unknown }
@@ -193,6 +194,7 @@ export interface components {
     DashboardUpdate: {
       title?: string | null
       theme_key?: string | null
+      theme_tokens?: { [key: string]: unknown } | null
       layout?: { [key: string]: unknown } | null
       data_bindings?: { [key: string]: unknown } | null
       data_source?: { [key: string]: unknown } | null

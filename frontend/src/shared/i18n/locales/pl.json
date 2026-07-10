@@ -68,7 +68,8 @@
     "exportPaid": "Eksport dostępny w planach płatnych.",
     "notFound": "Nie znaleziono.",
     "server": "Błąd serwera. Spróbuj ponownie później.",
-    "generic": "Coś poszło nie tak. Spróbuj ponownie."
+    "generic": "Coś poszło nie tak. Spróbuj ponownie.",
+    "customThemePaid": "Własne motywy dostępne w planach płatnych."
   },
   "toast": {
     "close": "Zamknij"
@@ -204,6 +205,16 @@
     "undo": "Cofnij",
     "redo": "Ponów"
   },
-  "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny" },
+  "theme": { "system": "Systemowy", "light": "Jasny", "dark": "Ciemny", "custom": "Własny" },
+  "themeEditor": {
+    "title": "Własny motyw",
+    "background": "Tło",
+    "surface": "Powierzchnia",
+    "text": "Tekst",
+    "muted": "Stonowany",
+    "accent": "Akcent",
+    "series": "Serie",
+    "font": "Czcionka"
+  },
   "language": { "label": "Język" }
 }

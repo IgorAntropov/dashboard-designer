@@ -68,7 +68,8 @@
     "exportPaid": "Export ist in kostenpflichtigen Tarifen verfügbar.",
     "notFound": "Nicht gefunden.",
     "server": "Serverfehler. Bitte später erneut versuchen.",
-    "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+    "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+    "customThemePaid": "Eigene Themes sind in kostenpflichtigen Tarifen verfügbar."
   },
   "toast": {
     "close": "Schließen"
@@ -204,6 +205,16 @@
     "undo": "Rückgängig",
     "redo": "Wiederholen"
   },
-  "theme": { "system": "System", "light": "Hell", "dark": "Dunkel" },
+  "theme": { "system": "System", "light": "Hell", "dark": "Dunkel", "custom": "Eigene" },
+  "themeEditor": {
+    "title": "Eigenes Theme",
+    "background": "Hintergrund",
+    "surface": "Fläche",
+    "text": "Text",
+    "muted": "Gedämpft",
+    "accent": "Akzent",
+    "series": "Reihen",
+    "font": "Schrift"
+  },
   "language": { "label": "Sprache" }
 }

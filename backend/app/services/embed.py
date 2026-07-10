@@ -35,6 +35,7 @@ class EmbedService:
         return PublishedConfig(
             dashboard_id=str(dashboard.id),
             theme_key=dashboard.theme_key,
+            theme_tokens=dashboard.theme_tokens,
             layout=dashboard.layout,
             data_source=dashboard.data_source,
             attribution=attribution,

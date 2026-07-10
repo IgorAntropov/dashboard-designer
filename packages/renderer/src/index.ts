@@ -5,11 +5,14 @@ import { buildGeoOption, ensureMap, mapNameForUrl } from './map'
 import { mapUrlFor } from './maps/scopes'
 import { buildChartOption } from './option'
 import { rankRows } from './ranking'
+import { sortRows, tableColumns } from './table'
+import type { SortDirection } from './table'
 import type { RenderInput, WidgetHandle } from './types'
 
 export type { RenderInput, RenderTheme, WidgetHandle } from './types'
 export { formatKpiValue, deltaMeta } from './kpi'
 export { rankRows } from './ranking'
+export { tableColumns, sortRows } from './table'
 export {
   resolvePoints,
   resolveRegions,
@@ -344,9 +347,100 @@ function renderGeoMap(el: HTMLElement, input: RenderInput): WidgetHandle {
   }
 }
 
+function renderTable(el: HTMLElement, input: RenderInput): WidgetHandle {
+  let current = input
+  let sortKey: string | null = null
+  let sortDir: SortDirection = 'desc'
+
+  function draw(): void {
+    const columns = tableColumns(current)
+    const decimals =
+      typeof current.config.decimals === 'number' ? current.config.decimals : undefined
+    let rows = current.data
+    const active = columns.find((column) => column.key === sortKey)
+    if (active) {
+      rows = sortRows(rows, active, sortDir)
+    }
+
+    el.replaceChildren()
+    const wrap = document.createElement('div')
+    wrap.className = 'pk-table'
+
+    const table = document.createElement('table')
+    table.className = 'pk-table__el'
+
+    const thead = document.createElement('thead')
+    const headRow = document.createElement('tr')
+    columns.forEach((column) => {
+      const th = document.createElement('th')
+      th.className = 'pk-table__th'
+      if (column.type === 'number') {
+        th.classList.add('pk-table__num')
+      }
+      th.style.color = current.theme.colorMuted
+      const arrow =
+        sortKey === column.key ? (sortDir === 'asc' ? ' ▲' : ' ▼') : ''
+      th.textContent = `${column.name}${arrow}`
+      th.addEventListener('click', () => {
+        if (sortKey === column.key) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc'
+        } else {
+          sortKey = column.key
+          sortDir = 'desc'
+        }
+        draw()
+      })
+      headRow.append(th)
+    })
+    thead.append(headRow)
+    table.append(thead)
+
+    const tbody = document.createElement('tbody')
+    for (const row of rows) {
+      const tr = document.createElement('tr')
+      columns.forEach((column) => {
+        const td = document.createElement('td')
+        td.className = 'pk-table__td'
+        td.style.color = current.theme.colorText
+        const raw = row[column.key]
+        if (column.type === 'number') {
+          td.classList.add('pk-table__num')
+          const value = Number(raw ?? 0)
+          td.textContent = Number.isFinite(value)
+            ? formatKpiValue(value, decimals)
+            : ''
+        } else {
+          td.textContent = raw != null ? String(raw) : ''
+        }
+        tr.append(td)
+      })
+      tbody.append(tr)
+    }
+    table.append(tbody)
+
+    wrap.append(table)
+    el.append(wrap)
+  }
+
+  draw()
+
+  return {
+    update: (next) => {
+      current = next
+      draw()
+    },
+    resize: () => undefined,
+    dispose: () => el.replaceChildren(),
+  }
+}
+
 export function renderWidget(el: HTMLElement, input: RenderInput): WidgetHandle {
   if (input.type === 'svg-map') {
     return renderGeoMap(el, input)
+  }
+
+  if (input.type === 'table') {
+    return renderTable(el, input)
   }
 
   if (CHART_TYPES.has(input.type)) {

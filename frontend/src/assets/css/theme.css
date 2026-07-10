@@ -823,6 +823,42 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+.pk-table {
+  height: 100%;
+  overflow: auto;
+}
+
+.pk-table__el {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.pk-table__th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--pk-surface);
+  border-bottom: 1px solid var(--pk-border);
+}
+
+.pk-table__td {
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--pk-border) 60%, transparent);
+  white-space: nowrap;
+}
+
+.pk-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 .palette {
   display: flex;
   flex-direction: column;

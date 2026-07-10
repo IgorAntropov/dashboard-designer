@@ -37,7 +37,10 @@
     "dashed": "Pointillé",
     "remove": "Supprimer",
     "limit": "Top N",
-    "direction": "Direction"
+    "direction": "Direction",
+    "columns": "Colonnes",
+    "columnName": "Nom de colonne",
+    "addColumn": "Ajouter une colonne"
   },
   "mapScope": {
     "world": "Monde",

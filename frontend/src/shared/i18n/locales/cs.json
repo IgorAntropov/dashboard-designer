@@ -37,7 +37,10 @@
     "dashed": "Čárkovaně",
     "remove": "Odebrat",
     "limit": "Top N",
-    "direction": "Směr"
+    "direction": "Směr",
+    "columns": "Sloupce",
+    "columnName": "Název sloupce",
+    "addColumn": "Přidat sloupec"
   },
   "mapScope": {
     "world": "Svět",

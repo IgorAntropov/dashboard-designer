@@ -37,7 +37,10 @@
     "dashed": "Gestrichelt",
     "remove": "Entfernen",
     "limit": "Top N",
-    "direction": "Richtung"
+    "direction": "Richtung",
+    "columns": "Spalten",
+    "columnName": "Spaltenname",
+    "addColumn": "Spalte hinzufügen"
   },
   "mapScope": {
     "world": "Welt",

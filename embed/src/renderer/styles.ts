@@ -45,6 +45,11 @@ export const ENGINE_CSS = `
 .pk-rank__track { width: 100%; height: 5px; border-radius: 999px; background-color: rgba(128,128,128,0.18); overflow: hidden; }
 .pk-rank__bar { height: 100%; border-radius: 999px; }
 .pk-rank__delta { flex: 0 0 auto; font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pk-table { height: 100%; overflow: auto; }
+.pk-table__el { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.pk-table__th { position: sticky; top: 0; z-index: 1; padding: 5px 8px; text-align: left; font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; background-color: var(--pk-surface, #f6f6f7); border-bottom: 1px solid rgba(0,0,0,0.1); }
+.pk-table__td { padding: 4px 8px; border-bottom: 1px solid rgba(128,128,128,0.18); white-space: nowrap; }
+.pk-table__num { text-align: right; font-variant-numeric: tabular-nums; }
 .pk-text { height: 100%; display: flex; align-items: center; padding: 4px 8px; }
 .pk-progress { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; padding: 4px 8px; }
 .pk-progress__label { font-size: 0.85rem; }

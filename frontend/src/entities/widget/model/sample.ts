@@ -38,6 +38,14 @@ export function sampleDataFor(type: string): Array<Record<string, unknown>> {
       { label: 'Татарстан', value: 1.7, delta: -3.7 },
     ]
   }
+  if (type === 'table') {
+    return [
+      { region: 'Москва', trips: 8.12, delta: 11.5 },
+      { region: 'Краснодарский край', trips: 6.74, delta: 16.1 },
+      { region: 'Санкт-Петербург', trips: 4.13, delta: 22.3 },
+      { region: 'Татарстан', trips: 1.7, delta: -3.7 },
+    ]
+  }
   if (type === 'text-block') {
     return []
   }

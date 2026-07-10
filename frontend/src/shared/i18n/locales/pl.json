@@ -37,7 +37,10 @@
     "dashed": "Przerywana",
     "remove": "Usuń",
     "limit": "Top N",
-    "direction": "Kierunek"
+    "direction": "Kierunek",
+    "columns": "Kolumny",
+    "columnName": "Nazwa kolumny",
+    "addColumn": "Dodaj kolumnę"
   },
   "mapScope": {
     "world": "Świat",

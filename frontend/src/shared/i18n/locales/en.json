@@ -37,7 +37,10 @@
     "dashed": "Dashed",
     "remove": "Remove",
     "limit": "Top N",
-    "direction": "Direction"
+    "direction": "Direction",
+    "columns": "Columns",
+    "columnName": "Column name",
+    "addColumn": "Add column"
   },
   "mapScope": {
     "world": "World",

@@ -37,7 +37,10 @@
     "dashed": "Tratteggiato",
     "remove": "Rimuovi",
     "limit": "Top N",
-    "direction": "Direzione"
+    "direction": "Direzione",
+    "columns": "Colonne",
+    "columnName": "Nome colonna",
+    "addColumn": "Aggiungi colonna"
   },
   "mapScope": {
     "world": "Mondo",

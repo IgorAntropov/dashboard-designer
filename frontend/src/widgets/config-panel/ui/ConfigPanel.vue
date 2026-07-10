@@ -126,6 +126,53 @@ function onSeriesDashed(index: number, event: Event): void {
   patchSeries(index, { dashed: (event.target as HTMLInputElement).checked })
 }
 
+interface ColumnItem {
+  key: string
+  name?: string
+  type?: string
+}
+
+const COLUMN_TYPES = ['text', 'number']
+
+function columnsList(): ColumnItem[] {
+  const raw = widget.value?.config.columns
+  return Array.isArray(raw) ? (raw as ColumnItem[]) : []
+}
+
+function setColumns(next: ColumnItem[]): void {
+  if (widget.value) {
+    store.updateConfig(widget.value.id, 'columns', next)
+  }
+}
+
+function addColumn(): void {
+  setColumns([...columnsList(), { key: '', name: '', type: 'text' }])
+}
+
+function removeColumn(index: number): void {
+  setColumns(columnsList().filter((_, position) => position !== index))
+}
+
+function patchColumn(index: number, patch: Partial<ColumnItem>): void {
+  setColumns(
+    columnsList().map((item, position) =>
+      position === index ? { ...item, ...patch } : item,
+    ),
+  )
+}
+
+function onColumnKey(index: number, event: Event): void {
+  patchColumn(index, { key: (event.target as HTMLInputElement).value })
+}
+
+function onColumnName(index: number, event: Event): void {
+  patchColumn(index, { name: (event.target as HTMLInputElement).value })
+}
+
+function onColumnType(index: number, event: Event): void {
+  patchColumn(index, { type: (event.target as HTMLSelectElement).value })
+}
+
 function onMapScope(event: Event): void {
   if (widget.value) {
     store.updateConfig(
@@ -393,6 +440,67 @@ function onDataKey(key: string, event: Event): void {
               :value="typeof widget.config.decimals === 'number' ? widget.config.decimals : ''"
               @input="(event) => onConfigNumber('decimals', event)"
             >
+          </div>
+        </div>
+      </template>
+
+      <template v-if="widget.type === 'table'">
+        <div class="mb-3">
+          <label class="form-label small">{{ $t('config.decimals') }}</label>
+          <input
+            type="number"
+            min="0"
+            max="6"
+            class="form-control form-control-sm"
+            :value="typeof widget.config.decimals === 'number' ? widget.config.decimals : ''"
+            @input="(event) => onConfigNumber('decimals', event)"
+          >
+        </div>
+
+        <div class="config-field">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="config-field__name">{{ $t('config.columns') }}</span>
+            <AppButton size="sm" variant="ghost" icon="plus" @click="addColumn">
+              {{ $t('config.addColumn') }}
+            </AppButton>
+          </div>
+
+          <div
+            v-for="(item, index) in columnsList()"
+            :key="index"
+            class="pk-series"
+          >
+            <input
+              class="form-control form-control-sm mb-1"
+              :value="item.key"
+              :placeholder="$t('config.dataKey')"
+              @input="(event) => onColumnKey(index, event)"
+            >
+            <input
+              class="form-control form-control-sm mb-1"
+              :value="item.name ?? ''"
+              :placeholder="$t('config.columnName')"
+              @input="(event) => onColumnName(index, event)"
+            >
+            <div class="d-flex gap-2 align-items-center">
+              <select
+                class="form-select form-select-sm"
+                :value="item.type === 'number' ? 'number' : 'text'"
+                @change="(event) => onColumnType(index, event)"
+              >
+                <option v-for="option in COLUMN_TYPES" :key="option" :value="option">
+                  {{ option }}
+                </option>
+              </select>
+              <AppButton
+                size="sm"
+                variant="ghost"
+                icon="trash"
+                icon-only
+                :aria-label="$t('config.remove')"
+                @click="removeColumn(index)"
+              />
+            </div>
           </div>
         </div>
       </template>

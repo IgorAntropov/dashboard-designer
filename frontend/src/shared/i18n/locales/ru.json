@@ -37,7 +37,10 @@
     "dashed": "Пунктир",
     "remove": "Удалить",
     "limit": "Топ-N",
-    "direction": "Направление"
+    "direction": "Направление",
+    "columns": "Столбцы",
+    "columnName": "Название столбца",
+    "addColumn": "Добавить столбец"
   },
   "mapScope": {
     "world": "Мир",

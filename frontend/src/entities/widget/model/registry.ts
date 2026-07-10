@@ -166,6 +166,15 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultBinding: RANK_BINDING,
   },
   {
+    key: 'table',
+    label: 'Table',
+    category: 'data',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: { title: 'Table', columns: [] },
+    defaultSchema: {},
+    defaultBinding: {},
+  },
+  {
     key: 'text-block',
     label: 'Text',
     category: 'text',

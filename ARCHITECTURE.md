@@ -277,3 +277,14 @@ scaling), unit-tested in `ranking.test.ts`. `renderRanking` (DOM, theme colors i
 `assets/css/theme.css` and the embed `renderer/styles.ts`. The registry adds the `ranking` type
 (label/value/delta schema) and `data` to `WIDGET_CATEGORIES`; `sampleDataFor` returns region-style rows;
 the config panel exposes limit / direction (leaders vs bottom) / unit / decimals.
+
+Data table (5.7): a `table` widget (data category) renders a sortable multi-column table. Pure logic in
+`packages/renderer/table.ts`: `tableColumns` (from `config.columns: [{key,name,type}]` or inferred from
+the first data row, numeric vs text by value) and `sortRows` (numeric or localeCompare, non-mutating),
+unit-tested in `table.test.ts`. Rendering needs local sort state, so — like the geo map — `table` has a
+dedicated stateful `renderTable` handle (not a plain DOM_RENDERER): it draws a `<table>` with a sticky,
+clickable header (toggles asc/desc, shows ▲/▼), right-aligns and formats numeric cells via
+`formatKpiValue` (`config.decimals`), and re-renders on header click or `update`. Styled by `.pk-table*`
+in both `assets/css/theme.css` and the embed `renderer/styles.ts`. The registry adds the `table` type
+(empty schema — columns drive it) with a `columns` config; `sampleDataFor` returns region rows; the
+config panel has a columns editor (add/remove; key/name/type text|number) plus decimals.

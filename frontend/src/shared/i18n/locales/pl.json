@@ -13,7 +13,10 @@
     "link": "Link",
     "snippet": "Fragment iframe",
     "copy": "Kopiuj",
-    "copied": "Skopiowano"
+    "copied": "Skopiowano",
+    "analytics": "Analityka",
+    "loads": "Wczytania",
+    "noData": "Brak danych"
   },
   "config": {
     "heading": "Widżet",

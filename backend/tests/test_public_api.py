@@ -41,3 +41,24 @@ async def test_public_config_after_publish(client: AsyncClient) -> None:
 async def test_public_config_unknown_token_returns_404(client: AsyncClient) -> None:
     response = await client.get("/api/v1/public/embed/does-not-exist")
     assert response.status_code == 404
+
+
+async def test_embed_loads_are_counted_in_analytics(client: AsyncClient) -> None:
+    dashboard_id, token = await _publish(client)
+
+    await client.get(f"/api/v1/public/embed/{token}")
+    await client.get(f"/api/v1/public/embed/{token}")
+
+    login = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "embed@example.com", "password": "password123"},
+    )
+    headers = {"Authorization": f"Bearer {login.json()['access_token']}"}
+    analytics = await client.get(
+        f"/api/v1/dashboards/{dashboard_id}/analytics", headers=headers
+    )
+
+    assert analytics.status_code == 200
+    body = analytics.json()
+    assert body["total"] == 2
+    assert sum(day["count"] for day in body["days"]) == 2

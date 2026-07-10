@@ -311,3 +311,15 @@ writes tokens to the store; the editor page saves `theme_tokens` in autosave and
 Embed engine resolves the theme the same way from `config.theme_tokens`. Errors plugin maps
 `custom_theme_paid` → `errors.customThemePaid` toast; all labels are i18n (`theme.custom`,
 `themeEditor.*`) across 7 locales. NOTE: migration 0007 requires a backend container restart to apply.
+
+Embed analytics (5.10): embed loads are counted per dashboard per day. `embed_events` (dashboard_id,
+day, count, unique(dashboard_id, day); model + migration 0008 + registered in models/__init__).
+`AnalyticsService.record_load` does a portable upsert (UPDATE count+1; INSERT if no row) so it works on
+both SQLite (tests) and Postgres; the public config route (`GET /public/embed/{token}`) calls it on
+every load — cache hit or miss — wrapped fail-open so analytics never breaks an embed. Owners read
+`GET /dashboards/{id}/analytics` (ownership-checked) → `{total, days:[{day,count}]}` for the last 30
+days (`AnalyticsService.get_analytics`). Frontend: `getAnalytics` repository call + typed schema; the
+dashboards page fetches on opening the embed modal and shows the total plus a compact daily bar chart
+(`.embed-bars`, CSS). i18n `embed.analytics|loads|noData` across 7 locales. Phase 5 is complete;
+multi-page dashboards and drill-down were intentionally dropped. NOTE: migration 0008 needs a backend
+container restart to apply.

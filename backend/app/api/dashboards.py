@@ -8,8 +8,15 @@ from app.api.deps import CurrentUserDep, SessionDep
 from app.core.errors import AppError
 from app.models.dashboard import Dashboard
 from app.models.enums import SubscriptionTier
-from app.schemas.dashboard import DashboardCreate, DashboardOut, DashboardUpdate
+from app.schemas.dashboard import (
+    DashboardAnalytics,
+    DashboardCreate,
+    DashboardOut,
+    DashboardUpdate,
+    DayCount,
+)
 from app.schemas.embed import PublishRequest, PublishResponse
+from app.services.analytics import AnalyticsService
 from app.services.dashboard import (
     DashboardCustomThemeError,
     DashboardNotFoundError,
@@ -142,6 +149,23 @@ async def export_dashboard(
         headers={
             "Content-Disposition": f'attachment; filename="{dashboard.slug}.json"'
         },
+    )
+
+
+@router.get("/{dashboard_id}/analytics", response_model=DashboardAnalytics)
+async def dashboard_analytics(
+    dashboard_id: uuid.UUID, current_user: CurrentUserDep, session: SessionDep
+) -> DashboardAnalytics:
+    try:
+        dashboard = await DashboardService(session).get_owned(
+            current_user, dashboard_id
+        )
+    except DashboardNotFoundError as exc:
+        raise _NOT_FOUND from exc
+    total, daily = await AnalyticsService(session).get_analytics(dashboard.id)
+    return DashboardAnalytics(
+        total=total,
+        days=[DayCount(day=day, count=count) for day, count in daily],
     )
 
 

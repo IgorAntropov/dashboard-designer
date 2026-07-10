@@ -2,6 +2,7 @@ export {
   createDashboard,
   deleteDashboard,
   exportDashboard,
+  getAnalytics,
   getDashboard,
   listDashboards,
   publishDashboard,
@@ -9,6 +10,7 @@ export {
 } from './api/repository'
 export type {
   Dashboard,
+  DashboardAnalytics,
   DashboardCreate,
   DashboardUpdate,
   PublishResponse,

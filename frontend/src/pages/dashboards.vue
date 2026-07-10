@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
-import type { Dashboard } from '@entities/dashboard'
+import type { Dashboard, DashboardAnalytics } from '@entities/dashboard'
 import {
   createDashboard,
   DashboardCard,
   deleteDashboard,
   exportDashboard,
+  getAnalytics,
   listDashboards,
   publishDashboard,
 } from '@entities/dashboard'
@@ -49,6 +50,10 @@ const allowedDomains = ref('')
 const embedToken = ref<string | null>(null)
 const publishing = ref(false)
 const copied = ref('')
+const analytics = ref<DashboardAnalytics | null>(null)
+const analyticsMax = computed(() =>
+  Math.max(1, ...(analytics.value?.days ?? []).map((day) => day.count)),
+)
 
 const embedUrl = computed(() =>
   embedToken.value && import.meta.client
@@ -66,7 +71,11 @@ function openEmbed(id: string): void {
   allowedDomains.value = ''
   embedToken.value = null
   copied.value = ''
+  analytics.value = null
   embedOpen.value = true
+  void getAnalytics(id).then((result) => {
+    analytics.value = result
+  })
 }
 
 async function doPublish(): Promise<void> {
@@ -209,6 +218,25 @@ useHead({ title: computed(() => t('dashboards.title')) })
     </AppModal>
 
     <AppModal v-model="embedOpen" :title="$t('embed.title')">
+      <div v-if="analytics" class="mb-3">
+        <div class="d-flex justify-content-between align-items-baseline mb-1">
+          <label class="form-label small mb-0">{{ $t('embed.analytics') }}</label>
+          <span class="small text-muted">
+            {{ $t('embed.loads') }}: {{ analytics.total }}
+          </span>
+        </div>
+        <div v-if="analytics.days.length" class="embed-bars">
+          <span
+            v-for="day in analytics.days"
+            :key="day.day"
+            class="embed-bars__bar"
+            :style="{ height: `${Math.round((day.count / analyticsMax) * 100)}%` }"
+            :title="`${day.day}: ${day.count}`"
+          />
+        </div>
+        <p v-else class="small text-muted mb-0">{{ $t('embed.noData') }}</p>
+      </div>
+
       <div class="mb-3">
         <label class="form-label small">{{ $t('embed.domains') }}</label>
         <input
@@ -232,7 +260,12 @@ useHead({ title: computed(() => t('dashboards.title')) })
         </div>
 
         <label class="form-label small">{{ $t('embed.snippet') }}</label>
-        <textarea class="form-control form-control-sm mb-2" rows="3" readonly>{{ iframeSnippet }}</textarea>
+        <textarea
+          class="form-control form-control-sm mb-2"
+          rows="3"
+          readonly
+          :value="iframeSnippet"
+        />
         <AppButton
           variant="secondary"
           size="sm"

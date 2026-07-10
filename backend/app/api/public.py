@@ -1,3 +1,4 @@
+import uuid
 from typing import Any
 
 from fastapi import (
@@ -8,9 +9,12 @@ from fastapi import (
     status,
 )
 
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.api.deps import SessionDep
 from app.core.redis import get_redis
 from app.schemas.embed import PublishedConfig
+from app.services.analytics import AnalyticsService
 from app.services.embed import EmbedService
 
 router = APIRouter(prefix="/public", tags=["public"])
@@ -53,7 +57,9 @@ async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
     except Exception:
         cached = None
     if cached:
-        return PublishedConfig.model_validate_json(cached)
+        config = PublishedConfig.model_validate_json(cached)
+        await _record_load(session, config.dashboard_id)
+        return config
 
     config = await EmbedService(session).get_config(token)
     if config is None:
@@ -66,7 +72,15 @@ async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
     except Exception:
         pass
 
+    await _record_load(session, config.dashboard_id)
     return config
+
+
+async def _record_load(session: AsyncSession, dashboard_id: str) -> None:
+    try:
+        await AnalyticsService(session).record_load(uuid.UUID(dashboard_id))
+    except Exception:
+        pass
 
 
 @router.websocket("/embed/{token}/live")

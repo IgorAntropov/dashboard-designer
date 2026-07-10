@@ -565,6 +565,24 @@ body {
   color: var(--pk-muted);
 }
 
+.embed-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 60px;
+  padding: 0.4rem;
+  border: 1px solid var(--pk-border);
+  border-radius: 0.5rem;
+  background-color: var(--pk-surface);
+}
+
+.embed-bars__bar {
+  flex: 1 1 0;
+  min-height: 2px;
+  border-radius: 2px 2px 0 0;
+  background-color: var(--pk-accent);
+}
+
 .pk-canvas {
   background-color: var(--pk-bg);
   color: var(--pk-text);

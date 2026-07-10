@@ -109,6 +109,17 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/v1/dashboards/{dashboard_id}/analytics': {
+    parameters: { query?: never; header?: never; path?: never; cookie?: never }
+    get: operations['dashboard_analytics_api_v1_dashboards__dashboard_id__analytics_get']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/v1/dashboards/{dashboard_id}/publish': {
     parameters: { query?: never; header?: never; path?: never; cookie?: never }
     get?: never
@@ -207,6 +218,11 @@ export interface components {
       token: string
       allowed_domains: string[]
       status: 'draft' | 'published'
+    }
+    DayCount: { day: string; count: number }
+    DashboardAnalytics: {
+      total: number
+      days: components['schemas']['DayCount'][]
     }
   }
   responses: never
@@ -374,6 +390,23 @@ export interface operations {
       200: {
         headers: { [name: string]: unknown }
         content: { 'application/json': { [key: string]: unknown } }
+      }
+    }
+  }
+  dashboard_analytics_api_v1_dashboards__dashboard_id__analytics_get: {
+    parameters: {
+      query?: never
+      header?: never
+      path: { dashboard_id: string }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      200: {
+        headers: { [name: string]: unknown }
+        content: {
+          'application/json': components['schemas']['DashboardAnalytics']
+        }
       }
     }
   }

@@ -13,7 +13,10 @@
     "link": "Odkaz",
     "snippet": "Úryvek iframe",
     "copy": "Kopírovat",
-    "copied": "Zkopírováno"
+    "copied": "Zkopírováno",
+    "analytics": "Analytika",
+    "loads": "Načtení",
+    "noData": "Zatím žádná data"
   },
   "config": {
     "heading": "Widget",

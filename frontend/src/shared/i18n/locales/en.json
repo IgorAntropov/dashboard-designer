@@ -13,7 +13,10 @@
     "link": "Embed link",
     "snippet": "iframe snippet",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "analytics": "Analytics",
+    "loads": "Loads",
+    "noData": "No data yet"
   },
   "config": {
     "heading": "Widget",

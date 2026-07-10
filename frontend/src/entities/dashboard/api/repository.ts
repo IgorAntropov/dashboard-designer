@@ -55,6 +55,17 @@ export async function publishDashboard(
   return data ?? null
 }
 
+export type DashboardAnalytics = components['schemas']['DashboardAnalytics']
+
+export async function getAnalytics(
+  id: string,
+): Promise<DashboardAnalytics | null> {
+  const { data } = await api.GET('/api/v1/dashboards/{dashboard_id}/analytics', {
+    params: { path: { dashboard_id: id } },
+  })
+  return data ?? null
+}
+
 export async function exportDashboard(
   id: string,
 ): Promise<Record<string, unknown> | null> {

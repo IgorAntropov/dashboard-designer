@@ -1,5 +1,6 @@
 from app.db.base import Base
 from app.models.dashboard import Dashboard
+from app.models.embed_event import EmbedEvent
 from app.models.embed_token import EmbedToken
 from app.models.oauth_account import OAuthAccount
 from app.models.processed_webhook import ProcessedWebhook
@@ -12,6 +13,7 @@ metadata = Base.metadata
 __all__ = [
     "Base",
     "Dashboard",
+    "EmbedEvent",
     "EmbedToken",
     "OAuthAccount",
     "ProcessedWebhook",

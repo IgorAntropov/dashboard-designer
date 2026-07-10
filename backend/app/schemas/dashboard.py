@@ -25,6 +25,16 @@ class DashboardUpdate(BaseModel):
     status: DashboardStatus | None = None
 
 
+class DayCount(BaseModel):
+    day: str
+    count: int
+
+
+class DashboardAnalytics(BaseModel):
+    total: int
+    days: list[DayCount]
+
+
 class DashboardOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

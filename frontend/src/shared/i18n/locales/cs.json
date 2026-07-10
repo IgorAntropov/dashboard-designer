@@ -205,7 +205,12 @@
     "new": "Nový",
     "cancel": "Zrušit",
     "confirmDelete": "Smazat dashboard?",
-    "export": "Exportovat"
+    "export": "Exportovat",
+    "published": "Publikováno",
+    "draft": "Koncept",
+    "widgetsCount": "widgetů",
+    "countLabel": "dashboardů",
+    "newFull": "Nový dashboard"
   },
   "editor": {
     "title": "Editor",

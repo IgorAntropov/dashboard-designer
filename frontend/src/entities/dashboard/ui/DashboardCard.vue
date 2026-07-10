@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { AppButton, Logo } from '@shared/ui'
+import { AppButton } from '@shared/ui'
 
 import type { Dashboard } from '../api/repository'
 
@@ -27,67 +27,80 @@ const tiles = computed<PreviewTile[]>(() => {
   return Array.isArray(layout?.widgets) ? layout.widgets : []
 })
 
+const published = computed(() => props.dashboard.status === 'published')
+
 function styleFor(tile: PreviewTile): Record<string, string> {
   return {
     left: `${(tile.x / 12) * 100}%`,
     width: `${(tile.w / 12) * 100}%`,
-    top: `${tile.y * 14}px`,
-    height: `${tile.h * 14}px`,
+    top: `${tile.y * 8}px`,
+    height: `${tile.h * 8}px`,
   }
 }
 </script>
 
 <template>
-  <div class="dash-card">
-    <NuxtLink :to="`/editor/${dashboard.id}`" class="dash-card__link">
-      <div class="dash-card__preview">
-        <div
-          v-for="(tile, index) in tiles"
-          :key="index"
-          class="dash-card__tile"
-          :style="styleFor(tile)"
-        />
-        <div v-if="tiles.length === 0" class="dash-card__empty">
-          <Logo :show-word="false" />
-        </div>
-      </div>
+  <article class="dash-card">
+    <NuxtLink :to="`/editor/${dashboard.id}`" class="dash-card__preview">
+      <div
+        v-for="(tile, index) in tiles"
+        :key="index"
+        class="dash-card__tile"
+        :style="styleFor(tile)"
+      />
+      <span v-if="tiles.length === 0" class="dash-card__blank">
+        {{ $t('dashboards.empty') }}
+      </span>
     </NuxtLink>
 
     <div class="dash-card__body">
-      <NuxtLink :to="`/editor/${dashboard.id}`" class="dash-card__title">
-        {{ dashboard.title }}
-      </NuxtLink>
+      <div class="dash-card__row">
+        <NuxtLink :to="`/editor/${dashboard.id}`" class="dash-card__title">
+          {{ dashboard.title }}
+        </NuxtLink>
+        <span
+          class="pk-badge"
+          :class="published ? 'pk-badge--success' : 'pk-badge--neutral'"
+        >
+          {{ published ? $t('dashboards.published') : $t('dashboards.draft') }}
+        </span>
+      </div>
 
-      <div class="dash-card__actions">
-        <AppButton
-          v-if="props.canExport"
-          variant="secondary"
-          size="sm"
-          icon="download"
-          icon-only
-          :aria-label="$t('dashboards.export')"
-          :title="$t('dashboards.export')"
-          @click="emit('export', dashboard.id)"
-        />
-        <AppButton
-          variant="secondary"
-          size="sm"
-          icon="link"
-          icon-only
-          :aria-label="$t('embed.title')"
-          :title="$t('embed.title')"
-          @click="emit('embed', dashboard.id)"
-        />
-        <AppButton
-          variant="danger"
-          size="sm"
-          icon="trash"
-          icon-only
-          :aria-label="$t('dashboards.delete')"
-          :title="$t('dashboards.delete')"
-          @click="emit('delete', dashboard.id)"
-        />
+      <div class="dash-card__row">
+        <span class="dash-card__meta">
+          {{ tiles.length }} {{ $t('dashboards.widgetsCount') }}
+        </span>
+        <div class="dash-card__actions">
+          <AppButton
+            v-if="props.canExport"
+            variant="ghost"
+            size="sm"
+            icon="download"
+            icon-only
+            :aria-label="$t('dashboards.export')"
+            :title="$t('dashboards.export')"
+            @click="emit('export', dashboard.id)"
+          />
+          <AppButton
+            variant="ghost"
+            size="sm"
+            icon="link"
+            icon-only
+            :aria-label="$t('embed.title')"
+            :title="$t('embed.title')"
+            @click="emit('embed', dashboard.id)"
+          />
+          <AppButton
+            variant="ghost"
+            size="sm"
+            icon="trash"
+            icon-only
+            :aria-label="$t('dashboards.delete')"
+            :title="$t('dashboards.delete')"
+            @click="emit('delete', dashboard.id)"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </article>
 </template>

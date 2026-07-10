@@ -205,7 +205,12 @@
     "new": "Neu",
     "cancel": "Abbrechen",
     "confirmDelete": "Dashboard löschen?",
-    "export": "Exportieren"
+    "export": "Exportieren",
+    "published": "Veröffentlicht",
+    "draft": "Entwurf",
+    "widgetsCount": "Widgets",
+    "countLabel": "Dashboards",
+    "newFull": "Neues Dashboard"
   },
   "editor": {
     "title": "Editor",

@@ -205,7 +205,12 @@
     "new": "New",
     "cancel": "Cancel",
     "confirmDelete": "Delete dashboard?",
-    "export": "Export"
+    "export": "Export",
+    "published": "Published",
+    "draft": "Draft",
+    "widgetsCount": "widgets",
+    "countLabel": "dashboards",
+    "newFull": "New dashboard"
   },
   "editor": {
     "title": "Editor",

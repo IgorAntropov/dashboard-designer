@@ -205,7 +205,12 @@
     "new": "Nouveau",
     "cancel": "Annuler",
     "confirmDelete": "Supprimer le tableau de bord ?",
-    "export": "Exporter"
+    "export": "Exporter",
+    "published": "Publié",
+    "draft": "Brouillon",
+    "widgetsCount": "widgets",
+    "countLabel": "tableaux de bord",
+    "newFull": "Nouveau tableau de bord"
   },
   "editor": {
     "title": "Éditeur",

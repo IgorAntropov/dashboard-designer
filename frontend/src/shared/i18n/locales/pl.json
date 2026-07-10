@@ -205,7 +205,12 @@
     "new": "Nowy",
     "cancel": "Anuluj",
     "confirmDelete": "Usunąć pulpit?",
-    "export": "Eksportuj"
+    "export": "Eksportuj",
+    "published": "Opublikowany",
+    "draft": "Szkic",
+    "widgetsCount": "widżetów",
+    "countLabel": "dashboardów",
+    "newFull": "Nowy dashboard"
   },
   "editor": {
     "title": "Edytor",

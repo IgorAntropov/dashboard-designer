@@ -12,7 +12,7 @@ import {
   publishDashboard,
 } from '@entities/dashboard'
 import { useSessionStore } from '@entities/session'
-import { AppButton, AppModal } from '@shared/ui'
+import { AppButton, AppEmpty, AppIcon, AppModal } from '@shared/ui'
 
 const { t } = useI18n()
 const session = useSessionStore()
@@ -158,21 +158,32 @@ useHead({ title: computed(() => t('dashboards.title')) })
 
 <template>
   <div class="container-xxl">
-    <div class="d-flex align-items-center gap-3 mb-4">
-      <h1 class="h3 mb-0">{{ $t('dashboards.title') }}</h1>
-      <AppButton
-        icon="plus"
-        icon-only
-        :aria-label="$t('dashboards.new')"
-        :title="$t('dashboards.new')"
-        @click="openModal"
-      />
-    </div>
+    <header class="dash-head">
+      <div>
+        <h1 class="dash-head__title">{{ $t('dashboards.title') }}</h1>
+        <p class="dash-head__sub">
+          {{ dashboards.length }} {{ $t('dashboards.countLabel') }}
+        </p>
+      </div>
+      <AppButton icon="plus" @click="openModal">
+        {{ $t('dashboards.newFull') }}
+      </AppButton>
+    </header>
 
-    <p v-if="loading">{{ $t('dashboards.loading') }}</p>
-    <p v-else-if="dashboards.length === 0" class="text-muted">
-      {{ $t('dashboards.empty') }}
-    </p>
+    <p v-if="loading" class="text-muted">{{ $t('dashboards.loading') }}</p>
+
+    <AppEmpty
+      v-else-if="dashboards.length === 0"
+      icon="plus"
+      :title="$t('dashboards.empty')"
+    >
+      <template #action>
+        <AppButton icon="plus" @click="openModal">
+          {{ $t('dashboards.newFull') }}
+        </AppButton>
+      </template>
+    </AppEmpty>
+
     <div v-else class="dash-grid">
       <DashboardCard
         v-for="dashboard in dashboards"
@@ -183,6 +194,10 @@ useHead({ title: computed(() => t('dashboards.title')) })
         @embed="openEmbed"
         @export="onExport"
       />
+      <button type="button" class="dash-new" @click="openModal">
+        <span class="dash-new__icon"><AppIcon name="plus" /></span>
+        <span>{{ $t('dashboards.newFull') }}</span>
+      </button>
     </div>
 
     <AppModal v-model="modalOpen" :title="$t('dashboards.create')">

@@ -205,7 +205,12 @@
     "new": "Новый",
     "cancel": "Отмена",
     "confirmDelete": "Удалить дашборд?",
-    "export": "Экспорт"
+    "export": "Экспорт",
+    "published": "Опубликован",
+    "draft": "Черновик",
+    "widgetsCount": "виджетов",
+    "countLabel": "дашбордов",
+    "newFull": "Новый дашборд"
   },
   "editor": {
     "title": "Редактор",

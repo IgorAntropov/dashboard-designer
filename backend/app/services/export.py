@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -31,7 +31,7 @@ class ExportService:
             "theme_key": dashboard.theme_key,
             "theme_tokens": dashboard.theme_tokens,
             "layout": dashboard.layout,
-            "exported_at": datetime.now(tz=timezone.utc).isoformat(),
+            "exported_at": datetime.now(tz=UTC).isoformat(),
         }
         job.status = "done"
         await self._session.flush()

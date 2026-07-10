@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any, Literal
 
 from jose import JWTError, jwt
@@ -14,7 +14,7 @@ TokenType = Literal["access", "refresh"]
 def _create_token(subject: str, token_type: TokenType, ttl_seconds: int) -> tuple[str, str]:
     settings = get_settings()
     jti = str(uuid.uuid4())
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     payload: dict[str, Any] = {
         "sub": subject,
         "type": token_type,

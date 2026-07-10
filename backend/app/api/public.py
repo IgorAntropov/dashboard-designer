@@ -11,7 +11,6 @@ from fastapi import (
     WebSocketDisconnect,
     status,
 )
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import SessionDep

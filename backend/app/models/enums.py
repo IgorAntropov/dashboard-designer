@@ -1,12 +1,12 @@
 import enum
 
 
-class SubscriptionTier(str, enum.Enum):
+class SubscriptionTier(enum.StrEnum):
     free = "free"
     pro = "pro"
     unlimited = "unlimited"
 
 
-class DashboardStatus(str, enum.Enum):
+class DashboardStatus(enum.StrEnum):
     draft = "draft"
     published = "published"

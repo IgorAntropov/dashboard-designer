@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,7 +12,7 @@ class AnalyticsService:
         self._session = session
 
     async def record_load(self, dashboard_id: uuid.UUID) -> None:
-        today = datetime.now(tz=timezone.utc).date()
+        today = datetime.now(tz=UTC).date()
         result = await self._session.execute(
             update(EmbedEvent)
             .where(
@@ -30,7 +30,7 @@ class AnalyticsService:
     async def get_analytics(
         self, dashboard_id: uuid.UUID, days: int = 30
     ) -> tuple[int, list[tuple[str, int]]]:
-        since = datetime.now(tz=timezone.utc).date() - timedelta(days=days - 1)
+        since = datetime.now(tz=UTC).date() - timedelta(days=days - 1)
         rows = await self._session.execute(
             select(EmbedEvent.day, EmbedEvent.count)
             .where(

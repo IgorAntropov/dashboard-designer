@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -63,7 +63,7 @@ class BillingService:
         tier = event.tier
         assert tier is not None
         user.subscription_tier = tier
-        period_end = datetime.now(tz=timezone.utc) + timedelta(days=PERIOD_DAYS)
+        period_end = datetime.now(tz=UTC) + timedelta(days=PERIOD_DAYS)
 
         subscription = await self._subscription(user)
         if subscription is None:

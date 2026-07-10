@@ -168,7 +168,8 @@
     "noAccount": "Nemáte účet?",
     "haveAccount": "Už máte účet?",
     "failed": "Nezdařilo se. Zkontrolujte údaje.",
-    "continueWith": "nebo pokračovat přes"
+    "continueWith": "nebo pokračovat přes",
+    "tagline": "Tvůrce dashboardů"
   },
   "profile": {
     "title": "Profil",

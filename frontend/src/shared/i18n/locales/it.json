@@ -168,7 +168,8 @@
     "noAccount": "Non hai un account?",
     "haveAccount": "Hai già un account?",
     "failed": "Operazione fallita. Controlla i dati.",
-    "continueWith": "oppure continua con"
+    "continueWith": "oppure continua con",
+    "tagline": "Costruttore di dashboard"
   },
   "profile": {
     "title": "Profilo",

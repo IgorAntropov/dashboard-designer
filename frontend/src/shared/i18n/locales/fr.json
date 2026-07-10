@@ -168,7 +168,8 @@
     "noAccount": "Pas de compte ?",
     "haveAccount": "Déjà un compte ?",
     "failed": "Échec. Vérifiez vos informations.",
-    "continueWith": "ou continuer avec"
+    "continueWith": "ou continuer avec",
+    "tagline": "Constructeur de tableaux de bord"
   },
   "profile": {
     "title": "Profil",

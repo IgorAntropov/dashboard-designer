@@ -168,7 +168,8 @@
     "noAccount": "No account?",
     "haveAccount": "Already have an account?",
     "failed": "Failed. Check your details.",
-    "continueWith": "or continue with"
+    "continueWith": "or continue with",
+    "tagline": "Dashboard builder"
   },
   "profile": {
     "title": "Profile",

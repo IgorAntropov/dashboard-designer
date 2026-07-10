@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 
 import { OAuthButtons } from '@features/oauth-login'
 import { useSessionStore } from '@entities/session'
-import { AppButton, PasswordField } from '@shared/ui'
+import { AppButton, Logo, PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
@@ -32,7 +32,12 @@ useHead({ title: computed(() => t('auth.loginTitle')) })
 <template>
   <section class="auth-center">
     <div class="auth-card">
-      <h1 class="h3 mb-4 text-center">{{ $t('auth.loginTitle') }}</h1>
+      <div class="auth-brand">
+        <Logo class="auth-brand__logo" />
+        <p class="auth-brand__tagline">{{ $t('auth.tagline') }}</p>
+      </div>
+
+      <h1 class="h5 mb-4 text-center">{{ $t('auth.loginTitle') }}</h1>
 
       <form @submit.prevent="onSubmit">
         <div class="form-floating mb-3">

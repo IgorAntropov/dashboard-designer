@@ -168,7 +168,8 @@
     "noAccount": "Kein Konto?",
     "haveAccount": "Schon ein Konto?",
     "failed": "Fehlgeschlagen. Prüfe deine Angaben.",
-    "continueWith": "oder weiter mit"
+    "continueWith": "oder weiter mit",
+    "tagline": "Dashboard-Baukasten"
   },
   "profile": {
     "title": "Profil",

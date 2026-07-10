@@ -447,6 +447,51 @@ body {
   max-width: 400px;
 }
 
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.auth-brand__logo .pk-logo__mark {
+  width: 40px;
+  height: 40px;
+}
+
+.auth-brand__logo .pk-logo__word {
+  font-size: 1.6rem;
+}
+
+.auth-brand__tagline {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--pk-muted);
+}
+
+.auth-card .form-control {
+  background-color: var(--pk-bg);
+  border-color: var(--pk-border);
+  color: var(--pk-text);
+}
+
+.auth-card input:-webkit-autofill,
+.auth-card input:-webkit-autofill:hover,
+.auth-card input:-webkit-autofill:focus,
+.auth-card input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--pk-text);
+  caret-color: var(--pk-text);
+  border-color: var(--pk-border);
+  -webkit-box-shadow:
+    0 0 0 1000px rgba(255, 212, 0, 0.12) inset,
+    0 0 0 1000px var(--pk-bg) inset;
+  box-shadow:
+    0 0 0 1000px rgba(255, 212, 0, 0.12) inset,
+    0 0 0 1000px var(--pk-bg) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 .auth-oauth {
   margin-top: 1.25rem;
   display: flex;

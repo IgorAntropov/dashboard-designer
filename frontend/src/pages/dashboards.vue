@@ -48,6 +48,7 @@ const embedOpen = ref(false)
 const embedDashboardId = ref<string | null>(null)
 const allowedDomains = ref('')
 const embedToken = ref<string | null>(null)
+const embedIngestKey = ref<string | null>(null)
 const publishing = ref(false)
 const copied = ref('')
 const analytics = ref<DashboardAnalytics | null>(null)
@@ -70,6 +71,7 @@ function openEmbed(id: string): void {
   embedDashboardId.value = id
   allowedDomains.value = ''
   embedToken.value = null
+  embedIngestKey.value = null
   copied.value = ''
   analytics.value = null
   embedOpen.value = true
@@ -91,8 +93,18 @@ async function doPublish(): Promise<void> {
   publishing.value = false
   if (result) {
     embedToken.value = result.token
+    embedIngestKey.value = result.ingest_key
   }
 }
+
+const livePushSnippet = computed(() =>
+  embedToken.value && embedIngestKey.value && import.meta.client
+    ? `curl -X POST ${window.location.origin.replace(':3000', ':8000')}/api/v1/public/embed/${embedToken.value}/live \\
+  -H "X-Ingest-Key: ${embedIngestKey.value}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"series":[1,2,3]}'`
+    : '',
+)
 
 async function copy(text: string, key: string): Promise<void> {
   await navigator.clipboard.writeText(text)
@@ -273,6 +285,25 @@ useHead({ title: computed(() => t('dashboards.title')) })
         >
           {{ copied === 'snippet' ? $t('embed.copied') : $t('embed.copy') }}
         </AppButton>
+
+        <label class="form-label small mt-3">{{ $t('embed.ingestKey') }}</label>
+        <div class="input-group input-group-sm mb-2">
+          <input class="form-control" :value="embedIngestKey" readonly>
+          <AppButton
+            variant="secondary"
+            size="sm"
+            @click="copy(embedIngestKey ?? '', 'ingest')"
+          >
+            {{ copied === 'ingest' ? $t('embed.copied') : $t('embed.copy') }}
+          </AppButton>
+        </div>
+        <p class="small text-muted mb-1">{{ $t('embed.livePush') }}</p>
+        <textarea
+          class="form-control form-control-sm mb-2"
+          rows="4"
+          readonly
+          :value="livePushSnippet"
+        />
       </div>
 
       <template #footer>

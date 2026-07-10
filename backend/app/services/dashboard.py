@@ -124,11 +124,14 @@ class DashboardService:
             token = EmbedToken(
                 dashboard_id=dashboard.id,
                 token=secrets.token_urlsafe(32)[:64],
+                ingest_key=secrets.token_urlsafe(32)[:64],
                 allowed_domains=allowed_domains,
             )
             self._session.add(token)
         else:
             token.allowed_domains = allowed_domains
+            if not token.ingest_key:
+                token.ingest_key = secrets.token_urlsafe(32)[:64]
 
         await self._session.flush()
         return dashboard, token

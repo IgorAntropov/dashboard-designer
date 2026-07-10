@@ -216,6 +216,7 @@ export interface components {
     }
     PublishResponse: {
       token: string
+      ingest_key: string
       allowed_domains: string[]
       status: 'draft' | 'published'
     }

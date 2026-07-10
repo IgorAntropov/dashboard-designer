@@ -1,8 +1,11 @@
+import asyncio
+import json
 import uuid
 from typing import Any
 
 from fastapi import (
     APIRouter,
+    Header,
     HTTPException,
     WebSocket,
     WebSocketDisconnect,
@@ -20,14 +23,17 @@ from app.services.embed import EmbedService
 router = APIRouter(prefix="/public", tags=["public"])
 
 CACHE_TTL_SECONDS = 60
+LIVE_CHANNEL_PREFIX = "embed:live:"
 
 
 class LiveChannelManager:
     def __init__(self) -> None:
         self._channels: dict[str, set[WebSocket]] = {}
+        self._subscriber: asyncio.Task[None] | None = None
 
     def connect(self, token: str, websocket: WebSocket) -> None:
         self._channels.setdefault(token, set()).add(websocket)
+        self._ensure_subscriber()
 
     def disconnect(self, token: str, websocket: WebSocket) -> None:
         connections = self._channels.get(token)
@@ -36,12 +42,43 @@ class LiveChannelManager:
             if not connections:
                 self._channels.pop(token, None)
 
-    async def broadcast(self, token: str, message: dict[str, Any]) -> None:
+    async def _deliver_local(self, token: str, message: dict[str, Any]) -> None:
         for websocket in list(self._channels.get(token, set())):
             try:
                 await websocket.send_json(message)
             except Exception:
                 pass
+
+    async def broadcast(self, token: str, message: dict[str, Any]) -> None:
+        try:
+            await get_redis().publish(
+                f"{LIVE_CHANNEL_PREFIX}{token}", json.dumps(message)
+            )
+        except Exception:
+            await self._deliver_local(token, message)
+
+    def _ensure_subscriber(self) -> None:
+        if self._subscriber is None or self._subscriber.done():
+            self._subscriber = asyncio.create_task(self._run_subscriber())
+
+    async def _run_subscriber(self) -> None:
+        try:
+            pubsub = get_redis().pubsub()
+            await pubsub.psubscribe(f"{LIVE_CHANNEL_PREFIX}*")
+            async for event in pubsub.listen():
+                if event.get("type") != "pmessage":
+                    continue
+                channel = event["channel"]
+                if isinstance(channel, bytes):
+                    channel = channel.decode()
+                token = channel.removeprefix(LIVE_CHANNEL_PREFIX)
+                try:
+                    payload = json.loads(event["data"])
+                except (TypeError, ValueError):
+                    continue
+                await self._deliver_local(token, payload)
+        except Exception:
+            pass
 
 
 live_manager = LiveChannelManager()
@@ -103,12 +140,14 @@ async def embed_live(
 
 @router.post("/embed/{token}/live", status_code=status.HTTP_202_ACCEPTED)
 async def embed_live_push(
-    token: str, payload: dict[str, Any], session: SessionDep
+    token: str,
+    payload: dict[str, Any],
+    session: SessionDep,
+    x_ingest_key: str = Header(default=""),
 ) -> None:
-    config = await EmbedService(session).get_config(token)
-    if config is None:
+    if not await EmbedService(session).verify_ingest(token, x_ingest_key):
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Not found"
+            status_code=status.HTTP_403_FORBIDDEN, detail="Invalid ingest key"
         )
     await live_manager.broadcast(
         token, {"type": "panelka:data", "payload": payload}

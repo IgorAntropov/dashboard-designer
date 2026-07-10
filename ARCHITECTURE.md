@@ -323,3 +323,12 @@ dashboards page fetches on opening the embed modal and shows the total plus a co
 (`.embed-bars`, CSS). i18n `embed.analytics|loads|noData` across 7 locales. Phase 5 is complete;
 multi-page dashboards and drill-down were intentionally dropped. NOTE: migration 0008 needs a backend
 container restart to apply.
+
+Secure live ingest (hardening): the live push endpoint is now authenticated. Publishing generates a
+secret `ingest_key` on the embed token (model + migration 0009) returned in PublishResponse; the
+customer's backend must send it as `X-Ingest-Key` to `POST /public/embed/{token}/live`
+(`EmbedService.verify_ingest`, constant-time compare) — 403 otherwise (previously anyone with the public
+token could push). Fan-out across workers: `LiveChannelManager.broadcast` publishes to a Redis channel
+`embed:live:{token}`; a lazily-started per-process subscriber (`psubscribe embed:live:*`) delivers to its
+local sockets — all fail-open, falling back to direct local delivery when Redis is down. The embed modal
+now shows the ingest key + a ready `curl` live-push example. NOTE: migration 0009 needs a backend restart.

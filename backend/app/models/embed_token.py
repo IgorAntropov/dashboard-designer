@@ -17,5 +17,6 @@ class EmbedToken(UuidPkMixin, TimestampMixin, Base):
         ForeignKey("dashboards.id", ondelete="CASCADE"), index=True
     )
     token: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    ingest_key: Mapped[str] = mapped_column(String(64), default="")
     allowed_domains: Mapped[list[str]] = mapped_column(JsonType, default=list)
     revoked: Mapped[bool] = mapped_column(default=False)

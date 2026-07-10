@@ -1,3 +1,5 @@
+import secrets
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -11,6 +13,17 @@ from app.schemas.embed import PublishedConfig
 class EmbedService:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
+
+    async def verify_ingest(self, token: str, provided_key: str) -> bool:
+        record = await self._session.scalar(
+            select(EmbedToken).where(
+                EmbedToken.token == token,
+                EmbedToken.revoked.is_(False),
+            )
+        )
+        if record is None or not record.ingest_key:
+            return False
+        return secrets.compare_digest(record.ingest_key, provided_key)
 
     async def get_config(self, token: str) -> PublishedConfig | None:
         record = await self._session.scalar(

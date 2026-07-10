@@ -16,7 +16,9 @@
     "copied": "Copied",
     "analytics": "Analytics",
     "loads": "Loads",
-    "noData": "No data yet"
+    "noData": "No data yet",
+    "ingestKey": "Ingest key",
+    "livePush": "Live data push (from your server):"
   },
   "config": {
     "heading": "Widget",

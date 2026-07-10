@@ -186,6 +186,7 @@ async def publish_dashboard(
     await session.commit()
     return PublishResponse(
         token=token.token,
+        ingest_key=token.ingest_key,
         allowed_domains=token.allowed_domains,
         status=dashboard.status,
     )

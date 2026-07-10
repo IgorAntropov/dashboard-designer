@@ -16,7 +16,9 @@
     "copied": "Zkopírováno",
     "analytics": "Analytika",
     "loads": "Načtení",
-    "noData": "Zatím žádná data"
+    "noData": "Zatím žádná data",
+    "ingestKey": "Ingest klíč",
+    "livePush": "Push živých dat (z vašeho serveru):"
   },
   "config": {
     "heading": "Widget",

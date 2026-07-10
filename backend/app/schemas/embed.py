@@ -11,6 +11,7 @@ class PublishRequest(BaseModel):
 
 class PublishResponse(BaseModel):
     token: str
+    ingest_key: str
     allowed_domains: list[str]
     status: DashboardStatus
 

@@ -76,21 +76,23 @@ function onAdd(definition: WidgetTypeDef): void {
         </svg>
       </button>
 
-      <div v-show="open[group.category]" class="palette-group__items">
-        <button
-          v-for="definition in group.items"
-          :key="definition.key"
-          type="button"
-          class="palette-item"
-          :gs-w="definition.defaultSize.w"
-          :gs-h="definition.defaultSize.h"
-          :data-widget-type="definition.key"
-          v-tooltip:left="$t(`widget.${definition.key}`)"
-          :aria-label="$t(`widget.${definition.key}`)"
-          @click="onAdd(definition)"
-        >
-          <WidgetGlyph :type="definition.key" class="palette-item__glyph" />
-        </button>
+      <div class="palette-group__panel">
+        <div class="palette-group__items">
+          <button
+            v-for="definition in group.items"
+            :key="definition.key"
+            type="button"
+            class="palette-item"
+            :gs-w="definition.defaultSize.w"
+            :gs-h="definition.defaultSize.h"
+            :data-widget-type="definition.key"
+            v-tooltip:left="$t(`widget.${definition.key}`)"
+            :aria-label="$t(`widget.${definition.key}`)"
+            @click="onAdd(definition)"
+          >
+            <WidgetGlyph :type="definition.key" class="palette-item__glyph" />
+          </button>
+        </div>
       </div>
     </section>
   </aside>

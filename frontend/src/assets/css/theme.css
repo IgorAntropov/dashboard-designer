@@ -908,7 +908,19 @@ body {
   transform: rotate(180deg);
 }
 
+.palette-group__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.palette-group--open .palette-group__panel {
+  grid-template-rows: 1fr;
+}
+
 .palette-group__items {
+  min-height: 0;
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.4rem;

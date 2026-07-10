@@ -445,3 +445,21 @@ only when `trust_proxy_headers` is enabled (prod behind a trusted proxy), else `
 a `request.clone()` in a WeakMap so the interceptor can replay the body-carrying mutation with the new
 token (guarded by `x-pk-retry`), so mutations no longer silently fail on token expiry; the editor's
 manual re-PATCH workaround was removed.
+
+Review High 6/7 + Medium/Low remediation: (6) refresh-token reuse now invalidates the whole family —
+`AuthService.rotate` calls `_revoke_family(user_id)` when a revoked token is re-presented, and the refresh
+route commits on the error path so the revocation persists. (7) URL-pull size caps are streamed: server
+`ssrf.safe_fetch` uses `client.stream` + `Content-Length` + `aiter_bytes` abort; the embed `UrlPuller`
+reads `body.getReader()` and counts real bytes. (10) Widget CSS lives once in
+`packages/renderer/styles.ts` (`WIDGET_CSS`); the embed shell composes `ENGINE_CSS`, the editor injects it
+via a client plugin. `DashboardEngine` moved into `packages/renderer` (single runtime) and both the embed
+SDK and the iframe page (`pages/embed/[token].vue`) run through it — the iframe now also applies custom
+themes (`resolveTheme`) and checks `postMessage` origin/source. (11) The embed SDK gained smoke tests
+(engine dispatch, URL-pull caps, live framing). (13/14) The access token is memory-only (restored from the
+httpOnly refresh cookie); the session WS authenticates via `Sec-WebSocket-Protocol` (`panelka-ws`) instead
+of a query-string JWT. (16) `GET /billing/status` reads the real `Subscription`. (17) `record_load`
+flushes; the router commits. (18) OAuth callback sets the refresh cookie and 303-redirects to
+`frontend_url/dashboards`; the login page has Yandex/VK buttons. (21) `DashboardUpdate` dropped `status`
+(publish-only) and bounds JSONB payload size. (24) publishing invalidates the `embed:{token}` cache. (30)
+`ConfigPanel` was decomposed into a `useWidgetConfig` composable + per-category subpanels. Full status in
+docs/code-review.md.

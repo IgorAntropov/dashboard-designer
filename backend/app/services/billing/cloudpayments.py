@@ -41,7 +41,7 @@ class CloudPaymentsProvider:
         except json.JSONDecodeError:
             return None
 
-        custom = data.get("Data") or {}
+        custom = data.get("Data") or data.get("Metadata") or {}
         if isinstance(custom, str):
             try:
                 custom = json.loads(custom)

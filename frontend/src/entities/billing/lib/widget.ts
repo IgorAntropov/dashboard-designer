@@ -3,14 +3,7 @@ import type { CheckoutResponse } from '../api/repository'
 const SCRIPT_URL = 'https://widget.cloudpayments.ru/bundles/cloudpayments.js'
 
 interface CloudPaymentsWidget {
-  pay(
-    type: 'charge' | 'auth',
-    receipt: Record<string, unknown>,
-    callbacks: {
-      onSuccess?: (options: unknown) => void
-      onFail?: (reason: string, options: unknown) => void
-    },
-  ): void
+  start(params: Record<string, unknown>): Promise<unknown>
 }
 
 type CloudPaymentsCtor = new () => CloudPaymentsWidget
@@ -58,20 +51,20 @@ export async function openCheckout(
   handlers: CheckoutHandlers = {},
 ): Promise<void> {
   const CloudPayments = await loadScript()
-  new CloudPayments().pay(
-    'charge',
-    {
-      publicId: checkout.public_id,
+  const widget = new CloudPayments()
+  try {
+    await widget.start({
+      publicTerminalId: checkout.public_id,
       description: checkout.description,
       amount: checkout.amount,
       currency: checkout.currency,
-      accountId: checkout.account_id,
-      invoiceId: checkout.invoice_id,
-      data: { tier: checkout.tier },
-    },
-    {
-      onSuccess: () => handlers.onSuccess?.(),
-      onFail: () => handlers.onFail?.(),
-    },
-  )
+      paymentSchema: 'Single',
+      externalId: checkout.invoice_id,
+      userInfo: { accountId: checkout.account_id },
+      metadata: { tier: checkout.tier },
+    })
+    handlers.onSuccess?.()
+  } catch {
+    handlers.onFail?.()
+  }
 }

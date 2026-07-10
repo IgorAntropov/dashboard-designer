@@ -362,3 +362,12 @@ set, `entities/billing.openCheckout` lazily loads the CloudPayments widget scrip
 shown and the client polls `/me` (webhook is the authoritative activation path). Downgrade to free stays
 a direct mock. So the integration is code-complete and activates purely by setting
 `PANELKA_CLOUDPAYMENTS_PUBLIC_ID` (+ api secret for webhooks) in env — no code change needed to go live.
+
+CloudPayments doc alignment: verified against current developers.cloudpayments.ru. The widget call was
+updated to the current intent API — `new cp.CloudPayments().start({ publicTerminalId, amount, currency,
+paymentSchema:'Single', description, externalId, userInfo:{accountId}, metadata:{tier} })` returning a
+Promise (was the legacy `.pay('charge', {…, invoiceId, data}, {onSuccess,onFail})`). Field renames the
+docs now use: data→metadata, invoiceId→externalId, charge/auth→paymentSchema Single/Dual,
+accountId→userInfo.accountId, publicId→publicTerminalId. A fiscal receipt (54-ФЗ `receipt`) is optional
+(only when CloudKassir is enabled), so no receipt is sent. Backend webhook parser now reads the custom
+payload from `Data` or `Metadata` for forward-compat, keeping `tier` activation working.

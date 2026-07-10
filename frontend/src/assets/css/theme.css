@@ -486,6 +486,12 @@ body {
   color: var(--pk-text);
 }
 
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--pk-accent);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--pk-accent) 30%, transparent);
+}
+
 .auth-card input:-webkit-autofill,
 .auth-card input:-webkit-autofill:hover,
 .auth-card input:-webkit-autofill:focus,

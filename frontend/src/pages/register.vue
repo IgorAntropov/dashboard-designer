@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 
 import { useSessionStore } from '@entities/session'
-import { AppButton, PasswordField } from '@shared/ui'
+import { AppButton, Logo, PasswordField } from '@shared/ui'
 
 definePageMeta({ layout: 'blank' })
 
@@ -32,7 +32,14 @@ useHead({ title: computed(() => t('auth.registerTitle')) })
 <template>
   <section class="auth-center">
     <div class="auth-card">
-      <h1 class="h3 mb-4 text-center">{{ $t('auth.registerTitle') }}</h1>
+      <div class="auth-brand">
+        <NuxtLink to="/" class="auth-brand__link" aria-label="Panelka">
+          <Logo class="auth-brand__logo" />
+        </NuxtLink>
+        <p class="auth-brand__tagline">{{ $t('auth.tagline') }}</p>
+      </div>
+
+      <h1 class="h5 mb-4 text-center">{{ $t('auth.registerTitle') }}</h1>
 
       <form @submit.prevent="onSubmit">
         <div class="form-floating mb-3">

@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Cookie, HTTPException, Response, status
 
 from app.api.deps import CurrentUserDep, SessionDep
+from app.core.config import get_settings
 from app.core.cookies import clear_refresh_cookie, set_refresh_cookie
+from app.core.rate_limit import rate_limit_dep
 from app.models.user import User
 from app.schemas.auth import (
     ChangePasswordRequest,
@@ -18,7 +20,18 @@ from app.services.auth import (
     InvalidRefreshTokenError,
 )
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+_settings = get_settings()
+router = APIRouter(
+    prefix="/auth",
+    tags=["auth"],
+    dependencies=[
+        rate_limit_dep(
+            "auth",
+            _settings.rate_limit_auth_per_min,
+            _settings.rate_limit_window_sec,
+        )
+    ],
+)
 
 
 def _tokens_with_cookie(response: Response, tokens: TokenPair) -> TokenPair:

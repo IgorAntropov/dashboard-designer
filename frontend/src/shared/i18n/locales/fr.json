@@ -74,7 +74,8 @@
     "notFound": "Introuvable.",
     "server": "Erreur serveur. Veuillez réessayer plus tard.",
     "generic": "Une erreur s'est produite. Veuillez réessayer.",
-    "customThemePaid": "Les thèmes personnalisés sont disponibles sur les offres payantes."
+    "customThemePaid": "Les thèmes personnalisés sont disponibles sur les offres payantes.",
+    "rateLimited": "Trop de requêtes. Réessayez plus tard."
   },
   "toast": {
     "close": "Fermer"

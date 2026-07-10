@@ -371,3 +371,16 @@ docs now use: data→metadata, invoiceId→externalId, charge/auth→paymentSche
 accountId→userInfo.accountId, publicId→publicTerminalId. A fiscal receipt (54-ФЗ `receipt`) is optional
 (only when CloudKassir is enabled), so no receipt is sent. Backend webhook parser now reads the custom
 payload from `Data` or `Metadata` for forward-compat, keeping `tier` activation working.
+
+Rate limiting & SSRF guard (hardening): `app/core/rate_limit.py` provides a Redis-backed fixed-window
+limiter as a FastAPI dependency (`rate_limit_dep(bucket, limit, window)`, keyed by client IP) that raises
+`AppError(429, rate_limited)` when exceeded and fails open if Redis is unavailable (`hit()` is
+unit-tested). Applied: the whole `auth` router (login/register/refresh/logout/change-password share one
+bucket), the public embed-config GET, the live-ingest POST, and the pull-data GET — limits are settings
+(`rate_limit_auth_per_min` 20, `_public_per_min` 120, `_ingest_per_min` 120). A new guarded server-side
+pull proxy `GET /public/embed/{token}/data` fetches the dashboard's configured pull URL through
+`app/core/ssrf.py`: `is_safe_url` rejects non-http(s) schemes and any host resolving to a
+private/loopback/link-local/reserved/multicast IP (incl. the 169.254.169.254 metadata address), and
+`safe_fetch` adds a timeout, size cap and disables redirects. `is_safe_url` is unit-tested with literal
+IPs. Known follow-up: pin the connection to the validated IP to fully close the DNS-rebinding (TOCTOU)
+window. Errors plugin maps `rate_limited` → `errors.rateLimited` toast across 7 locales.

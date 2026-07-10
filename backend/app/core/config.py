@@ -31,6 +31,13 @@ class Settings(BaseSettings):
     jwt_access_ttl_sec: int = 900
     jwt_refresh_ttl_sec: int = 1209600
 
+    rate_limit_window_sec: int = 60
+    rate_limit_auth_per_min: int = 20
+    rate_limit_public_per_min: int = 120
+    rate_limit_ingest_per_min: int = 120
+    pull_max_bytes: int = 1_000_000
+    pull_timeout_sec: float = 5.0
+
     oauth_redirect_base: str = "http://localhost:8000/api/v1/auth/oauth"
     oauth_yandex_client_id: str = ""
     oauth_yandex_client_secret: str = ""

@@ -74,7 +74,8 @@
     "notFound": "Nicht gefunden.",
     "server": "Serverfehler. Bitte später erneut versuchen.",
     "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
-    "customThemePaid": "Eigene Themes sind in kostenpflichtigen Tarifen verfügbar."
+    "customThemePaid": "Eigene Themes sind in kostenpflichtigen Tarifen verfügbar.",
+    "rateLimited": "Zu viele Anfragen. Bitte später erneut versuchen."
   },
   "toast": {
     "close": "Schließen"

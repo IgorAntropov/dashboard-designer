@@ -74,7 +74,8 @@
     "notFound": "Nie znaleziono.",
     "server": "Błąd serwera. Spróbuj ponownie później.",
     "generic": "Coś poszło nie tak. Spróbuj ponownie.",
-    "customThemePaid": "Własne motywy dostępne w planach płatnych."
+    "customThemePaid": "Własne motywy dostępne w planach płatnych.",
+    "rateLimited": "Zbyt wiele żądań. Spróbuj później."
   },
   "toast": {
     "close": "Zamknij"

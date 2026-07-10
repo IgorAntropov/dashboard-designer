@@ -74,7 +74,8 @@
     "notFound": "Not found.",
     "server": "Server error. Please try again later.",
     "generic": "Something went wrong. Please try again.",
-    "customThemePaid": "Custom themes are available on paid plans."
+    "customThemePaid": "Custom themes are available on paid plans.",
+    "rateLimited": "Too many requests. Please try again later."
   },
   "toast": {
     "close": "Close"

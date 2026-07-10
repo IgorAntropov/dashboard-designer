@@ -74,7 +74,8 @@
     "notFound": "Non trovato.",
     "server": "Errore del server. Riprova più tardi.",
     "generic": "Qualcosa è andato storto. Riprova.",
-    "customThemePaid": "I temi personalizzati sono disponibili nei piani a pagamento."
+    "customThemePaid": "I temi personalizzati sono disponibili nei piani a pagamento.",
+    "rateLimited": "Troppe richieste. Riprova più tardi."
   },
   "toast": {
     "close": "Chiudi"

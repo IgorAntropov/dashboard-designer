@@ -6,6 +6,7 @@ const CODE_KEYS: Record<string, string> = {
   quota_dashboards: 'errors.quotaDashboards',
   export_paid: 'errors.exportPaid',
   custom_theme_paid: 'errors.customThemePaid',
+  rate_limited: 'errors.rateLimited',
   not_found: 'errors.notFound',
 }
 

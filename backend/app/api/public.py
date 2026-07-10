@@ -15,7 +15,11 @@ from fastapi import (
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import SessionDep
+from app.core.config import get_settings
+from app.core.errors import AppError
+from app.core.rate_limit import rate_limit_dep
 from app.core.redis import get_redis
+from app.core.ssrf import safe_fetch
 from app.schemas.embed import PublishedConfig
 from app.services.analytics import AnalyticsService
 from app.services.embed import EmbedService
@@ -24,6 +28,14 @@ router = APIRouter(prefix="/public", tags=["public"])
 
 CACHE_TTL_SECONDS = 60
 LIVE_CHANNEL_PREFIX = "embed:live:"
+
+_settings = get_settings()
+_PUBLIC_RL = rate_limit_dep(
+    "public", _settings.rate_limit_public_per_min, _settings.rate_limit_window_sec
+)
+_INGEST_RL = rate_limit_dep(
+    "ingest", _settings.rate_limit_ingest_per_min, _settings.rate_limit_window_sec
+)
 
 
 class LiveChannelManager:
@@ -84,7 +96,11 @@ class LiveChannelManager:
 live_manager = LiveChannelManager()
 
 
-@router.get("/embed/{token}", response_model=PublishedConfig)
+@router.get(
+    "/embed/{token}",
+    response_model=PublishedConfig,
+    dependencies=[_PUBLIC_RL],
+)
 async def get_embed_config(token: str, session: SessionDep) -> PublishedConfig:
     redis = get_redis()
     cache_key = f"embed:{token}"
@@ -120,6 +136,29 @@ async def _record_load(session: AsyncSession, dashboard_id: str) -> None:
         pass
 
 
+@router.get("/embed/{token}/data", dependencies=[_PUBLIC_RL])
+async def embed_pull_data(token: str, session: SessionDep) -> Any:
+    config = await EmbedService(session).get_config(token)
+    if config is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Not found"
+        )
+    source = config.data_source or {}
+    if source.get("mode") != "pull" or not isinstance(source.get("url"), str):
+        raise AppError(
+            status.HTTP_400_BAD_REQUEST, "pull_not_configured", "Pull not configured"
+        )
+
+    data = await safe_fetch(
+        source["url"], _settings.pull_max_bytes, _settings.pull_timeout_sec
+    )
+    if data is None:
+        raise AppError(
+            status.HTTP_502_BAD_GATEWAY, "pull_failed", "Upstream fetch failed"
+        )
+    return data
+
+
 @router.websocket("/embed/{token}/live")
 async def embed_live(
     websocket: WebSocket, token: str, session: SessionDep
@@ -138,7 +177,11 @@ async def embed_live(
         live_manager.disconnect(token, websocket)
 
 
-@router.post("/embed/{token}/live", status_code=status.HTTP_202_ACCEPTED)
+@router.post(
+    "/embed/{token}/live",
+    status_code=status.HTTP_202_ACCEPTED,
+    dependencies=[_INGEST_RL],
+)
 async def embed_live_push(
     token: str,
     payload: dict[str, Any],

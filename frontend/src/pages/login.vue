@@ -33,7 +33,9 @@ useHead({ title: computed(() => t('auth.loginTitle')) })
   <section class="auth-center">
     <div class="auth-card">
       <div class="auth-brand">
-        <Logo class="auth-brand__logo" />
+        <NuxtLink to="/" class="auth-brand__link" aria-label="Panelka">
+          <Logo class="auth-brand__logo" />
+        </NuxtLink>
         <p class="auth-brand__tagline">{{ $t('auth.tagline') }}</p>
       </div>
 

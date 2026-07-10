@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Maps",
     "data": "Data",
-    "text": "Text"
+    "text": "Text",
+    "title": "Widgets"
   },
   "session": {
     "kickedTitle": "Session ended",
@@ -214,7 +215,10 @@
     "saving": "Saving…",
     "saved": "Saved",
     "undo": "Undo",
-    "redo": "Redo"
+    "redo": "Redo",
+    "toDashboards": "To dashboards",
+    "widgetSettings": "Widget settings",
+    "closeConfirm": "Close settings? Changes are already applied."
   },
   "theme": {
     "system": "System",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Language"
+  },
+  "widget": {
+    "bar-chart": "Bar chart",
+    "line-chart": "Line chart",
+    "area-chart": "Area chart",
+    "pie-chart": "Pie chart",
+    "donut-chart": "Donut chart",
+    "scatter-chart": "Scatter",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Gauge",
+    "progress": "Progress",
+    "svg-map": "Map",
+    "ranking": "Ranking",
+    "table": "Table",
+    "section": "Section",
+    "text-block": "Text"
   }
 }

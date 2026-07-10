@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Mappe",
     "data": "Dati",
-    "text": "Testo"
+    "text": "Testo",
+    "title": "Widget"
   },
   "session": {
     "kickedTitle": "Sessione terminata",
@@ -214,7 +215,10 @@
     "saving": "Salvataggio…",
     "saved": "Salvato",
     "undo": "Annulla",
-    "redo": "Ripeti"
+    "redo": "Ripeti",
+    "toDashboards": "Ai dashboard",
+    "widgetSettings": "Impostazioni widget",
+    "closeConfirm": "Chiudere le impostazioni? Le modifiche sono già applicate."
   },
   "theme": {
     "system": "Sistema",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Lingua"
+  },
+  "widget": {
+    "bar-chart": "Barre",
+    "line-chart": "Linee",
+    "area-chart": "Aree",
+    "pie-chart": "Torta",
+    "donut-chart": "Ciambella",
+    "scatter-chart": "Dispersione",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Indicatore",
+    "progress": "Avanzamento",
+    "svg-map": "Mappa",
+    "ranking": "Classifica",
+    "table": "Tabella",
+    "section": "Sezione",
+    "text-block": "Testo"
   }
 }

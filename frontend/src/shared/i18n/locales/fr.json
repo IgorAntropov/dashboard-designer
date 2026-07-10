@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Cartes",
     "data": "Données",
-    "text": "Texte"
+    "text": "Texte",
+    "title": "Widgets"
   },
   "session": {
     "kickedTitle": "Session terminée",
@@ -214,7 +215,10 @@
     "saving": "Enregistrement…",
     "saved": "Enregistré",
     "undo": "Annuler",
-    "redo": "Rétablir"
+    "redo": "Rétablir",
+    "toDashboards": "Aux tableaux de bord",
+    "widgetSettings": "Réglages du widget",
+    "closeConfirm": "Fermer les réglages ? Les modifications sont déjà appliquées."
   },
   "theme": {
     "system": "Système",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Langue"
+  },
+  "widget": {
+    "bar-chart": "Barres",
+    "line-chart": "Courbe",
+    "area-chart": "Aires",
+    "pie-chart": "Camembert",
+    "donut-chart": "Anneau",
+    "scatter-chart": "Nuage de points",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Jauge",
+    "progress": "Progression",
+    "svg-map": "Carte",
+    "ranking": "Classement",
+    "table": "Tableau",
+    "section": "Section",
+    "text-block": "Texte"
   }
 }

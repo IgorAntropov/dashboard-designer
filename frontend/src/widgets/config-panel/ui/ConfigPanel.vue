@@ -13,8 +13,6 @@ const { widget } = useWidgetConfig()
 
 <template>
   <aside class="config-panel">
-    <h2 class="h6 mb-3">{{ $t('config.heading') }}</h2>
-
     <p v-if="!widget" class="text-muted small">{{ $t('config.hint') }}</p>
 
     <template v-else>

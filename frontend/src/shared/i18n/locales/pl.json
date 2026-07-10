@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Mapy",
     "data": "Dane",
-    "text": "Tekst"
+    "text": "Tekst",
+    "title": "Widżety"
   },
   "session": {
     "kickedTitle": "Sesja zakończona",
@@ -214,7 +215,10 @@
     "saving": "Zapisywanie…",
     "saved": "Zapisano",
     "undo": "Cofnij",
-    "redo": "Ponów"
+    "redo": "Ponów",
+    "toDashboards": "Do dashboardów",
+    "widgetSettings": "Ustawienia widżetu",
+    "closeConfirm": "Zamknąć ustawienia? Zmiany zostały już zastosowane."
   },
   "theme": {
     "system": "Systemowy",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Język"
+  },
+  "widget": {
+    "bar-chart": "Słupkowy",
+    "line-chart": "Liniowy",
+    "area-chart": "Warstwowy",
+    "pie-chart": "Kołowy",
+    "donut-chart": "Pierścieniowy",
+    "scatter-chart": "Punktowy",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Wskaźnik",
+    "progress": "Postęp",
+    "svg-map": "Mapa",
+    "ranking": "Ranking",
+    "table": "Tabela",
+    "section": "Sekcja",
+    "text-block": "Tekst"
   }
 }

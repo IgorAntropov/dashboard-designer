@@ -7,7 +7,7 @@ import type { Dashboard } from '@entities/dashboard'
 import { getDashboard, updateDashboard } from '@entities/dashboard'
 import { AppButton } from '@shared/ui'
 import { DashboardCanvas, useCanvasStore } from '@widgets/canvas'
-import { ConfigPanel } from '@widgets/config-panel'
+import { ConfigPanelModal } from '@widgets/config-panel'
 import { WidgetPalette } from '@widgets/palette'
 import { ThemeSelector } from '@widgets/theme-switcher'
 
@@ -68,64 +68,76 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
 </script>
 
 <template>
-  <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
-      <input
-        v-model="titleInput"
-        class="editor-title-input"
-        :placeholder="$t('editor.title')"
-      >
+  <div class="editor">
+    <header class="editor-toolbar">
+      <div class="editor-toolbar__group">
+        <input
+          v-model="titleInput"
+          class="editor-title-input"
+          :placeholder="$t('editor.title')"
+        >
 
-      <div class="d-flex align-items-center gap-2">
+        <ClientOnly>
+          <div class="editor-toolbar__history">
+            <AppButton
+              variant="ghost"
+              size="sm"
+              icon="undo"
+              icon-only
+              :aria-label="$t('editor.undo')"
+              :title="$t('editor.undo')"
+              :disabled="!canvasStore.canUndo"
+              @click="canvasStore.undo()"
+            />
+            <AppButton
+              variant="ghost"
+              size="sm"
+              icon="redo"
+              icon-only
+              :aria-label="$t('editor.redo')"
+              :title="$t('editor.redo')"
+              :disabled="!canvasStore.canRedo"
+              @click="canvasStore.redo()"
+            />
+          </div>
+        </ClientOnly>
+      </div>
+
+      <div class="editor-toolbar__group">
+        <span class="small text-muted d-none d-lg-inline">{{ $t('editor.theme') }}</span>
+        <ClientOnly><ThemeSelector /></ClientOnly>
+
         <ClientOnly>
           <span
-            class="small text-muted"
+            class="editor-save small text-muted"
             :class="{ invisible: saveState === 'idle' }"
           >
             {{ saveState === 'saving' ? $t('editor.saving') : $t('editor.saved') }}
           </span>
-
           <AppButton
-            variant="ghost"
             size="sm"
-            icon="undo"
+            icon="save"
             icon-only
-            :aria-label="$t('editor.undo')"
-            :title="$t('editor.undo')"
-            :disabled="!canvasStore.canUndo"
-            @click="canvasStore.undo()"
+            :aria-label="$t('editor.save')"
+            :title="$t('editor.save')"
+            @click="save"
           />
-          <AppButton
-            variant="ghost"
-            size="sm"
-            icon="redo"
-            icon-only
-            :aria-label="$t('editor.redo')"
-            :title="$t('editor.redo')"
-            :disabled="!canvasStore.canRedo"
-            @click="canvasStore.redo()"
-          />
-
-          <span class="small text-muted">{{ $t('editor.theme') }}</span>
-          <ThemeSelector />
-
-          <AppButton size="sm" icon="save" @click="save">
-            {{ $t('editor.save') }}
-          </AppButton>
         </ClientOnly>
 
         <AppButton to="/dashboards" variant="secondary" size="sm" icon="back">
-          {{ $t('editor.back') }}
+          {{ $t('editor.toDashboards') }}
         </AppButton>
       </div>
-    </div>
+    </header>
 
-    <ClientOnly>
-      <WidgetPalette class="mb-3" />
-      <div class="editor-workspace">
-        <DashboardCanvas class="editor-workspace__canvas" />
-        <ConfigPanel class="editor-workspace__panel" />
-      </div>
-    </ClientOnly>
+    <div class="editor-body">
+      <ClientOnly>
+        <div class="editor-canvas-wrap">
+          <DashboardCanvas />
+        </div>
+        <WidgetPalette class="editor-palette" />
+        <ConfigPanelModal />
+      </ClientOnly>
+    </div>
   </div>
 </template>

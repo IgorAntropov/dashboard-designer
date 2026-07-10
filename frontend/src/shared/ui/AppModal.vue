@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
 
-const props = defineProps<{ modelValue: boolean; title?: string }>()
+const props = defineProps<{
+  modelValue: boolean
+  title?: string
+  beforeClose?: () => boolean
+}>()
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 
 function close(): void {
+  if (props.beforeClose && !props.beforeClose()) {
+    return
+  }
   emit('update:modelValue', false)
 }
 

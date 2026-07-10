@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Карты",
     "data": "Данные",
-    "text": "Текст"
+    "text": "Текст",
+    "title": "Виджеты"
   },
   "session": {
     "kickedTitle": "Сеанс завершён",
@@ -214,7 +215,10 @@
     "saving": "Сохранение…",
     "saved": "Сохранено",
     "undo": "Отменить",
-    "redo": "Повторить"
+    "redo": "Повторить",
+    "toDashboards": "К дашбордам",
+    "widgetSettings": "Настройки виджета",
+    "closeConfirm": "Закрыть настройки? Изменения уже применены."
   },
   "theme": {
     "system": "Системная",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Язык"
+  },
+  "widget": {
+    "bar-chart": "Столбчатая",
+    "line-chart": "Линейная",
+    "area-chart": "Область",
+    "pie-chart": "Круговая",
+    "donut-chart": "Кольцевая",
+    "scatter-chart": "Точечная",
+    "radar-chart": "Радар",
+    "stat-tile": "KPI",
+    "gauge": "Датчик",
+    "progress": "Прогресс",
+    "svg-map": "Карта",
+    "ranking": "Рейтинг",
+    "table": "Таблица",
+    "section": "Секция",
+    "text-block": "Текст"
   }
 }

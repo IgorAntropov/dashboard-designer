@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Mapy",
     "data": "Data",
-    "text": "Text"
+    "text": "Text",
+    "title": "Widgety"
   },
   "session": {
     "kickedTitle": "Relace ukončena",
@@ -214,7 +215,10 @@
     "saving": "Ukládání…",
     "saved": "Uloženo",
     "undo": "Zpět",
-    "redo": "Znovu"
+    "redo": "Znovu",
+    "toDashboards": "Na dashboardy",
+    "widgetSettings": "Nastavení widgetu",
+    "closeConfirm": "Zavřít nastavení? Změny už byly použity."
   },
   "theme": {
     "system": "Systém",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Jazyk"
+  },
+  "widget": {
+    "bar-chart": "Sloupcový",
+    "line-chart": "Čárový",
+    "area-chart": "Plošný",
+    "pie-chart": "Koláčový",
+    "donut-chart": "Prstencový",
+    "scatter-chart": "Bodový",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Měřidlo",
+    "progress": "Postup",
+    "svg-map": "Mapa",
+    "ranking": "Žebříček",
+    "table": "Tabulka",
+    "section": "Sekce",
+    "text-block": "Text"
   }
 }

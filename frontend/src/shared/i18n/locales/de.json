@@ -61,7 +61,8 @@
     "kpi": "KPI",
     "geo": "Karten",
     "data": "Daten",
-    "text": "Text"
+    "text": "Text",
+    "title": "Widgets"
   },
   "session": {
     "kickedTitle": "Sitzung beendet",
@@ -214,7 +215,10 @@
     "saving": "Speichern…",
     "saved": "Gespeichert",
     "undo": "Rückgängig",
-    "redo": "Wiederholen"
+    "redo": "Wiederholen",
+    "toDashboards": "Zu Dashboards",
+    "widgetSettings": "Widget-Einstellungen",
+    "closeConfirm": "Einstellungen schließen? Änderungen sind bereits übernommen."
   },
   "theme": {
     "system": "System",
@@ -234,5 +238,22 @@
   },
   "language": {
     "label": "Sprache"
+  },
+  "widget": {
+    "bar-chart": "Balkendiagramm",
+    "line-chart": "Liniendiagramm",
+    "area-chart": "Flächendiagramm",
+    "pie-chart": "Kreisdiagramm",
+    "donut-chart": "Ringdiagramm",
+    "scatter-chart": "Streudiagramm",
+    "radar-chart": "Radar",
+    "stat-tile": "KPI",
+    "gauge": "Tacho",
+    "progress": "Fortschritt",
+    "svg-map": "Karte",
+    "ranking": "Rangliste",
+    "table": "Tabelle",
+    "section": "Abschnitt",
+    "text-block": "Text"
   }
 }

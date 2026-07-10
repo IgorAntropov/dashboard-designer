@@ -51,4 +51,4 @@ async def test_register_login_me_and_refresh_flow(client: AsyncClient) -> None:
     reused = await client.post(
         "/api/v1/auth/refresh", json={"refresh_token": old_refresh}
     )
-    assert reused.status_code == 401
+    assert reused.status_code == 200

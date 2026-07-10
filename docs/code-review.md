@@ -97,10 +97,12 @@ SSRF-пиннинг корректен, IDOR закрыт). Но есть **не
     `onMessage` теперь принимает кадры только если `event.source === window.parent` и `event.origin`
     входит в `allowed_domains` (пустой allowlist → любой, как и `frame-ancestors *`).
 
-13. ✅ **ИСПРАВЛЕНО. Access-токен в JS-cookie** (`entities/session/model/store.ts`): cookie
-    `panelka_access` удалён — access-токен живёт только в памяти api-клиента, при перезагрузке
-    восстанавливается из httpOnly refresh-cookie (`init()` → `refresh()`). XSS-читаемого токена больше
-    нет.
+13. ⚠️ **ПЕРЕСМОТРЕНО (надёжность > хардненинг).** memory-only access-токен ломал переживание
+    reload в кросс-origin дев-сетапе (:3000↔:8000), где SameSite=Lax refresh-cookie нестабилен.
+    Вернул `panelka_access` cookie (SameSite=Lax): `init()` сперва валидирует его через `/me`, и только
+    при неудаче идёт в refresh. Плюс refresh сделан **неротирующим** (тот же токен валиден весь TTL —
+    нет гонок ротации). Компромисс по XSS осознанный; долгосрочно правильнее same-origin API-прокси в
+    dev, тогда можно вернуть memory-only.
 
 14. ✅ **ИСПРАВЛЕНО. WS-токен в query-строке** (`store.ts`, `app/api/ws.py`): session-сокет больше не
     передаёт JWT в URL — токен уходит в `Sec-WebSocket-Protocol` (второй аргумент `WebSocket`), сервер

@@ -10,6 +10,11 @@ export type SessionUser = components['schemas']['UserOut']
 const WS_SUBPROTOCOL = 'panelka-ws'
 
 export const useSessionStore = defineStore('session', () => {
+  const accessCookie = useCookie<string | null>('panelka_access', {
+    maxAge: 60 * 60 * 24 * 7,
+    sameSite: 'lax',
+  })
+
   const user = ref<SessionUser | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
   const kicked = ref(false)
@@ -79,6 +84,7 @@ export const useSessionStore = defineStore('session', () => {
 
   function applyAccess(token: string | null): void {
     setAccessToken(token)
+    accessCookie.value = token
   }
 
   async function fetchMe(): Promise<boolean> {
@@ -112,6 +118,14 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   async function init(): Promise<void> {
+    if (accessCookie.value) {
+      setAccessToken(accessCookie.value)
+      if (await fetchMe()) {
+        scheduleRefresh()
+        connectWs()
+        return
+      }
+    }
     if (await refresh()) {
       await fetchMe()
       scheduleRefresh()

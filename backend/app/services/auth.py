@@ -92,11 +92,11 @@ class AuthService:
         if record is None or record.revoked:
             raise InvalidRefreshTokenError
 
-        record.revoked = True
         user = await self._session.get(User, uuid.UUID(str(payload["sub"])))
         if user is None:
             raise InvalidRefreshTokenError
-        return await self.issue_tokens(user)
+        access = create_access_token(str(user.id))
+        return TokenPair(access_token=access, refresh_token=refresh_token)
 
     async def upsert_oauth_user(self, identity: OAuthIdentity) -> User:
         account = await self._session.scalar(

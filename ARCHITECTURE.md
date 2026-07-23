@@ -153,7 +153,9 @@ set). The editor page composes palette + canvas.
 UX foundation (1.2b): `@nuxtjs/i18n` with 7 locales (ru default, en/de/pl/cs/fr/it) driven by a
 `shared/i18n/config.ts` message bundle; `@nuxtjs/color-mode` (system/light/dark) mapped to Bootstrap's
 `data-bs-theme` in `app.vue`; design tokens in `assets/css/theme.css` (neutral base + yellow accent);
-a right-anchored app-shell `layouts/default.vue` with nav + `shared/ui` `ThemeToggle`/`LanguageSwitcher`;
+a fixed left icon-rail app-shell `layouts/default.vue` with nav + `shared/ui` `ThemeToggle`/`LanguageSwitcher`
+(6.2: the rail collapses to a fixed bottom tab bar at ≤768px, safe-area aware; the editor stacks its palette
+above the canvas at ≤900px, and dashboard cards expose their hover-actions on touch via `hover:none`);
 landing/auth use `layouts/blank.vue`; page transitions enabled. Locale messages are injected via a
 `plugins/i18n.ts` plugin (setLocaleMessage from `shared/i18n/messages.ts`) to avoid path resolution
 issues; the initial locale is auto-detected from the browser (Accept-Language) with `ru` fallback and

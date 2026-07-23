@@ -16,11 +16,14 @@ let observer: ResizeObserver | null = null
 let renderedType: string | null = null
 
 function buildInput(): RenderInput {
+  const embedded = props.widget.config.sampleData
   return {
     type: props.widget.type,
     config: props.widget.config,
     binding: props.widget.binding,
-    data: sampleDataFor(props.widget.type, t),
+    data: Array.isArray(embedded)
+      ? (embedded as Array<Record<string, unknown>>)
+      : sampleDataFor(props.widget.type, t),
     theme: props.theme,
   }
 }

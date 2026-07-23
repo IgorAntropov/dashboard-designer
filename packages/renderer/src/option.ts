@@ -155,6 +155,7 @@ export function buildChartOption(input: RenderInput): Record<string, unknown> {
       ? {
           data: defs.map((def) => def.name),
           bottom: 0,
+          itemHeight: 10,
           textStyle: { color: input.theme.colorMuted },
         }
       : undefined,
@@ -162,7 +163,7 @@ export function buildChartOption(input: RenderInput): Record<string, unknown> {
       left: 48,
       right: 16,
       top: title ? 40 : 16,
-      bottom: multi ? 34 : 28,
+      bottom: multi ? 58 : 28,
     },
     xAxis: {
       type: 'category',

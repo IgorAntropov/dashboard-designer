@@ -47,7 +47,17 @@
     "columns": "Colonnes",
     "columnName": "Nom de colonne",
     "addColumn": "Ajouter une colonne",
-    "subtitle": "Sous-titre"
+    "subtitle": "Sous-titre",
+    "tabForm": "Formulaire",
+    "tabJson": "JSON",
+    "jsonHint": "Modifiez config, schema et binding directement — les changements sont appliqués en direct.",
+    "jsonError": {
+      "syntax": "JSON invalide",
+      "root": "Objet attendu",
+      "config": "config doit être un objet",
+      "schema": "schema invalide",
+      "binding": "binding invalide"
+    }
   },
   "mapScope": {
     "world": "Monde",

@@ -41,7 +41,10 @@ Config panel (1.5): widget types carry `defaultConfig`/`defaultSchema`/`defaultB
 and the canvas store clones them on create. The store tracks `selectedId`/`selectedWidget` and exposes
 `updateConfig`/`updateBinding`/`updateSchemaField`. Clicking a canvas widget selects it (accent ring);
 `widgets/config-panel/ConfigPanel.vue` edits the title/text, and per schema field the label, type and
-bound data key — mutations flow back into the store so `WidgetView` re-renders live.
+bound data key — mutations flow back into the store so `WidgetView` re-renders live. The settings modal
+(`ConfigPanelModal`) has **Form / JSON tabs**: the JSON tab (`JsonFields`) renders the widget's resolved
+`{config, schema, binding}`, validates edits via `parseWidgetJson`, and applies them atomically through
+`store.setWidgetData` (two-way sync guarded against feedback loops; invalid JSON shows an inline error).
 
 Themes (1.6): `packages/renderer` ships 5 dashboard token sets (`light-minimal`, `dark-pro`, `neon`,
 `pastel`, `corporate-blue`) as `RenderTheme`s via `getTheme(key)`. The canvas store holds `themeKey`;

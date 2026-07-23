@@ -47,7 +47,17 @@
     "columns": "Spalten",
     "columnName": "Spaltenname",
     "addColumn": "Spalte hinzufügen",
-    "subtitle": "Untertitel"
+    "subtitle": "Untertitel",
+    "tabForm": "Formular",
+    "tabJson": "JSON",
+    "jsonHint": "Bearbeite config, schema und binding direkt — Änderungen werden sofort übernommen.",
+    "jsonError": {
+      "syntax": "Ungültiges JSON",
+      "root": "Objekt erwartet",
+      "config": "config muss ein Objekt sein",
+      "schema": "Ungültiges schema",
+      "binding": "Ungültiges binding"
+    }
   },
   "mapScope": {
     "world": "Welt",

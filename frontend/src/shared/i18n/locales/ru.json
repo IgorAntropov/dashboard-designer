@@ -47,7 +47,17 @@
     "columns": "Столбцы",
     "columnName": "Название столбца",
     "addColumn": "Добавить столбец",
-    "subtitle": "Подзаголовок"
+    "subtitle": "Подзаголовок",
+    "tabForm": "Форма",
+    "tabJson": "JSON",
+    "jsonHint": "Редактируйте config, schema и binding напрямую — изменения применяются сразу.",
+    "jsonError": {
+      "syntax": "Некорректный JSON",
+      "root": "Ожидается объект",
+      "config": "Поле config должно быть объектом",
+      "schema": "Некорректная schema",
+      "binding": "Некорректный binding"
+    }
   },
   "mapScope": {
     "world": "Мир",

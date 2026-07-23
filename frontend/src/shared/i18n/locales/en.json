@@ -47,7 +47,17 @@
     "columns": "Columns",
     "columnName": "Column name",
     "addColumn": "Add column",
-    "subtitle": "Subtitle"
+    "subtitle": "Subtitle",
+    "tabForm": "Form",
+    "tabJson": "JSON",
+    "jsonHint": "Edit config, schema and binding directly — changes apply live.",
+    "jsonError": {
+      "syntax": "Invalid JSON",
+      "root": "Expected an object",
+      "config": "config must be an object",
+      "schema": "Invalid schema",
+      "binding": "Invalid binding"
+    }
   },
   "mapScope": {
     "world": "World",

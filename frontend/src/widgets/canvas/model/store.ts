@@ -157,6 +157,22 @@ export const useCanvasStore = defineStore('canvas', () => {
     }
   }
 
+  function setWidgetData(
+    id: string,
+    data: {
+      config: Record<string, unknown>
+      schema: WidgetInstance['schema']
+      binding: WidgetInstance['binding']
+    },
+  ): void {
+    const widget = find(id)
+    if (widget) {
+      widget.config = data.config
+      widget.schema = data.schema
+      widget.binding = data.binding
+    }
+  }
+
   function updateSchemaField(
     id: string,
     fieldKey: string,
@@ -288,6 +304,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     updateConfig,
     updateBinding,
     updateSchemaField,
+    setWidgetData,
     undo,
     redo,
     remove,

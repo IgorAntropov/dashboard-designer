@@ -47,7 +47,17 @@
     "columns": "Sloupce",
     "columnName": "Název sloupce",
     "addColumn": "Přidat sloupec",
-    "subtitle": "Podnadpis"
+    "subtitle": "Podnadpis",
+    "tabForm": "Formulář",
+    "tabJson": "JSON",
+    "jsonHint": "Upravuj config, schema a binding přímo — změny se projeví okamžitě.",
+    "jsonError": {
+      "syntax": "Neplatný JSON",
+      "root": "Očekáván objekt",
+      "config": "config musí být objekt",
+      "schema": "Neplatné schema",
+      "binding": "Neplatný binding"
+    }
   },
   "mapScope": {
     "world": "Svět",

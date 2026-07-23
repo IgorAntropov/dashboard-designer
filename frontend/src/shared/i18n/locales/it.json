@@ -57,7 +57,8 @@
       "config": "config deve essere un oggetto",
       "schema": "schema non valido",
       "binding": "binding non valido"
-    }
+    },
+    "infoPlaceholder": "Testo del tooltip al passaggio"
   },
   "mapScope": {
     "world": "Mondo",
@@ -282,7 +283,10 @@
     "ranking": "Classifica",
     "table": "Tabella",
     "section": "Sezione",
-    "text-block": "Testo"
+    "text-block": "Testo",
+    "scatter-trend": "Punti + trend",
+    "combo": "Barre + linea",
+    "timeseries": "Serie temporale"
   },
   "sample": {
     "mon": "Lun",

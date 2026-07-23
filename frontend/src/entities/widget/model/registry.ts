@@ -24,6 +24,13 @@ const POINT_SCHEMA: WidgetSchema = {
 
 const POINT_BINDING: WidgetBinding = { x: 'x', y: 'y' }
 
+const TIME_SCHEMA: WidgetSchema = {
+  date: { key: 'date', type: 'date', label: 'Date' },
+  value: { key: 'value', type: 'number', label: 'Value' },
+}
+
+const TIME_BINDING: WidgetBinding = { label: 'date', value: 'value' }
+
 const VALUE_SCHEMA: WidgetSchema = {
   value: { key: 'value', type: 'number', label: 'Value' },
 }
@@ -119,6 +126,39 @@ export const WIDGET_TYPES: WidgetTypeDef[] = [
     defaultConfig: { title: 'Radar' },
     defaultSchema: CHART_SCHEMA,
     defaultBinding: CHART_BINDING,
+  },
+  {
+    key: 'scatter-trend',
+    label: 'Scatter + trend',
+    category: 'charts',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: { title: 'Scatter + trend' },
+    defaultSchema: POINT_SCHEMA,
+    defaultBinding: POINT_BINDING,
+  },
+  {
+    key: 'combo',
+    label: 'Bar + line',
+    category: 'charts',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: {
+      title: 'Bar + line',
+      series: [
+        { key: 'value', name: 'Bars', type: 'bar' },
+        { key: 'value2', name: 'Line', type: 'line' },
+      ],
+    },
+    defaultSchema: CHART_SCHEMA,
+    defaultBinding: CHART_BINDING,
+  },
+  {
+    key: 'timeseries',
+    label: 'Time series',
+    category: 'charts',
+    defaultSize: { w: 6, h: 4 },
+    defaultConfig: { title: 'Time series' },
+    defaultSchema: TIME_SCHEMA,
+    defaultBinding: TIME_BINDING,
   },
   {
     key: 'stat-tile',

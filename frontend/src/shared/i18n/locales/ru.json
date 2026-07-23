@@ -57,7 +57,8 @@
       "config": "Поле config должно быть объектом",
       "schema": "Некорректная schema",
       "binding": "Некорректный binding"
-    }
+    },
+    "infoPlaceholder": "Текст подсказки при наведении"
   },
   "mapScope": {
     "world": "Мир",
@@ -282,7 +283,10 @@
     "ranking": "Рейтинг",
     "table": "Таблица",
     "section": "Секция",
-    "text-block": "Текст"
+    "text-block": "Текст",
+    "scatter-trend": "Точки с трендом",
+    "combo": "Столбцы + линия",
+    "timeseries": "Временной ряд"
   },
   "sample": {
     "mon": "Пн",

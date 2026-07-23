@@ -57,7 +57,8 @@
       "config": "config musi być obiektem",
       "schema": "Nieprawidłowa schema",
       "binding": "Nieprawidłowy binding"
-    }
+    },
+    "infoPlaceholder": "Tekst podpowiedzi po najechaniu"
   },
   "mapScope": {
     "world": "Świat",
@@ -282,7 +283,10 @@
     "ranking": "Ranking",
     "table": "Tabela",
     "section": "Sekcja",
-    "text-block": "Tekst"
+    "text-block": "Tekst",
+    "scatter-trend": "Punkty + trend",
+    "combo": "Słupki + linia",
+    "timeseries": "Szereg czasowy"
   },
   "sample": {
     "mon": "Pon",

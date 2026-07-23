@@ -51,5 +51,22 @@ function onText(event: Event): void {
         @input="(event) => onConfigText('subtitle', event)"
       >
     </div>
+
+    <div
+      v-if="
+        widget.type !== 'section' &&
+        widget.type !== 'text-block' &&
+        widget.type !== 'stat-tile'
+      "
+      class="mb-3"
+    >
+      <label class="form-label small">{{ $t('config.info') }}</label>
+      <input
+        class="form-control form-control-sm"
+        :placeholder="$t('config.infoPlaceholder')"
+        :value="asString(widget.config.info)"
+        @input="(event) => onConfigText('info', event)"
+      >
+    </div>
   </template>
 </template>

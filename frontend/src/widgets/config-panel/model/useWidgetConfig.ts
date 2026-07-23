@@ -23,11 +23,17 @@ export const FIELD_TYPES: SchemaField['type'][] = [
   'date',
 ]
 export const SERIES_TYPES = ['auto', 'bar', 'line']
-export const COLUMN_TYPES = ['text', 'number']
+export const COLUMN_TYPES = ['text', 'number', 'image']
 export const DIRECTION_OPTIONS = ['top', 'bottom']
 export const MAP_SCOPE_OPTIONS = ['world', 'custom']
 export const HAS_MAX = new Set(['gauge', 'progress'])
-export const CARTESIAN = new Set(['bar-chart', 'line-chart', 'area-chart'])
+export const CARTESIAN = new Set([
+  'bar-chart',
+  'line-chart',
+  'area-chart',
+  'combo',
+  'timeseries',
+])
 
 export function useWidgetConfig() {
   const store = useCanvasStore()

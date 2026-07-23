@@ -57,7 +57,8 @@
       "config": "config doit être un objet",
       "schema": "schema invalide",
       "binding": "binding invalide"
-    }
+    },
+    "infoPlaceholder": "Texte d'infobulle au survol"
   },
   "mapScope": {
     "world": "Monde",
@@ -282,7 +283,10 @@
     "ranking": "Classement",
     "table": "Tableau",
     "section": "Section",
-    "text-block": "Texte"
+    "text-block": "Texte",
+    "scatter-trend": "Points + tendance",
+    "combo": "Barres + ligne",
+    "timeseries": "Série temporelle"
   },
   "sample": {
     "mon": "Lun",

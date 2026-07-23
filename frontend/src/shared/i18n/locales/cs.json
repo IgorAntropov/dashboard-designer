@@ -57,7 +57,8 @@
       "config": "config musí být objekt",
       "schema": "Neplatné schema",
       "binding": "Neplatný binding"
-    }
+    },
+    "infoPlaceholder": "Text nápovědy při najetí"
   },
   "mapScope": {
     "world": "Svět",
@@ -282,7 +283,10 @@
     "ranking": "Žebříček",
     "table": "Tabulka",
     "section": "Sekce",
-    "text-block": "Text"
+    "text-block": "Text",
+    "scatter-trend": "Body + trend",
+    "combo": "Sloupce + čára",
+    "timeseries": "Časová řada"
   },
   "sample": {
     "mon": "Po",

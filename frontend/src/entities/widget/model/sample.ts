@@ -19,7 +19,16 @@ export function sampleDataFor(
   if (type === 'gauge' || type === 'progress') {
     return [{ value: 68 }]
   }
-  if (type === 'scatter-chart') {
+  if (type === 'timeseries') {
+    const start = Date.UTC(2024, 0, 1)
+    const day = 86_400_000
+    const values = [12, 18, 15, 22, 19, 27, 24, 31, 28, 35, 33, 40]
+    return values.map((value, index) => ({
+      date: new Date(start + index * 7 * day).toISOString().slice(0, 10),
+      value,
+    }))
+  }
+  if (type === 'scatter-chart' || type === 'scatter-trend') {
     return [
       { x: 5, y: 12 },
       { x: 12, y: 8 },

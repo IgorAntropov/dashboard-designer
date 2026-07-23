@@ -57,7 +57,8 @@
       "config": "config must be an object",
       "schema": "Invalid schema",
       "binding": "Invalid binding"
-    }
+    },
+    "infoPlaceholder": "Tooltip text on hover"
   },
   "mapScope": {
     "world": "World",
@@ -282,7 +283,10 @@
     "ranking": "Ranking",
     "table": "Table",
     "section": "Section",
-    "text-block": "Text"
+    "text-block": "Text",
+    "scatter-trend": "Scatter + trend",
+    "combo": "Bar + line",
+    "timeseries": "Time series"
   },
   "sample": {
     "mon": "Mon",

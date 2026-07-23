@@ -80,9 +80,10 @@ function renderKpi(el: HTMLElement, input: RenderInput): void {
     head.append(titleEl)
     if (info) {
       const infoEl = document.createElement('span')
-      infoEl.className = 'pk-kpi__info'
+      infoEl.className = 'pk-kpi__info pk-info'
       infoEl.textContent = 'i'
-      infoEl.title = info
+      infoEl.tabIndex = 0
+      infoEl.setAttribute('data-pk-tip', info)
       infoEl.style.borderColor = input.theme.colorMuted
       infoEl.style.color = input.theme.colorMuted
       head.append(infoEl)

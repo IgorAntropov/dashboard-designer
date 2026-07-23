@@ -70,6 +70,10 @@ export const WIDGET_CSS = `
 .pk-table__num { text-align: right; font-variant-numeric: tabular-nums; }
 .pk-table__imgcell { width: 1px; }
 .pk-table__img { display: block; width: 28px; height: 28px; border-radius: 6px; object-fit: cover; }
+.pk-info { position: relative; }
+.pk-info::after { content: attr(data-pk-tip); position: absolute; top: calc(100% + 8px); left: 0; z-index: 30; width: max-content; max-width: 220px; padding: 7px 10px; border-radius: 8px; background: #12151b; color: #f4f5f7; font-family: inherit; font-style: normal; font-weight: 400; font-size: 0.74rem; line-height: 1.4; text-align: left; white-space: normal; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity 0.15s ease, transform 0.15s ease; }
+.pk-info--end::after { left: auto; right: 0; }
+.pk-info:hover::after, .pk-info:focus-visible::after { opacity: 1; transform: translateY(0); }
 `
 
 export const ENGINE_CSS = SHELL_CSS + WIDGET_CSS

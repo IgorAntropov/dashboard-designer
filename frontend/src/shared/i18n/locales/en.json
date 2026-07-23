@@ -223,7 +223,9 @@
     "widgetsCount": "widgets",
     "countLabel": "dashboards",
     "newFull": "New dashboard",
-    "widgetsLabel": "Widgets"
+    "widgetsLabel": "Widgets",
+    "demoTitle": "Demo: all widgets",
+    "demoBadge": "Example"
   },
   "editor": {
     "title": "Editor",
@@ -237,7 +239,9 @@
     "toDashboards": "To dashboards",
     "widgetSettings": "Widget settings",
     "closeConfirm": "Close settings? Changes are already applied.",
-    "arrange": "Arrange"
+    "arrange": "Arrange",
+    "readOnly": "Read-only",
+    "createOwn": "Create your own"
   },
   "theme": {
     "system": "System",

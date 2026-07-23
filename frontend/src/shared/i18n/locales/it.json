@@ -223,7 +223,9 @@
     "widgetsCount": "widget",
     "countLabel": "dashboard",
     "newFull": "Nuovo dashboard",
-    "widgetsLabel": "Widget"
+    "widgetsLabel": "Widget",
+    "demoTitle": "Demo: tutti i widget",
+    "demoBadge": "Esempio"
   },
   "editor": {
     "title": "Editor",
@@ -237,7 +239,9 @@
     "toDashboards": "Ai dashboard",
     "widgetSettings": "Impostazioni widget",
     "closeConfirm": "Chiudere le impostazioni? Le modifiche sono già applicate.",
-    "arrange": "Riordina"
+    "arrange": "Riordina",
+    "readOnly": "Sola lettura",
+    "createOwn": "Crea il tuo"
   },
   "theme": {
     "system": "Sistema",

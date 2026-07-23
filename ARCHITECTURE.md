@@ -40,6 +40,12 @@
 Config panel (1.5): widget types carry `defaultConfig`/`defaultSchema`/`defaultBinding` in the registry
 and the canvas store clones them on create. The store tracks `selectedId`/`selectedWidget` and exposes
 `updateConfig`/`updateBinding`/`updateSchemaField`. Clicking a canvas widget selects it (accent ring);
+A built-in read-only **demo dashboard** (`entities/dashboard/model/demo.ts`, id `demo`) is a client-side
+constant (not a DB row): `buildDemoWidgets()` assembles one instance of every registered widget type from
+the registry defaults, arranged in sections. It appears as a pinned card on the dashboards list and opens
+in the editor at `/editor/demo`, where the page hydrates from the constant and disables autosave/save
+(`isDemo`) — so every user, including existing ones, gets a live example with no quota or persistence.
+
 `widgets/config-panel/ConfigPanel.vue` edits the title/text, and per schema field the label, type and
 bound data key — mutations flow back into the store so `WidgetView` re-renders live. The settings modal
 (`ConfigPanelModal`) has **Form / JSON tabs**: the JSON tab (`JsonFields`) renders the widget's resolved

@@ -4,7 +4,12 @@ import type { WidgetInstance } from '@entities/widget'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import type { Dashboard } from '@entities/dashboard'
-import { getDashboard, updateDashboard } from '@entities/dashboard'
+import {
+  demoDashboard,
+  DEMO_DASHBOARD_ID,
+  getDashboard,
+  updateDashboard,
+} from '@entities/dashboard'
 import { AppButton } from '@shared/ui'
 import { DashboardCanvas, useCanvasStore } from '@widgets/canvas'
 import { ConfigPanelModal } from '@widgets/config-panel'
@@ -15,6 +20,7 @@ const { t } = useI18n()
 const route = useRoute()
 const canvasStore = useCanvasStore()
 const dashboardId = route.params.id as string
+const isDemo = dashboardId === DEMO_DASHBOARD_ID
 
 const dashboard = ref<Dashboard | null>(null)
 const titleInput = ref('')
@@ -42,6 +48,9 @@ function clearSavedTimer(): void {
 }
 
 async function save(): Promise<void> {
+  if (isDemo) {
+    return
+  }
   if (saveTimer) {
     clearTimeout(saveTimer)
     saveTimer = null
@@ -88,7 +97,9 @@ function scheduleSave(): void {
 }
 
 onMounted(async () => {
-  const loaded = await getDashboard(dashboardId)
+  const loaded = isDemo
+    ? demoDashboard(t('dashboards.demoTitle'))
+    : await getDashboard(dashboardId)
   dashboard.value = loaded
   titleInput.value = loaded?.title ?? ''
   const layout = (loaded?.layout ?? {}) as { widgets?: WidgetInstance[] }
@@ -108,7 +119,7 @@ watch(
     titleInput,
   ],
   () => {
-    if (!ready.value) {
+    if (!ready.value || isDemo) {
       return
     }
     scheduleSave()
@@ -184,7 +195,13 @@ useHead({ title: computed(() => titleInput.value || t('editor.title')) })
         <span class="small text-muted d-none d-lg-inline">{{ $t('editor.theme') }}</span>
         <ClientOnly><ThemeSelector /></ClientOnly>
         <span class="editor-toolbar__divider" />
-        <ClientOnly>
+        <template v-if="isDemo">
+          <span class="pk-badge pk-badge--accent">{{ $t('editor.readOnly') }}</span>
+          <AppButton to="/dashboards" size="sm" icon="plus">
+            {{ $t('editor.createOwn') }}
+          </AppButton>
+        </template>
+        <ClientOnly v-else>
           <AppButton
             v-tooltip:bottom="$t('editor.save')"
             :icon="saveIcon"

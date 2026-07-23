@@ -223,7 +223,9 @@
     "widgetsCount": "виджетов",
     "countLabel": "дашбордов",
     "newFull": "Новый дашборд",
-    "widgetsLabel": "Виджетов"
+    "widgetsLabel": "Виджетов",
+    "demoTitle": "Демо: все виджеты",
+    "demoBadge": "Пример"
   },
   "editor": {
     "title": "Редактор",
@@ -237,7 +239,9 @@
     "toDashboards": "К дашбордам",
     "widgetSettings": "Настройки виджета",
     "closeConfirm": "Закрыть настройки? Изменения уже применены.",
-    "arrange": "Упорядочить"
+    "arrange": "Упорядочить",
+    "readOnly": "Только просмотр",
+    "createOwn": "Создать свой"
   },
   "theme": {
     "system": "Системная",

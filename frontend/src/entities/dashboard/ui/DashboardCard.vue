@@ -6,8 +6,8 @@ import { AppButton } from '@shared/ui'
 import type { Dashboard } from '../api/repository'
 
 const props = withDefaults(
-  defineProps<{ dashboard: Dashboard; canExport?: boolean }>(),
-  { canExport: false },
+  defineProps<{ dashboard: Dashboard; canExport?: boolean; demo?: boolean }>(),
+  { canExport: false, demo: false },
 )
 const emit = defineEmits<{
   delete: [id: string]
@@ -59,6 +59,13 @@ function styleFor(tile: PreviewTile): Record<string, string> {
           {{ dashboard.title }}
         </NuxtLink>
         <span
+          v-if="props.demo"
+          class="pk-badge pk-badge--accent"
+        >
+          {{ $t('dashboards.demoBadge') }}
+        </span>
+        <span
+          v-else
           class="pk-badge"
           :class="published ? 'pk-badge--success' : 'pk-badge--neutral'"
         >
@@ -70,7 +77,7 @@ function styleFor(tile: PreviewTile): Record<string, string> {
         <span class="dash-card__meta">
           {{ $t('dashboards.widgetsLabel') }}: {{ tiles.length }}
         </span>
-        <div class="dash-card__actions">
+        <div v-if="!props.demo" class="dash-card__actions">
           <AppButton
             v-if="props.canExport"
             variant="ghost"

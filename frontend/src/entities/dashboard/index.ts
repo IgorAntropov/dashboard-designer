@@ -15,4 +15,9 @@ export type {
   DashboardUpdate,
   PublishResponse,
 } from './api/repository'
+export {
+  buildDemoWidgets,
+  demoDashboard,
+  DEMO_DASHBOARD_ID,
+} from './model/demo'
 export { default as DashboardCard } from './ui/DashboardCard.vue'

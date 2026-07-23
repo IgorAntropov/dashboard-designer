@@ -223,7 +223,9 @@
     "widgetsCount": "widżetów",
     "countLabel": "dashboardów",
     "newFull": "Nowy dashboard",
-    "widgetsLabel": "Widżety"
+    "widgetsLabel": "Widżety",
+    "demoTitle": "Demo: wszystkie widżety",
+    "demoBadge": "Przykład"
   },
   "editor": {
     "title": "Edytor",
@@ -237,7 +239,9 @@
     "toDashboards": "Do dashboardów",
     "widgetSettings": "Ustawienia widżetu",
     "closeConfirm": "Zamknąć ustawienia? Zmiany zostały już zastosowane.",
-    "arrange": "Uporządkuj"
+    "arrange": "Uporządkuj",
+    "readOnly": "Tylko podgląd",
+    "createOwn": "Utwórz własny"
   },
   "theme": {
     "system": "Systemowy",

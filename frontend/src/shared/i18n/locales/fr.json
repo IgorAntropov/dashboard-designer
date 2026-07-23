@@ -223,7 +223,9 @@
     "widgetsCount": "widgets",
     "countLabel": "tableaux de bord",
     "newFull": "Nouveau tableau de bord",
-    "widgetsLabel": "Widgets"
+    "widgetsLabel": "Widgets",
+    "demoTitle": "Démo : tous les widgets",
+    "demoBadge": "Exemple"
   },
   "editor": {
     "title": "Éditeur",
@@ -237,7 +239,9 @@
     "toDashboards": "Aux tableaux de bord",
     "widgetSettings": "Réglages du widget",
     "closeConfirm": "Fermer les réglages ? Les modifications sont déjà appliquées.",
-    "arrange": "Réorganiser"
+    "arrange": "Réorganiser",
+    "readOnly": "Lecture seule",
+    "createOwn": "Créer le vôtre"
   },
   "theme": {
     "system": "Système",

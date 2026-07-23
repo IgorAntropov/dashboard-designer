@@ -223,7 +223,9 @@
     "widgetsCount": "widgetů",
     "countLabel": "dashboardů",
     "newFull": "Nový dashboard",
-    "widgetsLabel": "Widgety"
+    "widgetsLabel": "Widgety",
+    "demoTitle": "Demo: všechny widgety",
+    "demoBadge": "Příklad"
   },
   "editor": {
     "title": "Editor",
@@ -237,7 +239,9 @@
     "toDashboards": "Na dashboardy",
     "widgetSettings": "Nastavení widgetu",
     "closeConfirm": "Zavřít nastavení? Změny už byly použity.",
-    "arrange": "Uspořádat"
+    "arrange": "Uspořádat",
+    "readOnly": "Jen ke čtení",
+    "createOwn": "Vytvořit vlastní"
   },
   "theme": {
     "system": "Systém",

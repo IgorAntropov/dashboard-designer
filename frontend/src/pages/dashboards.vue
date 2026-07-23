@@ -6,16 +6,18 @@ import {
   createDashboard,
   DashboardCard,
   deleteDashboard,
+  demoDashboard,
   exportDashboard,
   getAnalytics,
   listDashboards,
   publishDashboard,
 } from '@entities/dashboard'
 import { useSessionStore } from '@entities/session'
-import { AppButton, AppEmpty, AppIcon, AppModal } from '@shared/ui'
+import { AppButton, AppIcon, AppModal } from '@shared/ui'
 
 const { t } = useI18n()
 const session = useSessionStore()
+const demo = computed(() => demoDashboard(t('dashboards.demoTitle')))
 const canExport = computed(
   () => (session.user?.subscription_tier ?? 'free') !== 'free',
 )
@@ -172,19 +174,8 @@ useHead({ title: computed(() => t('dashboards.title')) })
 
     <p v-if="loading" class="text-muted">{{ $t('dashboards.loading') }}</p>
 
-    <AppEmpty
-      v-else-if="dashboards.length === 0"
-      icon="plus"
-      :title="$t('dashboards.empty')"
-    >
-      <template #action>
-        <AppButton icon="plus" @click="openModal">
-          {{ $t('dashboards.newFull') }}
-        </AppButton>
-      </template>
-    </AppEmpty>
-
     <div v-else class="dash-grid">
+      <DashboardCard :dashboard="demo" demo />
       <DashboardCard
         v-for="dashboard in dashboards"
         :key="dashboard.id"

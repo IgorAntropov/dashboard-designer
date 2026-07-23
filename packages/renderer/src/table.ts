@@ -3,7 +3,17 @@ import type { RenderInput } from './types'
 export interface TableColumn {
   key: string
   name: string
-  type: 'text' | 'number'
+  type: 'text' | 'number' | 'image'
+}
+
+function columnType(value: unknown): TableColumn['type'] {
+  if (value === 'number') {
+    return 'number'
+  }
+  if (value === 'image') {
+    return 'image'
+  }
+  return 'text'
 }
 
 export type SortDirection = 'asc' | 'desc'
@@ -21,8 +31,8 @@ export function tableColumns(input: RenderInput): TableColumn[] {
       )
       .map((item) => {
         const key = item.key as string
-        const name = typeof item.name === 'string' && item.name ? item.name : key
-        return { key, name, type: item.type === 'number' ? 'number' : 'text' }
+        const name = typeof item.name === 'string' ? item.name : key
+        return { key, name, type: columnType(item.type) }
       })
   }
 

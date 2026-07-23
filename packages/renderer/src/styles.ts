@@ -68,6 +68,8 @@ export const WIDGET_CSS = `
 .pk-table__th { position: sticky; top: 0; z-index: 1; padding: 0.35rem 0.5rem; text-align: left; font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; background-color: var(--pk-surface, #f6f6f7); border-bottom: 1px solid var(--pk-border, rgba(128, 128, 128, 0.3)); }
 .pk-table__td { padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--pk-border, rgba(128, 128, 128, 0.18)); white-space: nowrap; }
 .pk-table__num { text-align: right; font-variant-numeric: tabular-nums; }
+.pk-table__imgcell { width: 1px; }
+.pk-table__img { display: block; width: 28px; height: 28px; border-radius: 6px; object-fit: cover; }
 `
 
 export const ENGINE_CSS = SHELL_CSS + WIDGET_CSS

@@ -26,6 +26,38 @@ function valueFormatter(input: RenderInput): (value: number) => string {
     `${formatKpiValue(Number(value), decimals)}${unit ? ` ${unit}` : ''}`
 }
 
+export function trendLine(
+  points: Array<[number, number]>,
+): Array<[number, number]> {
+  const n = points.length
+  if (n < 2) {
+    return []
+  }
+  let sx = 0
+  let sy = 0
+  let sxy = 0
+  let sxx = 0
+  for (const [x, y] of points) {
+    sx += x
+    sy += y
+    sxy += x * y
+    sxx += x * x
+  }
+  const denominator = n * sxx - sx * sx
+  if (denominator === 0) {
+    return []
+  }
+  const slope = (n * sxy - sx * sy) / denominator
+  const intercept = (sy - slope * sx) / n
+  const xs = points.map((point) => point[0])
+  const minX = Math.min(...xs)
+  const maxX = Math.max(...xs)
+  return [
+    [minX, intercept + slope * minX],
+    [maxX, intercept + slope * maxX],
+  ]
+}
+
 function baseOption(input: RenderInput, title: string): Record<string, unknown> {
   return {
     backgroundColor: 'transparent',
@@ -118,6 +150,135 @@ export function buildChartOption(input: RenderInput): Record<string, unknown> {
             fontSize: 20,
           },
           data: [{ value: resolveScalar(input) }],
+        },
+      ],
+    }
+  }
+
+  if (input.type === 'combo') {
+    const categories = resolveCategories(input)
+    const defs = seriesDefs(input)
+    const palette = input.theme.colorSeries
+    const decimals = decimalsOf(input)
+    const axisLabel = {
+      color: input.theme.colorMuted,
+      formatter: (value: number) => formatKpiValue(Number(value), decimals),
+    }
+    const series = defs.map((def, index) => {
+      const isLine = def.type === 'line'
+      return {
+        name: def.name,
+        type: isLine ? 'line' : 'bar',
+        yAxisIndex: isLine ? 1 : 0,
+        data: valuesForKey(input, def.key),
+        smooth: isLine,
+        symbolSize: 7,
+        lineStyle: isLine ? { width: 3 } : undefined,
+        itemStyle: {
+          color: palette[index % palette.length],
+          borderRadius: isLine ? 0 : 4,
+        },
+        z: isLine ? 3 : 2,
+      }
+    })
+    return {
+      ...base,
+      tooltip: { trigger: 'axis', valueFormatter: valueFormatter(input) },
+      legend:
+        defs.length > 1
+          ? {
+              data: defs.map((def) => def.name),
+              bottom: 0,
+              itemHeight: 10,
+              textStyle: { color: input.theme.colorMuted },
+            }
+          : undefined,
+      grid: {
+        left: 52,
+        right: 52,
+        top: title ? 40 : 16,
+        bottom: defs.length > 1 ? 58 : 28,
+      },
+      xAxis: {
+        type: 'category',
+        data: categories,
+        axisLabel: { color: input.theme.colorMuted },
+      },
+      yAxis: [
+        { type: 'value', axisLabel },
+        { type: 'value', axisLabel, splitLine: { show: false } },
+      ],
+      series,
+    }
+  }
+
+  if (input.type === 'timeseries') {
+    const dateKey = input.binding.label ?? 'date'
+    const defs = seriesDefs(input)
+    const palette = input.theme.colorSeries
+    const decimals = decimalsOf(input)
+    const series = defs.map((def, index) => ({
+      name: def.name,
+      type: 'line',
+      smooth: true,
+      showSymbol: false,
+      areaStyle: defs.length === 1 ? { opacity: 0.22 } : undefined,
+      lineStyle: { width: 2, type: def.dashed ? 'dashed' : 'solid' },
+      itemStyle: { color: palette[index % palette.length] },
+      data: input.data.map((row) => [row[dateKey], Number(row[def.key] ?? 0)]),
+    }))
+    return {
+      ...base,
+      tooltip: { trigger: 'axis', valueFormatter: valueFormatter(input) },
+      legend:
+        defs.length > 1
+          ? {
+              data: defs.map((def) => def.name),
+              bottom: 0,
+              itemHeight: 10,
+              textStyle: { color: input.theme.colorMuted },
+            }
+          : undefined,
+      grid: {
+        left: 52,
+        right: 20,
+        top: title ? 40 : 16,
+        bottom: defs.length > 1 ? 58 : 28,
+      },
+      xAxis: { type: 'time', axisLabel: { color: input.theme.colorMuted } },
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          color: input.theme.colorMuted,
+          formatter: (value: number) => formatKpiValue(Number(value), decimals),
+        },
+      },
+      series,
+    }
+  }
+
+  if (input.type === 'scatter-trend') {
+    const points = resolvePoints(input)
+    const line = trendLine(points)
+    return {
+      ...base,
+      tooltip: { trigger: 'item' },
+      grid: { left: 44, right: 16, top: title ? 40 : 16, bottom: 28 },
+      xAxis: { type: 'value', axisLabel: { color: input.theme.colorMuted } },
+      yAxis: { type: 'value', axisLabel: { color: input.theme.colorMuted } },
+      series: [
+        {
+          type: 'scatter',
+          data: points,
+          symbolSize: 11,
+          itemStyle: { color: input.theme.colorAccent },
+        },
+        {
+          type: 'line',
+          data: line,
+          showSymbol: false,
+          silent: true,
+          lineStyle: { type: 'dashed', width: 2, color: input.theme.colorMuted },
         },
       ],
     }

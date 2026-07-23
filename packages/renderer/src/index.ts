@@ -34,7 +34,10 @@ const CHART_TYPES = new Set([
   'pie-chart',
   'donut-chart',
   'scatter-chart',
+  'scatter-trend',
   'radar-chart',
+  'combo',
+  'timeseries',
   'gauge',
 ])
 
@@ -437,6 +440,16 @@ function renderTable(el: HTMLElement, input: RenderInput): WidgetHandle {
           td.textContent = Number.isFinite(value)
             ? formatKpiValue(value, decimals)
             : ''
+        } else if (column.type === 'image') {
+          td.classList.add('pk-table__imgcell')
+          if (raw != null && String(raw)) {
+            const img = document.createElement('img')
+            img.className = 'pk-table__img'
+            img.src = String(raw)
+            img.alt = ''
+            img.loading = 'lazy'
+            td.append(img)
+          }
         } else {
           td.textContent = raw != null ? String(raw) : ''
         }

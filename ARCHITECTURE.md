@@ -216,6 +216,14 @@ is grouped by localized category headers (`palette.charts|kpi|text`); the config
 field for gauge/progress (`config.max`). New progress styles live in both `assets/css/theme.css` and the
 embed `renderer/styles.ts`. Renderer logic is unit-tested (`option.test.ts`, `series.test.ts`).
 
+More chart types (6.6): `buildChartOption` also builds `combo` (bars on `yAxisIndex 0` + line on a
+secondary `yAxisIndex 1`), `timeseries` (line/area over `xAxis.type:'time'`, points as `[date, value]`),
+and `scatter-trend` (scatter points plus a least-squares `trendLine`). The `table` renderer supports an
+`image` column type (renders an `<img>`; icon/data-URI friendly). Any widget can show a KPI-style **info
+icon**: `config.info` (edited in `GeneralFields`, plus the KPI-specific field) is drawn as a hover-tooltip
+overlay in `WidgetView`. Editor preview data can be per-widget: `WidgetView` uses `config.sampleData`
+(array) when present, otherwise `sampleDataFor(type)` — the demo dashboard relies on this for its dataset.
+
 SVG geo maps (5.3): a `svg-map` widget (new `geo` palette category) renders a choropleth over a
 bundled, self-contained SVG world map. `packages/renderer/maps/world.ts` holds the SVG (six named
 continent regions via the `name` attribute) and `WORLD_MAP_NAME`; `map.ts` lazily registers it once

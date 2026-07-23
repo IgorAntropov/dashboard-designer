@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildChartOption } from './option'
+import { buildChartOption, trendLine } from './option'
 import type { RenderInput, RenderTheme } from './types'
 
 const theme: RenderTheme = {
@@ -136,5 +136,76 @@ describe('buildChartOption', () => {
     expect(series.type).toBe('gauge')
     expect(series.max).toBe(200)
     expect(series.data).toEqual([{ value: 50 }])
+  })
+
+  it('builds a combo with bars on left axis and line on right axis', () => {
+    const option = buildChartOption(
+      input('combo', {
+        config: {
+          series: [
+            { key: 'a', name: 'A', type: 'bar' },
+            { key: 'b', name: 'B', type: 'line' },
+          ],
+        },
+        data: [{ label: 'x', a: 1, b: 2 }],
+      }),
+    )
+    const series = option.series as Array<Record<string, unknown>>
+    expect(series[0].type).toBe('bar')
+    expect(series[0].yAxisIndex).toBe(0)
+    expect(series[1].type).toBe('line')
+    expect(series[1].yAxisIndex).toBe(1)
+    expect((option.yAxis as unknown[]).length).toBe(2)
+  })
+
+  it('builds a timeseries with a time x-axis and [date, value] points', () => {
+    const option = buildChartOption(
+      input('timeseries', {
+        binding: { label: 'date', value: 'value' },
+        data: [
+          { date: '2024-01-01', value: 5 },
+          { date: '2024-01-08', value: 9 },
+        ],
+      }),
+    )
+    expect((option.xAxis as Record<string, unknown>).type).toBe('time')
+    expect(firstSeries(option).data).toEqual([
+      ['2024-01-01', 5],
+      ['2024-01-08', 9],
+    ])
+  })
+
+  it('builds a scatter-trend with points plus a trend line', () => {
+    const option = buildChartOption(
+      input('scatter-trend', {
+        binding: { x: 'x', y: 'y' },
+        data: [
+          { x: 0, y: 0 },
+          { x: 1, y: 2 },
+          { x: 2, y: 4 },
+        ],
+      }),
+    )
+    const series = option.series as Array<Record<string, unknown>>
+    expect(series[0].type).toBe('scatter')
+    expect(series[1].type).toBe('line')
+    expect(series[1].data).toEqual([
+      [0, 0],
+      [2, 4],
+    ])
+  })
+
+  it('computes a least-squares trend line', () => {
+    expect(
+      trendLine([
+        [0, 1],
+        [1, 3],
+        [2, 5],
+      ]),
+    ).toEqual([
+      [0, 1],
+      [2, 5],
+    ])
+    expect(trendLine([[1, 1]])).toEqual([])
   })
 })

@@ -52,6 +52,20 @@ describe('tableColumns', () => {
       { key: 'trips', name: 'Поездки', type: 'number' },
     ])
   })
+
+  it('supports an image column type', () => {
+    const cols = tableColumns(
+      input({
+        config: {
+          columns: [
+            { key: 'icon', name: '', type: 'image' },
+            { key: 'name', name: 'Товар', type: 'text' },
+          ],
+        },
+      }),
+    )
+    expect(cols[0]).toEqual({ key: 'icon', name: '', type: 'image' })
+  })
 })
 
 describe('sortRows', () => {

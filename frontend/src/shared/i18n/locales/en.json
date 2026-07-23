@@ -58,7 +58,12 @@
       "schema": "Invalid schema",
       "binding": "Invalid binding"
     },
-    "infoPlaceholder": "Tooltip text on hover"
+    "infoPlaceholder": "Tooltip text on hover",
+    "columnType": {
+      "text": "Text",
+      "number": "Number",
+      "image": "Image"
+    }
   },
   "mapScope": {
     "world": "World",

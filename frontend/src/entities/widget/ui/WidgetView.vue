@@ -74,8 +74,9 @@ onBeforeUnmount(() => {
   <div class="pk-widget-view">
     <span
       v-if="infoText"
-      class="pk-widget-view__info"
-      :title="infoText"
+      class="pk-widget-view__info pk-info pk-info--end"
+      :data-pk-tip="infoText"
+      tabindex="0"
       role="img"
       :aria-label="infoText"
     >i</span>

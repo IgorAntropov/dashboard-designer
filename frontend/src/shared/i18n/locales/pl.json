@@ -58,7 +58,12 @@
       "schema": "Nieprawidłowa schema",
       "binding": "Nieprawidłowy binding"
     },
-    "infoPlaceholder": "Tekst podpowiedzi po najechaniu"
+    "infoPlaceholder": "Tekst podpowiedzi po najechaniu",
+    "columnType": {
+      "text": "Tekst",
+      "number": "Liczba",
+      "image": "Obraz"
+    }
   },
   "mapScope": {
     "world": "Świat",

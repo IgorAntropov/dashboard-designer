@@ -52,6 +52,31 @@ defineProps<{ type: string }>()
       <polygon points="20,10 26,13 24,19 16,19 14,13" fill="var(--pk-accent)" fill-opacity="0.3" stroke="var(--pk-accent)" />
     </template>
 
+    <template v-else-if="type === 'scatter-trend'">
+      <line x1="6" y1="22" x2="34" y2="8" stroke="var(--pk-accent)" stroke-dasharray="3 3" />
+      <circle cx="10" cy="19" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="17" cy="17" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="23" cy="13" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="30" cy="10" r="1.7" fill="currentColor" stroke="none" />
+    </template>
+
+    <template v-else-if="type === 'combo'">
+      <rect x="6" y="15" width="5" height="9" rx="1" fill="var(--pk-accent)" stroke="none" />
+      <rect x="14" y="11" width="5" height="13" rx="1" fill="var(--pk-accent)" stroke="none" />
+      <rect x="22" y="17" width="5" height="7" rx="1" fill="var(--pk-accent)" stroke="none" />
+      <rect x="30" y="13" width="5" height="11" rx="1" fill="var(--pk-accent)" stroke="none" />
+      <polyline points="8,10 16,7 24,12 33,6" stroke="currentColor" />
+    </template>
+
+    <template v-else-if="type === 'timeseries'">
+      <path d="M6 18 L13 14 L20 16 L27 9 L34 11 L34 23 L6 23 Z" fill="var(--pk-accent)" fill-opacity="0.18" stroke="none" />
+      <polyline points="6,18 13,14 20,16 27,9 34,11" stroke="var(--pk-accent)" />
+      <line x1="6" y1="23" x2="34" y2="23" opacity="0.5" />
+      <line x1="13" y1="23" x2="13" y2="25" opacity="0.5" />
+      <line x1="20" y1="23" x2="20" y2="25" opacity="0.5" />
+      <line x1="27" y1="23" x2="27" y2="25" opacity="0.5" />
+    </template>
+
     <template v-else-if="type === 'stat-tile'">
       <path d="M6 9 h13" stroke-width="1.4" opacity="0.6" />
       <path d="M6 16 h20" stroke="var(--pk-accent)" stroke-width="3.4" />

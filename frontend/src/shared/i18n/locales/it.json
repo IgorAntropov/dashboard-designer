@@ -58,7 +58,12 @@
       "schema": "schema non valido",
       "binding": "binding non valido"
     },
-    "infoPlaceholder": "Testo del tooltip al passaggio"
+    "infoPlaceholder": "Testo del tooltip al passaggio",
+    "columnType": {
+      "text": "Testo",
+      "number": "Numero",
+      "image": "Immagine"
+    }
   },
   "mapScope": {
     "world": "Mondo",

@@ -58,7 +58,12 @@
       "schema": "schema invalide",
       "binding": "binding invalide"
     },
-    "infoPlaceholder": "Texte d'infobulle au survol"
+    "infoPlaceholder": "Texte d'infobulle au survol",
+    "columnType": {
+      "text": "Texte",
+      "number": "Nombre",
+      "image": "Image"
+    }
   },
   "mapScope": {
     "world": "Monde",

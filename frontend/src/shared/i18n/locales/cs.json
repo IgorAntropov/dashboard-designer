@@ -58,7 +58,12 @@
       "schema": "Neplatné schema",
       "binding": "Neplatný binding"
     },
-    "infoPlaceholder": "Text nápovědy při najetí"
+    "infoPlaceholder": "Text nápovědy při najetí",
+    "columnType": {
+      "text": "Text",
+      "number": "Číslo",
+      "image": "Obrázek"
+    }
   },
   "mapScope": {
     "world": "Svět",

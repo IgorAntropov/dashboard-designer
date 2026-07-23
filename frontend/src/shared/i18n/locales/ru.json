@@ -58,7 +58,12 @@
       "schema": "Некорректная schema",
       "binding": "Некорректный binding"
     },
-    "infoPlaceholder": "Текст подсказки при наведении"
+    "infoPlaceholder": "Текст подсказки при наведении",
+    "columnType": {
+      "text": "Текст",
+      "number": "Число",
+      "image": "Картинка"
+    }
   },
   "mapScope": {
     "world": "Мир",

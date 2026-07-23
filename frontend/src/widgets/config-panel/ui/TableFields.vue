@@ -53,11 +53,11 @@ const {
         <div class="d-flex gap-2 align-items-center">
           <select
             class="form-select form-select-sm"
-            :value="item.type === 'number' ? 'number' : 'text'"
+            :value="COLUMN_TYPES.includes(item.type ?? '') ? item.type : 'text'"
             @change="(event) => onColumnType(index, event)"
           >
             <option v-for="option in COLUMN_TYPES" :key="option" :value="option">
-              {{ option }}
+              {{ $t(`config.columnType.${option}`) }}
             </option>
           </select>
           <AppButton

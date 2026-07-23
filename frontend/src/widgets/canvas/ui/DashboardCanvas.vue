@@ -26,10 +26,15 @@ const themeVars = computed(() => ({
 const gridElement = ref<HTMLDivElement | null>(null)
 let grid: GridStack | null = null
 let syncing = false
-const registered = new Set<string>()
+
+type GsElement = HTMLElement & { gridstackNode?: GridStackNode }
 
 function elementFor(id: string): HTMLElement | null {
   return gridElement.value?.querySelector<HTMLElement>(`[gs-id="${id}"]`) ?? null
+}
+
+function isManaged(element: HTMLElement): boolean {
+  return (element as GsElement).gridstackNode != null
 }
 
 function syncWidgets(): void {
@@ -38,13 +43,9 @@ function syncWidgets(): void {
   }
   syncing = true
   for (const widget of store.widgets) {
-    if (registered.has(widget.id)) {
-      continue
-    }
     const element = elementFor(widget.id)
-    if (element) {
+    if (element && !isManaged(element)) {
       grid.makeWidget(element)
-      registered.add(widget.id)
     }
   }
   syncing = false
@@ -143,13 +144,14 @@ watch(
   () => store.widgets.map((item) => item.id).join(','),
   async (value) => {
     const ids = value ? value.split(',') : []
-    for (const id of [...registered]) {
-      if (!ids.includes(id)) {
-        const element = elementFor(id)
-        if (element && grid) {
+    if (grid && gridElement.value) {
+      const items =
+        gridElement.value.querySelectorAll<HTMLElement>('.grid-stack-item')
+      for (const element of items) {
+        const id = element.getAttribute('gs-id')
+        if (id && !ids.includes(id) && isManaged(element)) {
           grid.removeWidget(element, false)
         }
-        registered.delete(id)
       }
     }
     await nextTick()
